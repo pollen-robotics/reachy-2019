@@ -1,4 +1,5 @@
 from .arm import LeftArm, RightArm # noqa
+from .hand import GripperHand # noqa
 
 try:
     from .head import Head # noqa
