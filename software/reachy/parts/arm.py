@@ -7,12 +7,7 @@ class Arm(ReachyPart):
         ReachyPart.__init__(self, name='{}_arm'.format(side))
 
         self.luos_io = SharedLuosIO(luos_port)
-
-        self.motors = []
-        for name, id in dxl_motors.items():
-            m = self.luos_io.find_module('dxl_{}'.format(id))
-            setattr(self, name, m)
-            self.motors.append(m)
+        self.attach_dxl_motors(self.luos_io, dxl_motors)
 
 
 class LeftArm(Arm):
