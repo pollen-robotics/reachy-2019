@@ -1,4 +1,5 @@
 from pyluos import Robot as LuosIO
+from pyluos.modules import DynamixelMotor
 
 
 class SharedLuosIO(object):
@@ -15,3 +16,13 @@ class SharedLuosIO(object):
             return getattr(self.shared_io, module_name)
         except AttributeError:
             raise IOError('Could not find module "{}" on bus "{}"'.format(module_name, self.port))
+
+    def find_dxl(self, dxl_id):
+        module_name = 'dxl_{}'.format(dxl_id)
+
+        m = self.find_module(module_name)
+
+        if not isinstance(m, DynamixelMotor):
+            raise IOError('Wrong module type found for module "{}" on bus "{}"'.format(module_name, self.port))
+
+        return m

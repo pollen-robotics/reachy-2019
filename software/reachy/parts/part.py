@@ -6,6 +6,6 @@ class ReachyPart(object):
         self.motors = []
 
         for name, id in dxl_motors.items():
-            m = luos_io.find_module('dxl_{}'.format(id))
+            m = luos_io.find_dxl(id)
             setattr(self, name, m)
             self.motors.append(m)
