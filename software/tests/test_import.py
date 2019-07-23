@@ -7,3 +7,6 @@ class ImportTestCase(unittest.TestCase):
 
     def test_has_version(self):
         from reachy import __version__
+
+    def test_import_parts(self):
+        from reachy import parts
