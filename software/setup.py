@@ -23,7 +23,9 @@ setup(name='reachy',
           'pyluos>=1.1'
       ],
 
-      extras_require={},
+      extras_require={
+          'head': ['opencv-python']
+      },
 
       include_package_data=True,
       exclude_package_data={'': ['README', '.gitignore']},
