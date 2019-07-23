@@ -1,1 +1,1 @@
-from .luos import SharedLuosIO
+from .luos import SharedLuosIO # noqa
