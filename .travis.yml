@@ -1,0 +1,30 @@
+language: python
+
+sudo: false
+
+python:
+  - "2.7"
+  - "3.4"
+  - "3.6"
+
+
+before_install:
+  - pip install --upgrade virtualenv
+  - virtualenv --python=python venv
+  - source venv/bin/activate
+  - python --version
+  - pip --version
+  - pip install nose python-coveralls flake8
+
+install:
+  - pip install -e ./software/
+
+script:
+  - nosetests --with-coverage --cover-erase --cover-package=reachy -v -w software/tests/
+  - flake8 --statistics --count --config=software/setup.cfg software/reachy
+
+after_success:
+    - pip uninstall -y reachy
+
+after_failure:
+    - pip uninstall -y reachy
