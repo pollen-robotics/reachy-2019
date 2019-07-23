@@ -19,7 +19,9 @@ setup(name='reachy',
       version=version(),
       packages=find_packages(),
 
-      install_requires=[],
+      install_requires=[
+          'pyluos>=1.1'
+      ],
 
       extras_require={},
 
