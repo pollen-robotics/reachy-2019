@@ -1,2 +1,2 @@
-from ._version import __version__ # noqa
-from .reachy import Reachy # noqa
+from ._version import __version__  # noqa: F401
+from .reachy import Reachy  # noqa: F401
