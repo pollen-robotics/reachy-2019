@@ -8,6 +8,9 @@ class SharedLuosIO(object):
     def __init__(self, luos_port):
         if luos_port not in SharedLuosIO.opened_io:
             SharedLuosIO.opened_io[luos_port] = LuosIO(luos_port)
+            # FIXME: wait for a first sync of all modules
+            import time
+            time.sleep(1)
         self.shared_io = SharedLuosIO.opened_io[luos_port]
         self.port = luos_port
 
