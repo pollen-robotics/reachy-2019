@@ -4,8 +4,8 @@ from ..io import SharedLuosIO
 
 class Head(ReachyPart):
     dxl_motors = {
-        'pan': 8,
-        'tilt': 5,
+        'pan': {'id': 8, 'offset': 90.0, 'orientation': 'direct'},
+        'tilt': {'id': 5, 'offset': 0.0, 'orientation': 'direct'},
     }
 
     def __init__(self, camera_id, luos_port):

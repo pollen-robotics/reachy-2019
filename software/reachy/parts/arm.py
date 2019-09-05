@@ -12,17 +12,18 @@ class Arm(ReachyPart):
 
         if hand is not None and not isinstance(hand, Hand):
             raise ValueError('"hand" must be a Hand or None!')
+
+        hand.name = f'{self.name}.{hand.name}'
         self.hand = hand
 
 
 class LeftArm(Arm):
     dxl_motors = {
-        'shoulder_pitch': 20,
-        'shoulder_roll': 21,
-        'arm_yaw': 22,
-        'forearm_yaw': 23,
-        'wrist_pitch': 24,
-        'wrist_roll': 25
+        'shoulder_pitch': {'id': 20, 'offset': 90.0, 'orientation': 'direct'},
+        'shoulder_roll': {'id': 21, 'offset': -90.0, 'orientation': 'indirect'},
+        'arm_yaw': {'id': 22, 'offset': 0.0, 'orientation': 'indirect'},
+        'elbow_pitch': {'id': 23, 'offset': 0.0, 'orientation': 'direct'},
+        'forearm_yaw': {'id': 24, 'offset': 0.0, 'orientation': 'indirect'},
     }
 
     def __init__(self, luos_port, hand=None):
@@ -33,12 +34,11 @@ class LeftArm(Arm):
 
 class RightArm(Arm):
     dxl_motors = {
-        'shoulder_pitch': 10,
-        'shoulder_roll': 11,
-        'arm_yaw': 12,
-        'forearm_yaw': 13,
-        'wrist_pitch': 14,
-        'wrist_roll': 15
+        'shoulder_pitch': {'id': 10, 'offset': 90.0, 'orientation': 'indirect'},
+        'shoulder_roll': {'id': 11, 'offset': 90.0, 'orientation': 'indirect'},
+        'arm_yaw': {'id': 12, 'offset': 0.0, 'orientation': 'indirect'},
+        'elbow_pitch': {'id': 13, 'offset': 0.0, 'orientation': 'indirect'},
+        'forearm_yaw': {'id': 14, 'offset': 0.0, 'orientation': 'indirect'},
     }
 
     def __init__(self, luos_port, hand=None):

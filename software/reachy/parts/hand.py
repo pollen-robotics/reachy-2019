@@ -9,9 +9,9 @@ class Hand(ReachyPart):
 
 class GripperHand(Hand):
     dxl_motors = {
-        'wrist_pitch': 15,
-        'wrist_roll': 16,
-        'gripper': 19,
+        'wrist_pitch': {'id': 15, 'offset': 0.0, 'orientation': 'indirect'},
+        'wrist_roll': {'id': 16, 'offset': 0.0, 'orientation': 'indirect'},
+        'gripper': {'id': 19, 'offset': 0.0, 'orientation': 'direct'},
     }
 
     def __init__(self, luos_port):
