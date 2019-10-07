@@ -9,8 +9,9 @@ class Link(object):
         self.rotation = np.array(rotation)
 
     def transformation_matrix(self, theta):
-        R = np.eye(4)
-        R[:3, :3] = Rotation.from_rotvec(self.rotation * theta).as_dcm()
+        R = np.zeros((theta.shape[0], 4, 4))
+        R[:, :3, :3] = Rotation.from_rotvec(np.matrix(theta).T * self.rotation).as_dcm()
+        R[:, 3, 3] = 1
         return np.matmul(self.T, R)
 
 
@@ -21,7 +22,7 @@ class Chain(object):
     def forward(self, joints):
         M = np.eye(4)
 
-        for l, theta in zip(self.links, joints):
+        for l, theta in zip(self.links, joints.T):
             M = np.matmul(M, l.transformation_matrix(theta))
 
         return M
