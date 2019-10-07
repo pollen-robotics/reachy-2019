@@ -22,6 +22,7 @@ setup(name='reachy',
       install_requires=[
           'pyluos>=1.1',
           'numpy',
+          'scipy',
       ],
 
       extras_require={

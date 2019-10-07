@@ -1,3 +1,7 @@
+import numpy as np
+
+from collections import OrderedDict
+
 from .hand import Hand
 from .part import ReachyPart
 from ..io import SharedLuosIO
@@ -10,22 +14,49 @@ class Arm(ReachyPart):
         self.luos_io = SharedLuosIO(luos_port)
         self.attach_dxl_motors(self.luos_io, dxl_motors)
 
+        self.attach_kinematic_chain(dxl_motors)
+
         if hand is not None and not isinstance(hand, Hand):
             raise ValueError('"hand" must be a Hand or None!')
 
         if hand is not None:
             hand.name = f'{self.name}.{hand.name}'
-            self.hand = hand
+        self.hand = hand
+
+    def forward_kinematics(self, joints_position):
+        joints_position = np.deg2rad(joints_position)
+
+        M = self.kin_chain.forward(joints_position[:len(self.motors)])
+
+        if self.hand is not None:
+            M = np.matmul(M, self.hand.kin_chain.forward(joints_position[len(self.motors):]))
+
+        return M
 
 
 class LeftArm(Arm):
-    dxl_motors = {
-        'shoulder_pitch': {'id': 20, 'offset': 90.0, 'orientation': 'direct'},
-        'shoulder_roll': {'id': 21, 'offset': -90.0, 'orientation': 'indirect'},
-        'arm_yaw': {'id': 22, 'offset': 0.0, 'orientation': 'indirect'},
-        'elbow_pitch': {'id': 23, 'offset': 0.0, 'orientation': 'direct'},
-        'forearm_yaw': {'id': 24, 'offset': 0.0, 'orientation': 'indirect'},
-    }
+    dxl_motors = OrderedDict([
+        ('shoulder_pitch', {
+            'id': 20, 'offset': 90.0, 'orientation': 'direct',
+            'link-translation': [0, 0.14, 0], 'link-rotation': [0, 1, 0]
+        }),
+        ('shoulder_roll', {
+            'id': 21, 'offset': -90.0, 'orientation': 'indirect',
+            'link-translation': [0, 0, 0], 'link-rotation': [1, 0, 0],
+        }),
+        ('arm_yaw', {
+            'id': 22, 'offset': 0.0, 'orientation': 'indirect',
+            'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
+        }),
+        ('elbow_pitch', {
+            'id': 23, 'offset': 0.0, 'orientation': 'direct',
+            'link-translation': [0, 0, -0.30745], 'link-rotation': [0, 1, 0],
+        }),
+        ('forearm_yaw', {
+            'id': 24, 'offset': 0.0, 'orientation': 'indirect',
+            'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
+        }),
+    ])
 
     def __init__(self, luos_port, hand=None):
         Arm.__init__(self, side='left',
@@ -34,13 +65,28 @@ class LeftArm(Arm):
 
 
 class RightArm(Arm):
-    dxl_motors = {
-        'shoulder_pitch': {'id': 10, 'offset': 90.0, 'orientation': 'indirect'},
-        'shoulder_roll': {'id': 11, 'offset': 90.0, 'orientation': 'indirect'},
-        'arm_yaw': {'id': 12, 'offset': 0.0, 'orientation': 'indirect'},
-        'elbow_pitch': {'id': 13, 'offset': 0.0, 'orientation': 'indirect'},
-        'forearm_yaw': {'id': 14, 'offset': 0.0, 'orientation': 'indirect'},
-    }
+    dxl_motors = OrderedDict([
+        ('shoulder_pitch', {
+            'id': 10, 'offset': 90.0, 'orientation': 'indirect',
+            'link-translation': [0, -0.14, 0], 'link-rotation': [0, 1, 0],
+        }),
+        ('shoulder_roll', {
+            'id': 11, 'offset': 90.0, 'orientation': 'indirect',
+            'link-translation': [0, 0, 0], 'link-rotation': [1, 0, 0],
+        }),
+        ('arm_yaw', {
+            'id': 12, 'offset': 0.0, 'orientation': 'indirect',
+            'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
+        }),
+        ('elbow_pitch', {
+            'id': 13, 'offset': 0.0, 'orientation': 'indirect',
+            'link-translation': [0, 0, -0.30745], 'link-rotation': [0, 1, 0],
+        }),
+        ('forearm_yaw', {
+            'id': 14, 'offset': 0.0, 'orientation': 'indirect',
+            'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
+        }),
+    ])
 
     def __init__(self, luos_port, hand=None):
         Arm.__init__(self, side='right',

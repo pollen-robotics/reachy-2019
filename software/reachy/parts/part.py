@@ -1,4 +1,5 @@
 from .motor import ReachyMotor
+from .kinematic import Link, Chain
 
 
 class ReachyPart(object):
@@ -12,3 +13,9 @@ class ReachyPart(object):
             m = ReachyMotor(self, motor_name, luos_io.find_dxl(config['id']), config)
             setattr(self, motor_name, m)
             self.motors.append(m)
+
+    def attach_kinematic_chain(self, dxl_motors):
+        self.kin_chain = Chain([
+            Link(m['link-translation'], m['link-rotation'])
+            for m in dxl_motors.values()
+        ])
