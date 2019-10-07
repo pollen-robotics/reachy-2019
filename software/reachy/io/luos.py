@@ -18,7 +18,7 @@ class SharedLuosIO(object):
         try:
             return getattr(self.shared_io, module_name)
         except AttributeError:
-            raise IOError('Could not find module "{}" on bus "{}"'.format(module_name, self.port))
+            raise IOError(f'Could not find module "{module_name}" on bus "{self.port}"')
 
     def find_dxl(self, dxl_id):
         module_name = 'dxl_{}'.format(dxl_id)
@@ -26,6 +26,6 @@ class SharedLuosIO(object):
         m = self.find_module(module_name)
 
         if not isinstance(m, DynamixelMotor):
-            raise IOError('Wrong module type found for module "{}" on bus "{}"'.format(module_name, self.port))
+            raise IOError(f'Wrong module type found for module "{module_name}" on bus "{self.port}"')
 
         return m

@@ -9,7 +9,7 @@ from ..io import SharedLuosIO
 
 class Arm(ReachyPart):
     def __init__(self, side, luos_port, dxl_motors, hand):
-        ReachyPart.__init__(self, name='{}_arm'.format(side))
+        ReachyPart.__init__(self, name=f'{side}_arm')
 
         self.luos_io = SharedLuosIO(luos_port)
         self.attach_dxl_motors(self.luos_io, dxl_motors)
