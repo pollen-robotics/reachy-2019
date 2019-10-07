@@ -13,6 +13,7 @@ class Arm(ReachyPart):
         if hand is not None and not isinstance(hand, Hand):
             raise ValueError('"hand" must be a Hand or None!')
 
+        if hand is not None:
         hand.name = f'{self.name}.{hand.name}'
         self.hand = hand
 
