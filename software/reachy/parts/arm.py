@@ -14,8 +14,8 @@ class Arm(ReachyPart):
             raise ValueError('"hand" must be a Hand or None!')
 
         if hand is not None:
-        hand.name = f'{self.name}.{hand.name}'
-        self.hand = hand
+            hand.name = f'{self.name}.{hand.name}'
+            self.hand = hand
 
 
 class LeftArm(Arm):
