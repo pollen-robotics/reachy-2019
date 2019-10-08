@@ -1,6 +1,11 @@
+import logging
+
 from operator import attrgetter
 
 from .parts import LeftArm, RightArm, Head
+
+
+logger = logging.getLogger(__name__)
 
 
 class Reachy(object):
@@ -13,7 +18,7 @@ class Reachy(object):
 
         if left_arm is not None:
             if not isinstance(left_arm, LeftArm):
-            raise ValueError('"left_arm" must be a LeftArm or None!')
+                raise ValueError('"left_arm" must be a LeftArm or None!')
             self._parts.append(left_arm)
             if left_arm.hand is not None:
                 self._parts.append(left_arm.hand)
@@ -21,7 +26,7 @@ class Reachy(object):
 
         if right_arm is not None:
             if not isinstance(right_arm, RightArm):
-            raise ValueError('"right_arm" must be a RightArm or None!')
+                raise ValueError('"right_arm" must be a RightArm or None!')
             self._parts.append(right_arm)
             if right_arm.hand is not None:
                 self._parts.append(right_arm.hand)
@@ -29,7 +34,7 @@ class Reachy(object):
 
         if head is not None:
             if not isinstance(head, Head):
-            raise ValueError('"head" must be a Head or None!')
+                raise ValueError('"head" must be a Head or None!')
             self._parts.append(head)
         self.head = head
 
