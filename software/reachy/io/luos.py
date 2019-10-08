@@ -1,5 +1,9 @@
+import logging
+
 from pyluos import Robot as LuosIO
 from pyluos.modules import DynamixelMotor
+
+logger = logging.getLogger(__name__)
 
 
 class SharedLuosIO(object):
@@ -7,7 +11,10 @@ class SharedLuosIO(object):
 
     def __init__(self, luos_port):
         if luos_port not in SharedLuosIO.opened_io:
-            SharedLuosIO.opened_io[luos_port] = LuosIO(luos_port)
+            logger.info('Connecting to new Luos IO', extra={
+                'luos_port': luos_port,
+            })
+            SharedLuosIO.opened_io[luos_port] = LuosIO(luos_port, log_conf='')
             # FIXME: wait for a first sync of all modules
             import time
             time.sleep(1)
