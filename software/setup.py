@@ -23,6 +23,7 @@ setup(name='reachy',
           'pyluos>=1.1',
           'numpy',
           'scipy',
+          'python-json-logger',
       ],
 
       extras_require={
