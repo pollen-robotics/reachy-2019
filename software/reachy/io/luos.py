@@ -36,3 +36,9 @@ class SharedLuosIO(object):
             raise IOError(f'Wrong module type found for module "{module_name}" on bus "{self.port}"')
 
         return m
+
+    def find_orbital_disks(self):
+        return [
+            self.find_module(name)
+            for name in ['disk_bottom', 'disk_middle', 'disk_top']
+        ]
