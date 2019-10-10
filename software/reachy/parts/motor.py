@@ -98,7 +98,7 @@ class DynamixelMotor(object):
             traj_player.wait()
 
 
-class OrbitalActuator(object):
+class OrbitaActuator(object):
     def __init__(self, root_part, name, luos_disks_motor, config):
         self.disk_bottom, self.disk_middle, self.disk_top = luos_disks_motor
         self.model = OrbitaModel(**config)
@@ -140,9 +140,9 @@ class OrbitalActuator(object):
 
         for i, disk in enumerate(self.disks):
             disk.rot_position = False
+            disk.encoder_res = 5
             disk.setToZero()
             disk.reduction = 214
-            disk.encoder_res = 5
             disk.wheel_size = 79
             disk.positionPid = pid[i]
             disk.rot_position_mode = True
