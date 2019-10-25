@@ -19,9 +19,10 @@ class GripperHand(Hand):
             'id': 16, 'offset': 0.0, 'orientation': 'indirect',
             'link-translation': [0, 0, -0.03243], 'link-rotation': [1, 0, 0],
         }),
-        # ('gripper', {
-        #     'id': 19, 'offset': 0.0, 'orientation': 'direct'
-        # }),
+        ('gripper', {
+            'id': 17, 'offset': 0.0, 'orientation': 'direct',
+            'link-translation': [0, -0.0185, -0.06], 'link-rotation': [0, 0, 0],
+        }),
     ])
 
     def __init__(self, luos_port):
