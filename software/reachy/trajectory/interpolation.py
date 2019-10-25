@@ -1,7 +1,7 @@
 import time
 import numpy as np
 
-from threading import Thread
+from threading import Thread, Event
 
 
 class TrajectoryInterpolation(object):
@@ -11,13 +11,18 @@ class TrajectoryInterpolation(object):
         self.duration = duration
 
         self._t = None
+        self._running = Event()
 
     def interpolate(self, t):
         raise NotImplementedError
 
     def start(self, motor, update_freq=50):
         self._t = Thread(target=lambda: self._follow_traj_loop(motor, update_freq))
+        self._running.set()
         self._t.start()
+
+    def stop(self):
+        self._running.clear()
 
     def wait(self):
         if self._t is not None and self._t.is_alive():
@@ -26,7 +31,7 @@ class TrajectoryInterpolation(object):
     def _follow_traj_loop(self, motor, update_freq):
         t0 = time.time()
 
-        while True:
+        while self._running.is_set():
             t = time.time() - t0
             if t > self.duration:
                 break
