@@ -16,7 +16,7 @@ class ReachyPart(object):
 
     def attach_orbita_actuator(self, name, luos_io, config):
         luos_disks_motor = luos_io.find_orbital_disks()
-        orb = OrbitaActuator(self, name, luos_disks_motor, config)
+        orb = OrbitaActuator(self, name, luos_disks_motor, **config)
         setattr(self, name, orb)
 
     def attach_kinematic_chain(self, dxl_motors):

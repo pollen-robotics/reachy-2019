@@ -1,3 +1,5 @@
+import time
+
 from spherical_joint import Actuator as OrbitaModel
 
 from ..trajectory.interpolation import Linear, MinimumJerk
@@ -97,13 +99,24 @@ class DynamixelMotor(object):
         if wait:
             traj_player.wait()
 
+        return traj_player
+
 
 class OrbitaActuator(object):
-    def __init__(self, root_part, name, luos_disks_motor, config):
+    def __init__(
+        self, root_part, name, luos_disks_motor,
+        Pc_z, Cp_z, R, R0,
+        pid, reduction, wheel_size, encoder_res,
+    ):
         self.disk_bottom, self.disk_middle, self.disk_top = luos_disks_motor
-        self.model = OrbitaModel(**config)
+        self.model = OrbitaModel(Pc_z=Pc_z, Cp_z=Cp_z, R=R, R0=R0)
 
-        self.setup()
+        self.setup(
+            pid=pid,
+            reduction=reduction,
+            wheel_size=wheel_size,
+            encoder_res=encoder_res,
+        )
 
     @property
     def disks(self):
@@ -131,19 +144,19 @@ class OrbitaActuator(object):
         for d, q in zip(self.disks, thetas):
             d.target_rot_position = q
 
-    def setup(self):
-        pid = [
-            [9, 0.02, 120],
-            [9, 0.06, 110],
-            [9, 0.06, 80],
-        ]
-
+    def setup(self, pid, reduction, wheel_size, encoder_res):
         for i, disk in enumerate(self.disks):
             disk.rot_position = False
-            disk.encoder_res = 5
+            disk.limit_current = 0.4
+            disk.encoder_res = encoder_res
             disk.setToZero()
-            disk.reduction = 214
-            disk.wheel_size = 79
-            disk.positionPid = pid[i]
+            disk.reduction = reduction
+            disk.wheel_size = wheel_size
+            disk.positionPid = pid
             disk.rot_position_mode = True
             disk.rot_position = True
+
+            disk.rot_speed_mode = True
+            # FIXME: temporary fix (see https://github.com/Luos-Robotics/pyluos/issues/53)
+            time.sleep(0.1)
+            disk.target_rot_speed = 100

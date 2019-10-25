@@ -24,6 +24,7 @@ setup(name='reachy',
           'numpy',
           'scipy',
           'python-json-logger',
+          #   'orbita', # FIXME: add orbita on pypi
       ],
 
       extras_require={
