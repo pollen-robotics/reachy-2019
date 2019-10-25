@@ -1,5 +1,7 @@
 import time
+import numpy as np
 
+from pyquaternion import Quaternion
 from spherical_joint import Actuator as OrbitaModel
 
 from ..trajectory.interpolation import Linear, MinimumJerk
@@ -143,6 +145,22 @@ class OrbitaActuator(object):
         for d, q in zip(self.disks, thetas):
             q = -q  # FIXME: Temporary path due to reversed encoder
             d.target_rot_position = q
+
+    def find_quaternion_transform(model, v_origin, v_target):
+        v_origin = np.array(v_origin)
+        v_origin = v_origin / np.linalg.norm(v_origin)
+
+        v_target = np.array(v_target)
+        v_target = v_target / np.linalg.norm(v_target)
+
+        V = np.cross(v_origin, v_target)
+        V = V / np.linalg.norm(V)
+
+        alpha = np.arccos(np.vdot(v_origin, v_target))
+        if alpha == 0:
+            return Quaternion(1, 0, 0, 0)
+
+        return Quaternion(axis=V, radians=alpha)
 
     def setup(self, pid, reduction, wheel_size, encoder_res):
         for i, disk in enumerate(self.disks):

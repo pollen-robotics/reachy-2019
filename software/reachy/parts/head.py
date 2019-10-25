@@ -30,3 +30,9 @@ class Head(ReachyPart):
         # if we are not using the Head part.
         from ..utils.vision import BackgroundVideoCapture
         self.cap = BackgroundVideoCapture(camera_id)
+
+    def look_at(self, x, y, z):
+        self.neck.model.reset_last_angles()
+
+        q = self.neck.find_quaternion_transform([1, 0, 0], [x, y, z])
+        self.neck.orient(q)

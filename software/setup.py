@@ -25,6 +25,7 @@ setup(name='reachy',
           'scipy',
           'python-json-logger',
           #   'orbita', # FIXME: add orbita on pypi
+          'pyquaternion',
       ],
 
       extras_require={
