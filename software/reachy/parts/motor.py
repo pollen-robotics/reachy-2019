@@ -130,18 +130,18 @@ class OrbitaActuator(object):
         for disk in self.disks:
             disk.compliant = False
 
-    def goto_zero(self):
-        for disk in self.disks:
-            disk.target_rot_position = 0
-
     def point_at(self, vector, angle):
         thetas = self.model.get_angles_from_vector(vector, angle)
+
         for d, q in zip(self.disks, thetas):
+            q = -q  # FIXME: Temporary path due to reversed encoder
             d.target_rot_position = q
 
     def orient(self, quat):
-        thetas = self.model.get_angles_from_quaternion(*quat)
+        thetas = self.model.get_angles_from_quaternion(quat.w, quat.x, quat.y, quat.z)
+
         for d, q in zip(self.disks, thetas):
+            q = -q  # FIXME: Temporary path due to reversed encoder
             d.target_rot_position = q
 
     def setup(self, pid, reduction, wheel_size, encoder_res):
