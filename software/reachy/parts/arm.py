@@ -21,6 +21,7 @@ class Arm(ReachyPart):
 
         if hand is not None:
             hand.name = f'{self.name}.{hand.name}'
+            self.motors += hand.motors
         self.hand = hand
 
     def forward_kinematics(self, joints_position, use_rad=False):
@@ -31,11 +32,15 @@ class Arm(ReachyPart):
         if not use_rad:
             joints_position = np.deg2rad(joints_position)
 
-        M = self.kin_chain.forward(joints_position[:, :len(self.motors)])
+        nb_arm_motors = 5
+
+        M = self.kin_chain.forward(joints_position[:, :nb_arm_motors])
 
         if self.hand is not None:
-            M = np.matmul(M, self.hand.kin_chain.forward(joints_position[:, len(self.motors):]))
+            M = np.matmul(M, self.hand.kin_chain.forward(joints_position[:, nb_arm_motors:]))
 
+        if joints_position.shape[0] == 1:
+            M = M[0]
         return M
 
 
