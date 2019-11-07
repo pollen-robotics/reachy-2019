@@ -18,10 +18,11 @@ class ReachyPart(object):
             setattr(self, motor_name, m)
             self.motors.append(m)
 
-    def attach_orbita_actuator(self, name, luos_io, config):
+    def create_orbita_actuator(self, name, luos_io, config):
         luos_disks_motor = luos_io.find_orbital_disks()
         orb = OrbitaActuator(self, name, luos_disks_motor, **config)
         setattr(self, name, orb)
+        return orb
 
     def attach_kinematic_chain(self, dxl_motors):
         self.kin_chain = Chain([
