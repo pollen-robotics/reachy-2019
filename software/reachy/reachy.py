@@ -59,6 +59,10 @@ class Reachy(object):
     def parts(self):
         return self._parts
 
+    @property
+    def motors(self):
+        return sum([p.motors for p in self.parts], [])
+
     def goto(self,
              goal_positions, duration,
              starting_point='present_position',
