@@ -5,6 +5,10 @@ from .kinematic import Link, Chain
 class ReachyPart(object):
     def __init__(self, name):
         self.name = name
+        self.motors = []
+
+    def close(self):
+        pass
 
     def attach_dxl_motors(self, luos_io, dxl_motors):
         self.motors = []

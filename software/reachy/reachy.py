@@ -41,9 +41,19 @@ class Reachy(object):
         logger.info(
             'Connected to reachy',
             extra={
-                'parts': [p.name for p in self.parts]
+                'parts': [p.name for p in self.parts],
             }
         )
+
+    def close(self):
+        logger.info(
+            'Closing connection with reachy',
+            extra={
+                'parts': [p.name for p in self.parts],
+            }
+        )
+        for p in self.parts:
+            p.close()
 
     @property
     def parts(self):

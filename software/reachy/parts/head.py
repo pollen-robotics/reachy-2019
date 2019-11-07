@@ -31,6 +31,9 @@ class Head(ReachyPart):
         from ..utils.vision import BackgroundVideoCapture
         self.cap = BackgroundVideoCapture(camera_id)
 
+    def close(self):
+        self.cap.close()
+
     def look_at(self, x, y, z):
         self.neck.model.reset_last_angles()
 
