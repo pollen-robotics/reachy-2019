@@ -39,3 +39,19 @@ class Head(ReachyPart):
 
         q = self.neck.find_quaternion_transform([1, 0, 0], [x, y, z])
         self.neck.orient(q)
+
+    @property
+    def compliant(self):
+        return self.neck.compliant
+
+    @compliant.setter
+    def compliant(self, compliancy):
+        self.neck.compliant = compliancy
+
+    @property
+    def moving_speed(self):
+        return self.neck.moving_speed
+
+    @moving_speed.setter
+    def moving_speed(self, speed):
+        self.neck.moving_speed = speed

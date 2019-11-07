@@ -113,24 +113,42 @@ class OrbitaActuator(object):
         self.disk_bottom, self.disk_middle, self.disk_top = luos_disks_motor
         self.model = OrbitaModel(Pc_z=Pc_z, Cp_z=Cp_z, R=R, R0=R0)
 
+        self._compliancy = False
+        self._moving_speed = 100
+
         self.setup(
             pid=pid,
             reduction=reduction,
             wheel_size=wheel_size,
             encoder_res=encoder_res,
+            moving_speed=self.moving_speed,
         )
 
     @property
     def disks(self):
         return [self.disk_top, self.disk_middle, self.disk_bottom]
 
-    def turn_compliant(self):
-        for disk in self.disks:
-            disk.compliant = True
+    @property
+    def compliant(self):
+        return self._compliancy
 
-    def turn_stiff(self):
-        for disk in self.disks:
-            disk.compliant = False
+    @compliant.setter
+    def compliant(self, compliancy):
+        self._compliancy = compliancy
+
+        for d in self.disks:
+            d.compliant = compliancy
+
+    @property
+    def moving_speed(self):
+        return self._moving_speed
+
+    @moving_speed.setter
+    def moving_speed(self, speed):
+        self._moving_speed = speed
+
+        for d in self.disks:
+            d.target_rot_speed = speed
 
     def point_at(self, vector, angle):
         thetas = self.model.get_angles_from_vector(vector, angle)
@@ -162,7 +180,7 @@ class OrbitaActuator(object):
 
         return Quaternion(axis=V, radians=alpha)
 
-    def setup(self, pid, reduction, wheel_size, encoder_res):
+    def setup(self, pid, reduction, wheel_size, encoder_res, moving_speed):
         for i, disk in enumerate(self.disks):
             disk.rot_position = False
             disk.limit_current = 0.4
@@ -177,4 +195,4 @@ class OrbitaActuator(object):
             disk.rot_speed_mode = True
             # FIXME: temporary fix (see https://github.com/Luos-Robotics/pyluos/issues/53)
             time.sleep(0.1)
-            disk.target_rot_speed = 100
+            disk.target_rot_speed = moving_speed
