@@ -26,6 +26,7 @@ setup(name='reachy',
           'python-json-logger',
           #   'orbita', # FIXME: add orbita on pypi
           'pyquaternion',
+          'zzlog',
       ],
 
       extras_require={
