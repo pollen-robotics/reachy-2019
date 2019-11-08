@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 def find_gate_name(port):
-    r = LuosIO(port)
+    r = LuosIO(port, log_conf='')
     name = r.modules[0].alias
     r.close()
     return name

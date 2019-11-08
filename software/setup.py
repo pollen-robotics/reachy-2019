@@ -20,7 +20,7 @@ setup(name='reachy',
       packages=find_packages(),
 
       install_requires=[
-          'pyluos>=1.1',
+          'pyluos>=1.2',
           'numpy',
           'scipy',
           'python-json-logger',
