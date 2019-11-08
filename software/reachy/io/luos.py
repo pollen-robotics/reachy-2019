@@ -1,9 +1,18 @@
 import logging
 
+from glob import glob
+
 from pyluos import Robot as LuosIO
 from pyluos.modules import DynamixelMotor
 
 logger = logging.getLogger(__name__)
+
+
+def find_gate_name(port):
+    r = LuosIO(port)
+    name = r.modules[0].alias
+    r.close()
+    return name
 
 
 class SharedLuosIO(object):
@@ -20,6 +29,17 @@ class SharedLuosIO(object):
             time.sleep(1)
         self.shared_io = SharedLuosIO.opened_io[luos_port]
         self.port = luos_port
+
+    @classmethod
+    def with_gate(cls, name, port_template):
+        for p in glob(port_template):
+            gate_name = (
+                find_gate_name(p) if p not in SharedLuosIO.opened_io
+                else SharedLuosIO.opened_io[p].modules[0].alias
+            )
+
+            if gate_name == name:
+                return cls(p)
 
     def find_module(self, module_name):
         try:
