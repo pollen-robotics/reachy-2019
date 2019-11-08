@@ -2,27 +2,33 @@ import numpy as np
 
 from collections import OrderedDict
 
-from .hand import Hand
+from .hand import ForceGripper
 from .part import ReachyPart
 from ..io import SharedLuosIO
+
+
+hands = {
+    'force_gripper': ForceGripper,
+}
 
 
 class Arm(ReachyPart):
     def __init__(self, side, luos_port, dxl_motors, hand):
         ReachyPart.__init__(self, name=f'{side}_arm')
 
-        self.luos_io = SharedLuosIO(luos_port)
+        self.luos_io = SharedLuosIO.with_gate(f'r_{side}_arm', luos_port)
         self.attach_dxl_motors(self.luos_io, dxl_motors)
 
         self.attach_kinematic_chain(dxl_motors)
 
-        if hand is not None and not isinstance(hand, Hand):
-            raise ValueError('"hand" must be a Hand or None!')
+        if hand is not None and hand not in hands.keys():
+            raise ValueError('"hand" must be one of {hands.keys()} or None!')
 
         if hand is not None:
-            hand.name = f'{self.name}.{hand.name}'
-            self.motors += hand.motors
-        self.hand = hand
+            hand_part = hands[hand](luos_port=self.luos_io.port)
+            hand_part.name = f'{self.name}.{hand}'
+            self.motors += hand_part.motors
+        self.hand = hand_part
 
     def forward_kinematics(self, joints_position, use_rad=False):
         joints_position = np.array(joints_position)

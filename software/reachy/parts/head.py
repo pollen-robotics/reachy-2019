@@ -23,7 +23,7 @@ class Head(ReachyPart):
     def __init__(self, camera_id, luos_port):
         ReachyPart.__init__(self, name='head')
 
-        self.luos_io = SharedLuosIO(luos_port)
+        self.luos_io = SharedLuosIO.with_gate('r_head', luos_port)
         self.neck = self.create_orbita_actuator('neck', self.luos_io, Head.orbital_config)
 
         # We import vision here to avoid OpenCV ImportError issue
