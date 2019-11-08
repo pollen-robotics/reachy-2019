@@ -28,7 +28,9 @@ class Arm(ReachyPart):
             hand_part = hands[hand](luos_port=self.luos_io.port)
             hand_part.name = f'{self.name}.{hand}'
             self.motors += hand_part.motors
-        self.hand = hand_part
+            self.hand = hand_part
+        else:
+            self.hand = None
 
     def forward_kinematics(self, joints_position, use_rad=False):
         joints_position = np.array(joints_position)
