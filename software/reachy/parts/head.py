@@ -1,4 +1,7 @@
+import time
 import numpy as np
+
+from reachy.trajectory.interpolation import MinimumJerk
 
 from .part import ReachyPart
 from ..io import SharedLuosIO
@@ -55,3 +58,32 @@ class Head(ReachyPart):
     @moving_speed.setter
     def moving_speed(self, speed):
         self.neck.moving_speed = speed
+
+    def homing(self, dur=2):
+        self.compliant = False
+        time.sleep(0.1)
+
+        traj = MinimumJerk(0, -360, dur).interpolate(np.linspace(0, dur, dur * 100))
+
+        for d in self.neck.disks:
+            d.play()
+            d.target_rot_position = traj
+
+        time.sleep(0.5)
+
+        while np.any(np.array([d.rot_speed for d in self.neck.disks]) < 0):
+            time.sleep(0.01)
+
+        for d in self.neck.disks:
+            d.stop()
+            d.setToZero()
+
+        time.sleep(0.2)
+
+        for d in self.neck.disks:
+            d.target_rot_position = 180
+
+        time.sleep(5)
+
+        for d in self.neck.disks:
+            d.setToZero()

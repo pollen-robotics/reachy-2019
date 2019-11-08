@@ -114,7 +114,7 @@ class OrbitaActuator(object):
         self.model = OrbitaModel(Pc_z=Pc_z, Cp_z=Cp_z, R=R, R0=R0)
 
         self._compliancy = False
-        self._moving_speed = 100
+        self._moving_speed = 50
 
         self.setup(
             pid=pid,
@@ -191,6 +191,7 @@ class OrbitaActuator(object):
             disk.positionPid = pid
             disk.rot_position_mode = True
             disk.rot_position = True
+            disk.rot_speed = True
 
             disk.rot_speed_mode = True
             # FIXME: temporary fix (see https://github.com/Luos-Robotics/pyluos/issues/53)
