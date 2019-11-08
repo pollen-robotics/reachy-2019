@@ -53,7 +53,7 @@ class Reachy(object):
             }
         )
         for p in self.parts:
-            p.close()
+            p.teardown()
 
     @property
     def parts(self):

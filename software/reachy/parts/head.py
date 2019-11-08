@@ -31,7 +31,7 @@ class Head(ReachyPart):
         from ..utils.vision import BackgroundVideoCapture
         self.cap = BackgroundVideoCapture(camera_id)
 
-    def close(self):
+    def teardown(self):
         self.cap.close()
 
     def look_at(self, x, y, z):

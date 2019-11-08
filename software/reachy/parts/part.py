@@ -7,7 +7,7 @@ class ReachyPart(object):
         self.name = name
         self.motors = []
 
-    def close(self):
+    def teardown(self):
         pass
 
     def attach_dxl_motors(self, luos_io, dxl_motors):
