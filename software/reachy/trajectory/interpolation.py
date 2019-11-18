@@ -2,6 +2,7 @@ import time
 import numpy as np
 
 from threading import Thread, Event
+from scipy.interpolate import interp1d
 
 
 class TrajectoryInterpolation(object):
@@ -87,3 +88,14 @@ class MinimumJerk(TrajectoryInterpolation):
             c * t ** i
             for i, c in enumerate(self._coeffs)
         ], axis=0)
+
+
+def cubic_smooth(Y, nb_points):
+    X = np.linspace(0, 1, Y.shape[0], endpoint=True)
+    fY = interp1d(X, Y.T, kind='linear')
+
+    kx = np.linspace(0, 1, nb_points)
+    KP = fY(kx)
+
+    C = interp1d(kx, KP, kind='cubic')
+    return C(X).T
