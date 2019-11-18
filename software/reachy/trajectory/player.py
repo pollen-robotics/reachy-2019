@@ -6,7 +6,7 @@ from operator import attrgetter
 
 
 class TrajectoryPlayer(object):
-    def __init__(self, reachy, trajectories, freq=50):
+    def __init__(self, reachy, trajectories, freq=100):
         motor_names, trajectories = zip(*trajectories.items())
 
         self._motors = [attrgetter(name)(reachy) for name in motor_names]

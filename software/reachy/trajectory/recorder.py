@@ -5,7 +5,7 @@ from threading import Event, Thread
 
 
 class TrajectoryRecorder(object):
-    def __init__(self, motors, position_field='present_position', freq=50):
+    def __init__(self, motors, position_field='present_position', freq=100):
         self.motors = motors
 
         self._data = []
@@ -37,12 +37,7 @@ class TrajectoryRecorder(object):
 
     @property
     def trajectories(self):
-        traj = np.array(self._data).T
-
-        return {
-            self.motors[i].name: traj
-            for i, traj in enumerate(traj)
-        }
+        return np.array(self._data)
 
     def _record_loop(self):
         self._data.clear()
