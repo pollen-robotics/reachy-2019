@@ -2,7 +2,7 @@ import time
 import numpy as np
 
 from pyquaternion import Quaternion
-from spherical_joint import Actuator as OrbitaModel
+from orbita import Actuator as OrbitaModel
 
 from ..trajectory.interpolation import Linear, MinimumJerk
 
@@ -159,6 +159,8 @@ class OrbitaActuator(object):
 
     def orient(self, quat):
         thetas = self.model.get_angles_from_quaternion(quat.w, quat.x, quat.y, quat.z)
+
+        # TODO: use min jerk instead?
 
         for d, q in zip(self.disks, thetas):
             q = -q  # FIXME: Temporary path due to reversed encoder
