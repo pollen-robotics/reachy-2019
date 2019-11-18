@@ -40,6 +40,8 @@ class SharedLuosIO(object):
 
             if gate_name == name:
                 return cls(p)
+        else:
+            return cls(port_template)
 
     def find_module(self, module_name):
         try:
