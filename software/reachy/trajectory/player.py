@@ -9,6 +9,7 @@ class TrajectoryPlayer(object):
     def __init__(self, reachy, trajectories, freq=100):
         motor_names, trajectories = zip(*trajectories.items())
 
+        self._reachy = reachy
         self._motors = [attrgetter(name)(reachy) for name in motor_names]
         self._traj = np.array(trajectories)
 
@@ -16,7 +17,16 @@ class TrajectoryPlayer(object):
 
         self.freq = freq
 
-    def play(self, wait=False):
+    def play(self, wait=False, fade_in_dur=0):
+        if fade_in_dur > 0:
+            self._reachy.goto(
+                goal_positions=self._traj[0, :],
+                duration=fade_in_dur,
+                starting_point='goal_position',
+                wait=True,
+                interpolation='minjerk',
+            )
+
         self._play_t = Thread(target=self._play_loop)
         self._play_t.start()
 
