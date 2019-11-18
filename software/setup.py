@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 import re
-import sys
 
 from setuptools import setup, find_packages
+from os import path
 
 
 def version():
@@ -11,37 +11,35 @@ def version():
         return re.search(r"^__version__ = ['\"]([^'\"]*)['\"]", f.read()).group(1)
 
 
-extra = {}
-if sys.version_info >= (3,):
-    extra['use_2to3'] = True
+here = path.abspath(path.dirname(__file__))
 
-setup(name='reachy',
-      version=version(),
-      packages=find_packages(),
+with open(path.join(here, '..', 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
-      install_requires=[
-          'pyluos>=1.2',
-          'numpy',
-          'scipy',
-          'python-json-logger',
-          #   'orbita', # FIXME: add orbita on pypi
-          'pyquaternion',
-          'zzlog',
-      ],
 
-      extras_require={
-          'head': ['opencv-python']
-      },
+setup(
+    name='reachy',
+    version=version(),
+    packages=find_packages(exclude=['tests']),
 
-      include_package_data=True,
-      exclude_package_data={'': ['README', '.gitignore']},
+    install_requires=[
+        'pyluos @ git+ssh://git@github.com/Luos-Robotics/pyluos@37687a67a14686a640b7d69a9218a671cef7eb65',
+        'numpy',
+        'scipy',
+        'orbita',
+        'pyquaternion',
+    ],
 
-      zip_safe=False,
+    extras_require={
+        'head': ['opencv-python'],
+        'log': ['zzlog'],
+    },
 
-      author='Pollen Robotics',
-      author_email='contact@pollen-robotics.com',
-      description='A multi-purposed robotic arm',
-      url='https://github.com/pollen-robotics/reachy-2.0',
+    author='Pollen Robotics',
+    author_email='contact@pollen-robotics.com',
+    url='https://github.com/pollen-robotics/reachy-2.0',
 
-      **extra
-      )
+    description='A multi-purposed robotic arm',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+)

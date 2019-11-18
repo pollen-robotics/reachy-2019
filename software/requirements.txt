@@ -1,0 +1,12 @@
+future==0.18.2
+ifaddr==0.1.6
+numpy==1.17.4
+orbita==0.1.1
+pyluos==1.1.0
+pyquaternion==0.9.5
+pyserial==3.4
+scipy==1.3.2
+SimpleWebSocketServer==0.1.1
+six==1.13.0
+websocket-client==0.56.0
+zeroconf==0.23.0
