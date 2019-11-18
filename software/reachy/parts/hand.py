@@ -33,9 +33,9 @@ class ForceGripper(Hand):
         self.luos_io = SharedLuosIO(luos_port)
         self.attach_dxl_motors(self.luos_io, ForceGripper.dxl_motors)
 
-        # self._load_sensor = self.luos_io.find_module('load_mod')
-        # self._load_sensor.offset = 4
-        # self._load_sensor.scale = 10000
+        self._load_sensor = self.luos_io.find_module('load_mod')
+        self._load_sensor.offset = 4
+        self._load_sensor.scale = 10000
 
         self.attach_kinematic_chain(ForceGripper.dxl_motors)
 

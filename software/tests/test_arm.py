@@ -16,7 +16,7 @@ class ArmTestCase(unittest.TestCase):
         )
         self.left_arm_with_gripper = parts.LeftArm(
             luos_port='',
-            hand=parts.GripperHand(luos_port='')
+            hand='force_gripper',
         )
         self.right_arm = parts.RightArm(
             luos_port='',
@@ -24,14 +24,14 @@ class ArmTestCase(unittest.TestCase):
         )
         self.right_arm_with_gripper = parts.RightArm(
             luos_port='',
-            hand=parts.GripperHand(luos_port=''),
+            hand='force_gripper',
         )
 
     def test_motors(self):
         self.assertEqual(len(self.left_arm.motors), 5)
-        self.assertEqual(len(self.left_arm_with_gripper.hand.motors), 2)
+        self.assertEqual(len(self.left_arm_with_gripper.hand.motors), 3)
         self.assertEqual(len(self.right_arm.motors), 5)
-        self.assertEqual(len(self.right_arm_with_gripper.hand.motors), 2)
+        self.assertEqual(len(self.right_arm_with_gripper.hand.motors), 3)
 
     def test_zero_forward_no_hand(self):
         N = np.random.randint(2, 100)
