@@ -17,11 +17,11 @@ class TrajectoryPlayer(object):
 
         self.freq = freq
 
-    def play(self, wait=False, fade_in_dur=0):
-        if fade_in_dur > 0:
+    def play(self, wait=False, fade_in_duration=0):
+        if fade_in_duration > 0:
             self._reachy.goto(
                 goal_positions=self._traj[0, :],
-                duration=fade_in_dur,
+                duration=fade_in_duration,
                 starting_point='goal_position',
                 wait=True,
                 interpolation='minjerk',
