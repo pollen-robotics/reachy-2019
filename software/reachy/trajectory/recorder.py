@@ -37,7 +37,12 @@ class TrajectoryRecorder(object):
 
     @property
     def trajectories(self):
-        return np.array(self._data)
+        traj = np.array(self._data).T
+
+        return {
+             self.motors[i].name: traj
+             for i, traj in enumerate(traj)
+         }
 
     def _record_loop(self):
         self._data.clear()

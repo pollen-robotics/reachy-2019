@@ -10,7 +10,7 @@ class TrajectoryPlayer(object):
         motor_names, trajectories = zip(*trajectories.items())
 
         self._motors = [attrgetter(name)(reachy) for name in motor_names]
-        self._traj = np.array(trajectories).T
+        self._traj = np.array(trajectories)
 
         self._play_t = None
 
