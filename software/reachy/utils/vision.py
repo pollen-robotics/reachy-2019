@@ -5,8 +5,11 @@ from threading import Thread, Event
 
 
 class BackgroundVideoCapture(object):
-    def __init__(self, camera_index):
+    def __init__(self, camera_index, resolution=(720, 960)):
         self.cap = cv.VideoCapture(camera_index)
+        self.cap.set(cv.CAP_PROP_FRAME_HEIGHT, resolution[0])
+        self.cap.set(cv.CAP_PROP_FRAME_WIDTH, resolution[1])
+
         self.q = Queue(1)
 
         self.running = Event()
