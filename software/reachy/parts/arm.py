@@ -26,7 +26,7 @@ class Arm(ReachyPart):
 
         if hand is not None:
             hand_part = hands[hand](luos_port=self.luos_io.port)
-            hand_part.name = f'{self.name}.{hand}'
+            hand_part.name = f'{self.name}.hand'
             self.motors += hand_part.motors
             self.hand = hand_part
         else:
