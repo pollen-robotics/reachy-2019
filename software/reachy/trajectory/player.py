@@ -11,7 +11,7 @@ class TrajectoryPlayer(object):
 
         self._reachy = reachy
         self._motors = [attrgetter(name)(reachy) for name in motor_names]
-        self._traj = np.array(trajectories)
+        self._traj = np.array(trajectories).T
 
         self._play_t = None
 
@@ -20,11 +20,11 @@ class TrajectoryPlayer(object):
     def play(self, wait=False, fade_in_duration=0):
         if fade_in_duration > 0:
             self._reachy.goto(
-                goal_positions=self._traj[0, :],
+                goal_positions=dict(zip([m.name for m in self._motors], self._traj[0, :])),
                 duration=fade_in_duration,
                 starting_point='goal_position',
                 wait=True,
-                interpolation='minjerk',
+                interpolation_mode='minjerk',
             )
 
         self._play_t = Thread(target=self._play_loop)
