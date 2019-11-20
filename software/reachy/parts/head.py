@@ -9,18 +9,18 @@ from ..io import SharedLuosIO
 
 class Head(ReachyPart):
     orbital_config = {
-        'Pc_z': [0, 0, 93],
-        'Cp_z': [0, 0, 73],
-        'R': 33.5,
+        'Pc_z': [0, 0, 25],
+        'Cp_z': [0, 0, 0],
+        'R': 36.7,
         'R0': [
             [np.cos(np.deg2rad(60)), -np.sin(np.deg2rad(60)), 0],
             [np.sin(np.deg2rad(60)),  np.cos(np.deg2rad(60)), 0],
             [0, 0, 1],
         ],
-        'pid': [10, 0, 90],
+        'pid': [10, 0.04, 90],
         'reduction': 77.35,
         'wheel_size': 62,
-        'encoder_res': 5,
+        'encoder_res': 3,
     }
 
     def __init__(self, camera_id, luos_port):
@@ -63,7 +63,10 @@ class Head(ReachyPart):
         self.compliant = False
         time.sleep(0.1)
 
-        traj = MinimumJerk(0, -360, dur).interpolate(np.linspace(0, dur, dur * 100))
+        for d in self.neck.disks:
+            d.sampling_freq = 100
+
+        traj = MinimumJerk(0, -180, dur).interpolate(np.linspace(0, dur, dur * 100))
 
         for d in self.neck.disks:
             d.play()
@@ -81,9 +84,13 @@ class Head(ReachyPart):
         time.sleep(0.2)
 
         for d in self.neck.disks:
-            d.target_rot_position = 180
+            d.target_rot_position = 101.23
 
-        time.sleep(5)
+        time.sleep(3)
 
         for d in self.neck.disks:
             d.setToZero()
+
+        time.sleep(0.2)
+
+        self.look_at(1, 0, 0)
