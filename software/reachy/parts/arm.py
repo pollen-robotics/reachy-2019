@@ -56,7 +56,7 @@ class LeftArm(Arm):
     dxl_motors = OrderedDict([
         ('shoulder_pitch', {
             'id': 20, 'offset': 90.0, 'orientation': 'direct',
-            'link-translation': [0, 0.14, 0], 'link-rotation': [0, 1, 0]
+            'link-translation': [0, 0.19, 0], 'link-rotation': [0, 1, 0]
         }),
         ('shoulder_roll', {
             'id': 21, 'offset': -90.0, 'orientation': 'indirect',
@@ -86,7 +86,7 @@ class RightArm(Arm):
     dxl_motors = OrderedDict([
         ('shoulder_pitch', {
             'id': 10, 'offset': 90.0, 'orientation': 'indirect',
-            'link-translation': [0, -0.14, 0], 'link-rotation': [0, 1, 0],
+            'link-translation': [0, -0.19, 0], 'link-rotation': [0, 1, 0],
         }),
         ('shoulder_roll', {
             'id': 11, 'offset': 90.0, 'orientation': 'indirect',
