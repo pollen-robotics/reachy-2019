@@ -60,6 +60,14 @@ class Head(ReachyPart):
         self.neck.moving_speed = speed
 
     def homing(self, dur=2):
+        self.compliant = True
+        time.sleep(0.1)
+
+        for d in self.neck.disks:
+            d.setToZero()
+
+        time.sleep(0.1)
+
         self.compliant = False
         time.sleep(0.1)
 
@@ -86,7 +94,7 @@ class Head(ReachyPart):
         for d in self.neck.disks:
             d.target_rot_position = 101.23
 
-        time.sleep(3)
+        time.sleep(2)
 
         for d in self.neck.disks:
             d.setToZero()
