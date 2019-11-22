@@ -38,8 +38,6 @@ class Head(ReachyPart):
         self.cap.close()
 
     def look_at(self, x, y, z):
-        self.neck.model.reset_last_angles()
-
         q = self.neck.find_quaternion_transform([1, 0, 0], [x, y, z])
         self.neck.orient(q)
 
@@ -100,5 +98,7 @@ class Head(ReachyPart):
             d.setToZero()
 
         time.sleep(0.2)
+        self.neck.model.reset_last_angles()
 
         self.look_at(1, 0, 0)
+        time.sleep(1)
