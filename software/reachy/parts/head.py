@@ -1,6 +1,8 @@
 import time
 import numpy as np
 
+from collections import OrderedDict
+
 from reachy.trajectory.interpolation import MinimumJerk
 
 from .part import ReachyPart
@@ -23,11 +25,22 @@ class Head(ReachyPart):
         'encoder_res': 3,
     }
 
+    dxl_motors = OrderedDict([
+        ('left_antenna', {
+            'id': 30, 'offset': 0.0, 'orientation': 'direct',
+        }),
+        ('right_antenna', {
+            'id': 31, 'offset': 0.0, 'orientation': 'direct',
+        }),
+    ])
+
     def __init__(self, camera_id, luos_port):
         ReachyPart.__init__(self, name='head')
 
         self.luos_io = SharedLuosIO.with_gate('r_head', luos_port)
+
         self.neck = self.create_orbita_actuator('neck', self.luos_io, Head.orbital_config)
+        self.attach_dxl_motors(self.luos_io, Head.dxl_motors)
 
         # We import vision here to avoid OpenCV ImportError issue
         # if we are not using the Head part.
