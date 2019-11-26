@@ -23,7 +23,7 @@ setup(
     packages=find_packages(exclude=['tests']),
 
     install_requires=[
-        'pyluos @ git+ssh://git@github.com/Luos-Robotics/pyluos@37687a67a14686a640b7d69a9218a671cef7eb65',
+        'pyluos @ git+ssh://git@github.com/Luos-Robotics/pyluos@78b8b70ecd9c2a55acf8951b8a473be2e762a163',
         'numpy',
         'scipy',
         'orbita',
