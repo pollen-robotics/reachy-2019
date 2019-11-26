@@ -69,10 +69,6 @@ class DynamixelMotor(object):
     def compliant(self, value):
         self._motor.compliant = value
 
-        # FIXME: temp fix before actual patch in pyluos.
-        if not value:
-            self._motor.target_rot_position = self._motor.rot_position
-
     @property
     def torque_limit(self):
         return self._motor.power_ratio_limit
