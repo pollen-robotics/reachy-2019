@@ -58,7 +58,11 @@ def position_dist(P, Q):
 
 def rotation_dist(P, Q):
     R = np.matmul(P, Q.T)
-    theta = np.arccos((np.trace(R) - 1) / 2)
+
+    A = (np.trace(R) - 1) / 2
+    A = np.clip(A, -1, 1)
+
+    theta = np.arccos(A)
     return theta
 
 
