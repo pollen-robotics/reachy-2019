@@ -111,7 +111,7 @@ class OrbitaActuator(object):
         pid, reduction, wheel_size, encoder_res,
     ):
         self.disk_bottom, self.disk_middle, self.disk_top = luos_disks_motor
-        self.model = OrbitaModel(Pc_z=Pc_z, Cp_z=Cp_z, R=R, R0=R0)
+        self.model = OrbitaModel(Pc_z=Pc_z, Cp_z=Cp_z, R=R, R0=R0.tolist())
 
         self._compliancy = False
         self._moving_speed = 50

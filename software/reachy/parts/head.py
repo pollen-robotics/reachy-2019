@@ -2,6 +2,7 @@ import time
 import numpy as np
 
 from collections import OrderedDict
+from scipy.spatial.transform import Rotation as R
 
 from reachy.trajectory.interpolation import MinimumJerk
 
@@ -9,16 +10,16 @@ from .part import ReachyPart
 from ..io import SharedLuosIO
 
 
+def rot(axis, deg):
+    return np.matrix(R.from_euler(axis, np.deg2rad(deg)).as_dcm())
+
+
 class Head(ReachyPart):
     orbital_config = {
         'Pc_z': [0, 0, 25],
         'Cp_z': [0, 0, 0],
         'R': 36.7,
-        'R0': [
-            [np.cos(np.deg2rad(60)), -np.sin(np.deg2rad(60)), 0],
-            [np.sin(np.deg2rad(60)),  np.cos(np.deg2rad(60)), 0],
-            [0, 0, 1],
-        ],
+        'R0': rot('z', 60) * rot('y', 10),
         'pid': [10, 0.04, 90],
         'reduction': 77.35,
         'wheel_size': 62,
