@@ -102,3 +102,24 @@ class ArmTestCase(unittest.TestCase):
                 np.linalg.norm(arm.forward_kinematics(J0) - M0),
                 0,
             )
+
+    def test_inverse_kinematics(self):
+        for arm in [self.left_arm, self.right_arm, self.left_arm_with_gripper, self.right_arm_with_gripper]:
+            N = np.random.randint(1, 3)
+
+            J0 = np.zeros((N, 7))
+            M0 = arm.forward_kinematics(J0)
+
+            noise_amp = np.random.rand() * 30
+            joint_noise = np.random.rand(*J0.shape) * noise_amp - (noise_amp / 2)
+            Q0 = J0 + joint_noise
+
+            J1 = arm.inverse_kinematics(M0, Q0)
+            M1 = arm.forward_kinematics(J1)
+
+            if N > 1:
+                err = np.linalg.norm(M0 - M1, axis=1)
+            else:
+                err = np.linalg.norm(M0 - M1)
+
+            assert np.all(err < 1e-2)

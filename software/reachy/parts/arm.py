@@ -51,6 +51,28 @@ class Arm(ReachyPart):
             M = M[0]
         return M
 
+    def inverse_kinematics(self, target_pose, q0=None, use_rad=False):
+        if q0 is None:
+            q0 = [m.present_position for m in self.motors]
+
+        q0 = np.array(q0)
+
+        if len(q0.shape) == 1:
+            q0 = q0.reshape(1, -1)
+
+        if len(target_pose.shape) == 2:
+            target_pose = target_pose.reshape(-1, 4, 4)
+
+        if not use_rad:
+            q0 = np.deg2rad(q0)
+
+        J = self.kin_chain.inverse(target_pose, q0)
+
+        if J.shape[0] == 1:
+            J = J[0]
+
+        return J
+
 
 class LeftArm(Arm):
     dxl_motors = OrderedDict([
