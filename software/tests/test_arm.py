@@ -29,9 +29,9 @@ class ArmTestCase(unittest.TestCase):
 
     def test_motors(self):
         self.assertEqual(len(self.left_arm.motors), 5)
-        self.assertEqual(len(self.left_arm_with_gripper.hand.motors), 3)
+        self.assertEqual(len(self.left_arm_with_gripper.motors), 8)
         self.assertEqual(len(self.right_arm.motors), 5)
-        self.assertEqual(len(self.right_arm_with_gripper.hand.motors), 3)
+        self.assertEqual(len(self.right_arm_with_gripper.motors), 8)
 
     def test_zero_forward_no_hand(self):
         N = np.random.randint(2, 100)
@@ -107,10 +107,10 @@ class ArmTestCase(unittest.TestCase):
         for arm in [self.left_arm, self.right_arm, self.left_arm_with_gripper, self.right_arm_with_gripper]:
             N = np.random.randint(1, 3)
 
-            J0 = np.zeros((N, 7))
+            J0 = np.zeros((N, len(arm.motors)))
             M0 = arm.forward_kinematics(J0)
 
-            noise_amp = np.random.rand() * 30
+            noise_amp = np.random.rand() * 10
             joint_noise = np.random.rand(*J0.shape) * noise_amp - (noise_amp / 2)
             Q0 = J0 + joint_noise
 
@@ -118,8 +118,8 @@ class ArmTestCase(unittest.TestCase):
             M1 = arm.forward_kinematics(J1)
 
             if N > 1:
-                err = np.linalg.norm(M0 - M1, axis=1)
+                err = np.linalg.norm(M0 - M1, axis=(0, 1))
             else:
                 err = np.linalg.norm(M0 - M1)
 
-            assert np.all(err < 1e-2)
+            assert np.all(err < 1e-3)

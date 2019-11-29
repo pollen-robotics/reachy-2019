@@ -37,8 +37,6 @@ class ForceGripper(Hand):
         self._load_sensor.offset = 4
         self._load_sensor.scale = 10000
 
-        self.attach_kinematic_chain(ForceGripper.dxl_motors)
-
     def open(self, end_pos=-20, duration=1):
         self.gripper.goto(
             goal_position=end_pos,

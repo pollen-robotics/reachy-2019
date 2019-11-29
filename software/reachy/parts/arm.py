@@ -16,10 +16,10 @@ class Arm(ReachyPart):
     def __init__(self, side, luos_port, dxl_motors, hand):
         ReachyPart.__init__(self, name=f'{side}_arm')
 
+        dxl_motors = OrderedDict(dxl_motors)
+
         self.luos_io = SharedLuosIO.with_gate(f'r_{side}_arm', luos_port)
         self.attach_dxl_motors(self.luos_io, dxl_motors)
-
-        self.attach_kinematic_chain(dxl_motors)
 
         if hand is not None and hand not in hands.keys():
             raise ValueError('"hand" must be one of {hands.keys()} or None!')
@@ -29,8 +29,14 @@ class Arm(ReachyPart):
             hand_part.name = f'{self.name}.hand'
             self.motors += hand_part.motors
             self.hand = hand_part
+
+            for m, conf in hands[hand].dxl_motors.items():
+                dxl_motors[m] = conf
+
         else:
             self.hand = None
+
+        self.attach_kinematic_chain(dxl_motors)
 
     def forward_kinematics(self, joints_position, use_rad=False):
         joints_position = np.array(joints_position)
@@ -40,12 +46,14 @@ class Arm(ReachyPart):
         if not use_rad:
             joints_position = np.deg2rad(joints_position)
 
-        nb_arm_motors = 5
+        M = self.kin_chain.forward(joints_position)
 
-        M = self.kin_chain.forward(joints_position[:, :nb_arm_motors])
+        # nb_arm_motors = 5
 
-        if self.hand is not None:
-            M = np.matmul(M, self.hand.kin_chain.forward(joints_position[:, nb_arm_motors:]))
+        # M = self.kin_chain.forward(joints_position[:, :nb_arm_motors])
+
+        # if self.hand is not None:
+        #     M = np.matmul(M, self.hand.kin_chain.forward(joints_position[:, nb_arm_motors:]))
 
         if joints_position.shape[0] == 1:
             M = M[0]
@@ -70,6 +78,9 @@ class Arm(ReachyPart):
 
         if J.shape[0] == 1:
             J = J[0]
+
+        if not use_rad:
+            J = np.rad2deg(J)
 
         return J
 
