@@ -1,16 +1,19 @@
 import numpy as np
 
 from scipy.spatial.transform import Rotation
+from scipy.optimize import minimize
 
 
 class Link(object):
     def __init__(self, translation, rotation):
         self.T = translation_matrix(translation)
-        self.rotation = np.array(rotation)
+        self.rotation = np.array(rotation).reshape(1, 3)
 
     def transformation_matrix(self, theta):
         R = np.zeros((theta.shape[0], 4, 4))
-        R[:, :3, :3] = Rotation.from_rotvec(np.matrix(theta).T * self.rotation).as_dcm()
+        theta = theta.reshape(1, -1)
+
+        R[:, :3, :3] = Rotation.from_rotvec(np.dot(theta.T, self.rotation)).as_dcm()
         R[:, 3, 3] = 1
         return np.matmul(self.T, R)
 
