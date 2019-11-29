@@ -91,7 +91,11 @@ class MinimumJerk(TrajectoryInterpolation):
 
 
 def cubic_smooth(traj, nb_kp, out_points=-1):
-    Y = np.array(list(traj.values())).T
+    if isinstance(traj, dict):
+        Y = np.array(list(traj.values())).T
+    else:
+        Y = traj
+
     X = np.linspace(0, 1, Y.shape[0], endpoint=True)
     fY = interp1d(X, Y.T, kind='linear')
 
@@ -104,7 +108,10 @@ def cubic_smooth(traj, nb_kp, out_points=-1):
     C = interp1d(kx, KP, kind='cubic')
     SY = C(np.linspace(0, 1, out_points, endpoint=True)).T
 
-    return {
-        m: SY[:, i]
-        for i, m in enumerate(traj.keys())
-    }
+    if isinstance(traj, dict):
+        return {
+            m: SY[:, i]
+            for i, m in enumerate(traj.keys())
+        }
+    else:
+        return SY
