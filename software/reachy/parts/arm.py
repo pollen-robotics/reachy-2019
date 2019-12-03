@@ -48,13 +48,6 @@ class Arm(ReachyPart):
 
         M = self.kin_chain.forward(joints_position)
 
-        # nb_arm_motors = 5
-
-        # M = self.kin_chain.forward(joints_position[:, :nb_arm_motors])
-
-        # if self.hand is not None:
-        #     M = np.matmul(M, self.hand.kin_chain.forward(joints_position[:, nb_arm_motors:]))
-
         if joints_position.shape[0] == 1:
             M = M[0]
         return M
