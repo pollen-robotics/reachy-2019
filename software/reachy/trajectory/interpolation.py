@@ -17,7 +17,7 @@ class TrajectoryInterpolation(object):
     def interpolate(self, t):
         raise NotImplementedError
 
-    def start(self, motor, update_freq=50):
+    def start(self, motor, update_freq=100):
         self._t = Thread(target=lambda: self._follow_traj_loop(motor, update_freq))
         self._running.set()
         self._t.start()
@@ -91,7 +91,9 @@ class MinimumJerk(TrajectoryInterpolation):
 
 
 def cubic_smooth(traj, nb_kp, out_points=-1):
-    if isinstance(traj, dict):
+    as_dict = isinstance(traj, dict) or isinstance(traj, np.lib.npyio.NpzFile)
+
+    if as_dict:
         Y = np.array(list(traj.values())).T
     else:
         Y = traj
@@ -108,7 +110,7 @@ def cubic_smooth(traj, nb_kp, out_points=-1):
     C = interp1d(kx, KP, kind='cubic')
     SY = C(np.linspace(0, 1, out_points, endpoint=True)).T
 
-    if isinstance(traj, dict):
+    if as_dict:
         return {
             m: SY[:, i]
             for i, m in enumerate(traj.keys())
