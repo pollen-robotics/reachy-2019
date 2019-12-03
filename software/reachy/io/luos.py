@@ -1,4 +1,5 @@
 import logging
+import time
 
 from glob import glob
 
@@ -11,7 +12,11 @@ logger = logging.getLogger(__name__)
 def find_gate_name(port):
     r = LuosIO(port, log_conf='')
     name = r.modules[0].alias
+    # FIXME: make sure we don't have deco/reco issue
+    time.sleep(0.1)
     r.close()
+    # FIXME: make sure we don't have deco/reco issue
+    time.sleep(0.1)
     return name
 
 
@@ -32,13 +37,18 @@ class SharedLuosIO(object):
 
     @classmethod
     def with_gate(cls, name, port_template):
-        for p in glob(port_template):
+        available_ports = glob(port_template)
+        if len(available_ports) == 1:
+            return cls(available_ports[0])
+
+        for p in available_ports:
             gate_name = (
                 find_gate_name(p) if p not in SharedLuosIO.opened_io
                 else SharedLuosIO.opened_io[p].modules[0].alias
             )
 
             if gate_name == name:
+                logger.info(f'Found gate "{gate_name}" on port "{p}"')
                 return cls(p)
         else:
             return cls(port_template)
