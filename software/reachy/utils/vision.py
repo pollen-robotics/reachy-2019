@@ -1,7 +1,6 @@
 import cv2 as cv
 
-from queue import Queue
-from threading import Thread, Event
+from threading import Thread, Event, Lock
 
 
 class BackgroundVideoCapture(object):
@@ -10,9 +9,10 @@ class BackgroundVideoCapture(object):
         self.cap.set(cv.CAP_PROP_FRAME_HEIGHT, resolution[0])
         self.cap.set(cv.CAP_PROP_FRAME_WIDTH, resolution[1])
 
-        self.q = Queue(1)
-
+        self._lock = Lock()
         self.running = Event()
+
+        self._img = None
 
         self._t = Thread(target=self._read_loop)
         self._t.daemon = True
@@ -29,13 +29,11 @@ class BackgroundVideoCapture(object):
 
         while self.running.is_set():
             b, img = self.cap.read()
+
             if b:
-                if self.q.full():
-                    self.q.get()
-                self.q.put(img.copy())
+                with self._lock:
+                    self._img = img
 
     def read(self):
-        if self.q.empty():
-            return False, None
-
-        return True, self.q.get()
+        with self._lock:
+            return True, self._img.copy()
