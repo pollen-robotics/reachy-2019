@@ -37,7 +37,7 @@ class ForceGripper(Hand):
         self._load_sensor.offset = 4
         self._load_sensor.scale = 10000
 
-    def open(self, end_pos=-20, duration=1):
+    def open(self, end_pos=-30, duration=1):
         self.gripper.goto(
             goal_position=end_pos,
             duration=duration,
@@ -45,7 +45,7 @@ class ForceGripper(Hand):
             interpolation_mode='minjerk',
         )
 
-    def close(self, end_pos=30, duration=1, target_grip_force=50):
+    def close(self, end_pos=30, duration=1, target_grip_force=100):
         motion = self.gripper.goto(
             goal_position=end_pos,
             duration=duration,
