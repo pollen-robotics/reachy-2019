@@ -11,7 +11,15 @@ logger = logging.getLogger(__name__)
 
 def find_gate_name(port):
     r = LuosIO(port, log_conf='')
-    name = r.modules[0].alias
+    modules = r.modules
+    name = modules[0].alias
+
+    logger.info(
+        f'Found {len(modules)} modules on gate {name}',
+        extra={
+            'modules': [m.alias for m in modules],
+        },
+    )
     # FIXME: make sure we don't have deco/reco issue
     time.sleep(0.1)
     r.close()
