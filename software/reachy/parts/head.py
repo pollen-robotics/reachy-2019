@@ -116,3 +116,7 @@ class Head(ReachyPart):
 
         self.look_at(1, 0, 0)
         time.sleep(1)
+
+    def get_image(self):
+        _, img = self.cap.read()
+        return img
