@@ -192,20 +192,19 @@ class OrbitaActuator(object):
 
         return Quaternion(axis=V, radians=alpha)
 
-    def setup(self, pid, reduction, wheel_size, encoder_res, moving_speed):
-        for i, disk in enumerate(self.disks):
-            disk.rot_position = False
+    def setup(self, pid, reduction, wheel_size, encoder_res, moving_speed):        
+        for disk in self.disks:
             disk.limit_current = 0.4
             disk.encoder_res = encoder_res
-            disk.setToZero()
             disk.reduction = reduction
             disk.wheel_size = wheel_size
             disk.positionPid = pid
             disk.rot_position_mode = True
+            disk.rot_speed_mode = True
             disk.rot_position = True
             disk.rot_speed = True
+            disk.setToZero()
 
-            disk.rot_speed_mode = True
             # FIXME: temporary fix (see https://github.com/Luos-Robotics/pyluos/issues/53)
             time.sleep(0.1)
             disk.target_rot_speed = moving_speed
