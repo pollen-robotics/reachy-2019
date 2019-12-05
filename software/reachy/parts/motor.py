@@ -157,14 +157,24 @@ class OrbitaActuator(object):
             q = -q  # FIXME: Temporary path due to reversed encoder
             d.target_rot_position = q
 
-    def orient(self, quat):
+    def orient(self, quat, duration=-1, wait=False):
         thetas = self.model.get_angles_from_quaternion(quat.w, quat.x, quat.y, quat.z)
+        # FIXME: Temporary patch due to reversed encoder
+        thetas = [-q for q in thetas]
 
-        # TODO: use min jerk instead?
+        if duration > 0:
+            speeds = [
+                abs(q - d.rot_position) / duration
+                for d, q in zip(self.disks, thetas)
+            ]
+            for d, s in zip(self.disks, speeds):
+                d.target_rot_speed = s
 
         for d, q in zip(self.disks, thetas):
-            q = -q  # FIXME: Temporary path due to reversed encoder
             d.target_rot_position = q
+
+        if wait:
+            time.sleep(duration)
 
     def find_quaternion_transform(model, v_origin, v_target):
         v_origin = np.array(v_origin)

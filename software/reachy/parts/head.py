@@ -51,9 +51,9 @@ class Head(ReachyPart):
     def teardown(self):
         self.cap.close()
 
-    def look_at(self, x, y, z):
+    def look_at(self, x, y, z, duration=-1, wait=False):
         q = self.neck.find_quaternion_transform([1, 0, 0], [x, y, z])
-        self.neck.orient(q)
+        self.neck.orient(q, duration=duration, wait=wait)
 
     @property
     def compliant(self):
