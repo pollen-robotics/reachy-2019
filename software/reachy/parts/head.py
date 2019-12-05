@@ -1,10 +1,8 @@
 import time
 import numpy as np
 
-from collections import OrderedDict
+from collections import OrderedDict, deque
 from scipy.spatial.transform import Rotation as R
-
-from reachy.trajectory.interpolation import MinimumJerk
 
 from .part import ReachyPart
 from ..io import SharedLuosIO
@@ -71,51 +69,46 @@ class Head(ReachyPart):
     def moving_speed(self, speed):
         self.neck.moving_speed = speed
 
-    def homing(self, dur=2):
-        self.compliant = True
-        time.sleep(0.1)
+    def homing(self):
+        recent_speed = deque([], 10)
 
         for d in self.neck.disks:
             d.setToZero()
-
         time.sleep(0.1)
 
         self.compliant = False
         time.sleep(0.1)
 
         for d in self.neck.disks:
-            d.sampling_freq = 100
+            d.target_rot_position = -270
 
-        traj = MinimumJerk(0, -180, dur).interpolate(np.linspace(0, dur, dur * 100))
+        time.sleep(1)
 
-        for d in self.neck.disks:
-            d.play()
-            d.target_rot_position = traj
+        while True:
+            recent_speed.append([d.rot_speed for d in self.neck.disks])
+            avg_speed = np.mean(recent_speed, axis=0)
 
-        time.sleep(0.5)
+            if np.all(avg_speed >= 0):
+                break
 
-        while np.any(np.array([d.rot_speed for d in self.neck.disks]) < 0):
             time.sleep(0.01)
 
         for d in self.neck.disks:
-            d.stop()
             d.setToZero()
 
-        time.sleep(0.2)
-
-        for d in self.neck.disks:
-            d.target_rot_position = 101.23
-
-        time.sleep(2)
-
-        for d in self.neck.disks:
-            d.setToZero()
-
-        time.sleep(0.2)
-        self.neck.model.reset_last_angles()
-
-        self.look_at(1, 0, 0)
         time.sleep(1)
+
+        for d in self.neck.disks:
+            d.target_rot_position = 102
+        time.sleep(2.5)
+
+        for d in self.neck.disks:
+            d.setToZero()
+        time.sleep(0.5)
+
+        self.neck.model.reset_last_angles()
+        self.look_at(1, 0, 0)
+        time.sleep(2)
 
     def get_image(self):
         _, img = self.cap.read()
