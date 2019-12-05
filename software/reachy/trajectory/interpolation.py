@@ -38,7 +38,10 @@ class TrajectoryInterpolation(object):
                 break
 
             pos = self.interpolate(t)
-            motor.goal_position = pos
+            if hasattr(motor, 'goal_position'):
+                motor.goal_position = pos
+            else:
+                motor.target_rot_position = pos
 
             time.sleep(1 / update_freq)
 
