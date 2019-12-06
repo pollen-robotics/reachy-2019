@@ -1,5 +1,4 @@
 import logging
-import time
 
 from glob import glob
 
@@ -9,34 +8,19 @@ from pyluos.modules import DynamixelMotor
 logger = logging.getLogger(__name__)
 
 
-def find_gate_name(port):
-    r = LuosIO(port, log_conf='')
-    modules = r.modules
-    name = modules[0].alias
-
-    logger.info(
-        f'Found {len(modules)} modules on gate {name}',
-        extra={
-            'modules': [m.alias for m in modules],
-        },
-    )
-    # FIXME: make sure we don't have deco/reco issue
-    time.sleep(0.1)
-    r.close()
-    # FIXME: make sure we don't have deco/reco issue
-    time.sleep(0.1)
-    return name
-
-
 class SharedLuosIO(object):
     opened_io = {}
 
     def __init__(self, luos_port):
         if luos_port not in SharedLuosIO.opened_io:
-            logger.info('Connecting to new Luos IO', extra={
+            io = LuosIO(luos_port, log_conf='')
+            SharedLuosIO.opened_io[luos_port] = io
+
+            logger.info('Connected to new Luos IO', extra={
                 'luos_port': luos_port,
+                'gate_name': io.modules[0].alias,
+                'modules': [mod.alias for mod in io.modules],
             })
-            SharedLuosIO.opened_io[luos_port] = LuosIO(luos_port, log_conf='')
             # FIXME: wait for a first sync of all modules
             import time
             time.sleep(1)
@@ -45,21 +29,31 @@ class SharedLuosIO(object):
 
     @classmethod
     def with_gate(cls, name, port_template):
+        logger.info(f'Looking for gate "{name}" on ports "{port_template}"')
+
         available_ports = glob(port_template)
         if len(available_ports) == 1:
             return cls(available_ports[0])
 
         for p in available_ports:
-            gate_name = (
-                find_gate_name(p) if p not in SharedLuosIO.opened_io
-                else SharedLuosIO.opened_io[p].modules[0].alias
-            )
+            io = cls(p)
 
-            if gate_name == name:
-                logger.info(f'Found gate "{gate_name}" on port "{p}"')
-                return cls(p)
+            if io.gate_name == name:
+                logger.info(f'Found gate "{io.gate_name}" on port "{p}"')
+                return io
         else:
             return cls(port_template)
+
+    @property
+    def gate_name(self):
+        return self.shared_io.modules[0].alias
+
+    def close(self):
+        self.shared_io.close()
+        logger.info('Luos IO connection closed', extra={
+            'gate_name': self.gate_name,
+            'port': self.port,
+        })
 
     def find_module(self, module_name):
         try:
