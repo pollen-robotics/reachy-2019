@@ -22,7 +22,7 @@ class Arm(ReachyPart):
         self.attach_dxl_motors(self.luos_io, dxl_motors)
 
         if hand is not None and hand not in hands.keys():
-            raise ValueError('"hand" must be one of {hands.keys()} or None!')
+            raise ValueError(f'"hand" must be one of {list(hands.keys())} or None!')
 
         if hand is not None:
             hand_part = hands[hand](luos_port=self.luos_io.port)
@@ -37,6 +37,9 @@ class Arm(ReachyPart):
             self.hand = None
 
         self.attach_kinematic_chain(dxl_motors)
+
+    def teardown(self):
+        self.luos_io.close()
 
     def forward_kinematics(self, joints_position, use_rad=False):
         joints_position = np.array(joints_position)
