@@ -47,6 +47,7 @@ class Head(ReachyPart):
         self.cap = BackgroundVideoCapture(camera_id)
 
     def teardown(self):
+        self.luos_io.close()
         self.cap.close()
 
     def look_at(self, x, y, z, duration=-1, wait=False):

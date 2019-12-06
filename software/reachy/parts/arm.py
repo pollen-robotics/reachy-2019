@@ -38,6 +38,9 @@ class Arm(ReachyPart):
 
         self.attach_kinematic_chain(dxl_motors)
 
+    def teardown(self):
+        self.luos_io.close()
+
     def forward_kinematics(self, joints_position, use_rad=False):
         joints_position = np.array(joints_position)
         if len(joints_position.shape) == 1:
