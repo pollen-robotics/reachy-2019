@@ -192,7 +192,7 @@ class OrbitaActuator(object):
 
         return Quaternion(axis=V, radians=alpha)
 
-    def setup(self, pid, reduction, wheel_size, encoder_res, moving_speed):        
+    def setup(self, pid, reduction, wheel_size, encoder_res, moving_speed):
         for disk in self.disks:
             disk.limit_current = 0.4
             disk.encoder_res = encoder_res
