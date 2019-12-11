@@ -103,7 +103,8 @@ class OrbitaWrist(Hand):
             d.setToZero()
         time.sleep(0.1)
 
-        self.compliant = False
+        for d in self.wrist.disks:
+            d.compliant = False
         time.sleep(0.1)
 
         for d in self.wrist.disks:
@@ -135,4 +136,5 @@ class OrbitaWrist(Hand):
         time.sleep(0.5)
 
         self.wrist.model.reset_last_angles()
-        self.wrist.orient(Quaternion(axis=[0, 0, 1], angle=np.deg2rad(60)))
+        self.wrist.orient(Quaternion(axis=[0, 0, 1], angle=0))
+        time.sleep(2)
