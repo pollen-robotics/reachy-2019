@@ -26,12 +26,17 @@ class ArmTestCase(unittest.TestCase):
             luos_port='',
             hand='force_gripper',
         )
+        self.right_arm_with_wrist = parts.RightArm(
+            luos_port='',
+            hand='orbita_wrist',
+        )
 
     def test_motors(self):
         self.assertEqual(len(self.left_arm.motors), 5)
         self.assertEqual(len(self.left_arm_with_gripper.motors), 8)
         self.assertEqual(len(self.right_arm.motors), 5)
         self.assertEqual(len(self.right_arm_with_gripper.motors), 8)
+        self.assertEqual(len(self.right_arm_with_wrist.motors), 4)
 
     def test_zero_forward_no_hand(self):
         N = np.random.randint(2, 100)
@@ -123,3 +128,6 @@ class ArmTestCase(unittest.TestCase):
                 err = np.linalg.norm(M0 - M1)
 
             assert np.all(err < 1e-3)
+
+    def test_wrist(self):
+        assert hasattr(self.right_arm_with_wrist.hand, 'wrist')
