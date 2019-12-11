@@ -81,6 +81,7 @@ class Head(ReachyPart):
         time.sleep(0.1)
 
         for d in self.neck.disks:
+            d.target_rot_speed = 50
             d.target_rot_position = -270
 
         time.sleep(1)
