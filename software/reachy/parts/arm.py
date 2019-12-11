@@ -2,13 +2,14 @@ import numpy as np
 
 from collections import OrderedDict
 
-from .hand import ForceGripper
+from .hand import ForceGripper, OrbitaWrist
 from .part import ReachyPart
 from ..io import SharedLuosIO
 
 
 hands = {
     'force_gripper': ForceGripper,
+    'orbita_wrist': OrbitaWrist,
 }
 
 
@@ -99,6 +100,7 @@ class LeftArm(Arm):
             'id': 23, 'offset': 0.0, 'orientation': 'direct',
             'link-translation': [0, 0, -0.30745], 'link-rotation': [0, 1, 0],
         }),
+        # FIXME: this should be in the hand part.
         ('forearm_yaw', {
             'id': 24, 'offset': 0.0, 'orientation': 'indirect',
             'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
@@ -129,6 +131,7 @@ class RightArm(Arm):
             'id': 13, 'offset': 0.0, 'orientation': 'indirect',
             'link-translation': [0, 0, -0.30745], 'link-rotation': [0, 1, 0],
         }),
+        # FIXME: this should be in the hand part.
         ('forearm_yaw', {
             'id': 14, 'offset': 0.0, 'orientation': 'indirect',
             'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
@@ -139,3 +142,30 @@ class RightArm(Arm):
         Arm.__init__(self, side='right',
                      luos_port=luos_port, dxl_motors=RightArm.dxl_motors,
                      hand=hand)
+
+
+class OrbitArm(RightArm):
+    dxl_motors = OrderedDict([
+        ('shoulder_pitch', {
+            'id': 10, 'offset': 90.0, 'orientation': 'indirect',
+            'link-translation': [0, -0.19, 0], 'link-rotation': [0, 1, 0],
+        }),
+        ('shoulder_roll', {
+            'id': 11, 'offset': 90.0, 'orientation': 'indirect',
+            'link-translation': [0, 0, 0], 'link-rotation': [1, 0, 0],
+        }),
+        ('arm_yaw', {
+            'id': 12, 'offset': 0.0, 'orientation': 'indirect',
+            'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
+        }),
+        ('elbow_pitch', {
+            'id': 13, 'offset': 0.0, 'orientation': 'indirect',
+            'link-translation': [0, 0, -0.30745], 'link-rotation': [0, 1, 0],
+        }),
+    ])
+
+    def __init__(self, luos_port):
+        Arm.__init__(self, side='right',
+                     luos_port=luos_port,
+                     dxl_motors=OrbitArm.dxl_motors,
+                     hand='orbita_wrist')
