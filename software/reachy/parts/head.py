@@ -13,7 +13,7 @@ def rot(axis, deg):
 
 
 class Head(ReachyPart):
-    orbital_config = {
+    orbita_config = {
         'Pc_z': [0, 0, 25],
         'Cp_z': [0, 0, 0],
         'R': 36.7,
@@ -38,7 +38,7 @@ class Head(ReachyPart):
 
         self.luos_io = SharedLuosIO.with_gate('r_head', luos_port)
 
-        self.neck = self.create_orbita_actuator('neck', self.luos_io, Head.orbital_config)
+        self.neck = self.create_orbita_actuator('neck', self.luos_io, Head.orbita_config)
         self.attach_dxl_motors(self.luos_io, Head.dxl_motors)
 
         # We import vision here to avoid OpenCV ImportError issue
