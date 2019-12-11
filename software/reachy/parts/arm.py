@@ -19,6 +19,10 @@ class Arm(ReachyPart):
 
         dxl_motors = OrderedDict(dxl_motors)
 
+        # FIXME: forearm_yaw should be removed from the arm part.
+        if hand == 'orbita_wrist':
+            del dxl_motors['forearm_yaw']
+
         self.luos_io = SharedLuosIO.with_gate(f'r_{side}_arm', luos_port)
         self.attach_dxl_motors(self.luos_io, dxl_motors)
 
@@ -142,30 +146,3 @@ class RightArm(Arm):
         Arm.__init__(self, side='right',
                      luos_port=luos_port, dxl_motors=RightArm.dxl_motors,
                      hand=hand)
-
-
-class OrbitArm(RightArm):
-    dxl_motors = OrderedDict([
-        ('shoulder_pitch', {
-            'id': 10, 'offset': 90.0, 'orientation': 'indirect',
-            'link-translation': [0, -0.19, 0], 'link-rotation': [0, 1, 0],
-        }),
-        ('shoulder_roll', {
-            'id': 11, 'offset': 90.0, 'orientation': 'indirect',
-            'link-translation': [0, 0, 0], 'link-rotation': [1, 0, 0],
-        }),
-        ('arm_yaw', {
-            'id': 12, 'offset': 0.0, 'orientation': 'indirect',
-            'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
-        }),
-        ('elbow_pitch', {
-            'id': 13, 'offset': 0.0, 'orientation': 'indirect',
-            'link-translation': [0, 0, -0.30745], 'link-rotation': [0, 1, 0],
-        }),
-    ])
-
-    def __init__(self, luos_port):
-        Arm.__init__(self, side='right',
-                     luos_port=luos_port,
-                     dxl_motors=OrbitArm.dxl_motors,
-                     hand='orbita_wrist')
