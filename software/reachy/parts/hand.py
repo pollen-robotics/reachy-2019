@@ -65,12 +65,12 @@ class ForceGripper(Hand):
         motion.stop()
         time.sleep(0.1)
 
-        self.gripper.goal_position = self.gripper.present_position
-        time.sleep(0.25)
+        self.gripper.goal_position = self.gripper.present_position - 2
+        time.sleep(0.5)
 
-        while self.grip_force > target_grip_force + 30:
-            self.gripper.goal_position -= 0.1
-            time.sleep(0.02)
+        # while self.grip_force > target_grip_force + 30:
+        #     self.gripper.goal_position -= 0.1
+        #     time.sleep(0.02)
 
     @property
     def grip_force(self):
