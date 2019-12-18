@@ -30,7 +30,7 @@ class Arm(ReachyPart):
             raise ValueError(f'"hand" must be one of {list(hands.keys())} or None!')
 
         if hand is not None:
-            hand_part = hands[hand](luos_port=self.luos_io.port)
+            hand_part = hands[hand](luos_port=self.luos_io.port, side=side)
             hand_part.name = f'{self.name}.hand'
             self.motors += hand_part.motors
             self.hand = hand_part

@@ -14,8 +14,10 @@ def rot(axis, deg):
 
 
 class Hand(ReachyPart):
-    def __init__(self):
+    def __init__(self, side):
         ReachyPart.__init__(self, name='hand')
+
+        self.side = side
 
 
 class ForceGripper(Hand):
@@ -34,11 +36,21 @@ class ForceGripper(Hand):
         }),
     ])
 
-    def __init__(self, luos_port):
-        Hand.__init__(self)
+    def __init__(self, luos_port, side):
+        Hand.__init__(self, side)
 
         self.luos_io = SharedLuosIO(luos_port)
-        self.attach_dxl_motors(self.luos_io, ForceGripper.dxl_motors)
+
+        dxl_motors = OrderedDict({
+            name: dict(conf)
+            for name, conf in ForceGripper.dxl_motors.items()
+        })
+
+        if self.side == 'left':
+            for name, conf in dxl_motors.items():
+                conf['id'] += 10
+
+        self.attach_dxl_motors(self.luos_io, dxl_motors)
 
         self._load_sensor = self.luos_io.find_module('force_gripper')
         self._load_sensor.offset = 4
@@ -90,8 +102,8 @@ class OrbitaWrist(Hand):
         'encoder_res': 3,
     }
 
-    def __init__(self, luos_port):
-        Hand.__init__(self)
+    def __init__(self, luos_port, side):
+        Hand.__init__(self, side)
 
         self.luos_io = SharedLuosIO(luos_port)
         self.wrist = self.create_orbita_actuator('wrist', self.luos_io, OrbitaWrist.orbita_config)
