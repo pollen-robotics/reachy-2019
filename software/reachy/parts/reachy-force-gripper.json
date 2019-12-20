@@ -1,0 +1,109 @@
+{
+  "controllers": {
+      "upper_arm_controller": {
+          "sync_read": true,
+          "attached_motors": [
+              "arm"
+          ],
+          "port": "/dev/ttyACM0",
+          "syncloop": "BaseDxlController"
+
+      }
+  },
+  "motorgroups": {
+      "arm": [
+          "shoulder_pitch",
+          "shoulder_roll",
+          "arm_yaw",
+          "elbow_pitch",
+          "forearm_yaw",
+          "wrist_pitch",
+          "wrist_roll",
+          "gripper"
+      ]
+  },
+  "motors": {
+      "shoulder_pitch": {
+        "offset": 90.0,
+        "type": "MX-106",
+        "id": 10,
+        "angle_limit": [
+          -180.0,
+          90.0
+        ],
+        "orientation": "indirect"
+      },
+      "shoulder_roll": {
+        "offset": 90.0,
+        "type": "MX-64",
+        "id": 11,
+        "angle_limit": [
+          -100.0,
+          90.0
+        ],
+        "orientation": "indirect"
+      },
+      "arm_yaw": {
+        "offset": 0.0,
+        "type": "MX-64",
+        "id": 12,
+        "angle_limit": [
+          -90.0,
+          90.0
+        ],
+        "orientation": "indirect"
+      },
+      "elbow_pitch": {
+        "offset": 0.0,
+        "type": "MX-64",
+        "id": 13,
+        "angle_limit": [
+          0.0,
+          125.0
+        ],
+        "orientation": "indirect"
+      },
+      "forearm_yaw": {
+        "offset": 0.0,
+        "type": "AX-12",
+        "id": 14,
+        "angle_limit": [
+          -150.0,
+          150.0
+        ],
+        "orientation": "indirect"
+      },
+      "wrist_pitch": {
+        "offset": 0.0,
+        "type": "AX-12",
+        "id": 15,
+        "angle_limit": [
+          -50.0,
+          50.0
+        ],
+        "orientation": "indirect"
+      },
+      "wrist_roll": {
+        "offset": 0.0,
+        "type": "AX-12",
+        "id": 16,
+        "angle_limit": [
+          -45.0,
+          45.0
+        ],
+        "orientation": "indirect"
+      },
+      "gripper": {
+        "offset": 0.0,
+        "type": "AX-12",
+        "id": 17,
+        "angle_limit": [
+          -69.0,
+          20.0
+        ],
+        "orientation": "direct"
+      }
+  },
+  "sensors": {
+  }
+}

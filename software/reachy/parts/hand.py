@@ -36,10 +36,11 @@ class ForceGripper(Hand):
         }),
     ])
 
-    def __init__(self, luos_port, side):
+    def __init__(self, pypot_robot, luos_port, side):
         Hand.__init__(self, side)
 
         self.luos_io = SharedLuosIO(luos_port)
+        self.pypot_robot = pypot_robot
 
         dxl_motors = OrderedDict({
             name: dict(conf)
@@ -50,7 +51,7 @@ class ForceGripper(Hand):
             for name, conf in dxl_motors.items():
                 conf['id'] += 10
 
-        self.attach_dxl_motors(self.luos_io, dxl_motors)
+        self.attach_pypot_dxl_motors(self.pypot_robot, dxl_motors)
 
         self._load_sensor = self.luos_io.find_module('force_gripper')
         self._load_sensor.offset = 4

@@ -1,10 +1,15 @@
+import os
+import json
 import numpy as np
 
+from glob import glob
 from collections import OrderedDict
 
 from .hand import ForceGripper, OrbitaWrist
 from .part import ReachyPart
 from ..io import SharedLuosIO
+
+from pypot.robot import from_config
 
 
 hands = {
@@ -23,14 +28,25 @@ class Arm(ReachyPart):
         if hand == 'orbita_wrist':
             del dxl_motors['forearm_yaw']
 
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+
+        json_file = os.path.join(dir_path, 'reachy-force-gripper.json')
+        with open(json_file) as f:
+            config = json.load(f)
+
+        port = glob('/dev/ttyACM*')[0]
+        config['controllers']['upper_arm_controller']['port'] = port
+
+        self.pypot_robot = from_config(config)
+
         self.luos_io = SharedLuosIO.with_gate(f'r_{side}_arm', luos_port)
-        self.attach_dxl_motors(self.luos_io, dxl_motors)
+        self.attach_pypot_dxl_motors(self.pypot_robot, dxl_motors)
 
         if hand is not None and hand not in hands.keys():
             raise ValueError(f'"hand" must be one of {list(hands.keys())} or None!')
 
         if hand is not None:
-            hand_part = hands[hand](luos_port=self.luos_io.port, side=side)
+            hand_part = hands[hand](pypot_robot=self.pypot_robot, luos_port=self.luos_io.port, side=side)
             hand_part.name = f'{self.name}.hand'
             self.motors += hand_part.motors
             self.hand = hand_part
@@ -44,7 +60,8 @@ class Arm(ReachyPart):
         self.attach_kinematic_chain(dxl_motors)
 
     def teardown(self):
-        self.luos_io.close()
+        # self.luos_io.close()
+        self.pypot_robot.close()
 
     def forward_kinematics(self, joints_position, use_rad=False):
         joints_position = np.array(joints_position)
