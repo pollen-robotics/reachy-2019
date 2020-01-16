@@ -110,7 +110,6 @@ class LuosDynamixelMotor(object):
         return traj_player
 
 
-
 class PypotDynamixelMotor(object):
     def __init__(self, root_part, name, pypot_motor):
         self._root_part = root_part
