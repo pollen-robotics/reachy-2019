@@ -69,7 +69,7 @@ class Reachy(object):
              wait=False, interpolation_mode='linear'):
 
         for i, (motor_name, goal_pos) in enumerate(goal_positions.items()):
-            last = (i == len(goal_positions) - 1)
+            last = wait and (i == len(goal_positions) - 1)
 
             motor = attrgetter(motor_name)(self)
             motor.goto(goal_pos, duration, starting_point,
