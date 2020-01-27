@@ -153,14 +153,15 @@ class OrbitaActuator(object):
 
     def point_at(self, vector, angle):
         thetas = self.model.get_angles_from_vector(vector, angle)
+        # We used a reversed encoder so we need to inverse the angles
+        thetas = [-q for q in thetas]
 
         for d, q in zip(self.disks, thetas):
-            q = -q  # FIXME: Temporary path due to reversed encoder
             d.target_rot_position = q
 
     def orient(self, quat, duration=-1, wait=False):
         thetas = self.model.get_angles_from_quaternion(quat.w, quat.x, quat.y, quat.z)
-        # FIXME: Temporary patch due to reversed encoder
+        # We used a reversed encoder so we need to inverse the angles
         thetas = [-q for q in thetas]
 
         if duration > 0:
