@@ -1,8 +1,7 @@
 import time
 import numpy as np
 
-from pyquaternion import Quaternion
-from collections import OrderedDict, deque
+from collections import OrderedDict
 from scipy.spatial.transform import Rotation as R
 
 from .part import ReachyPart
@@ -109,44 +108,4 @@ class OrbitaWrist(Hand):
         self.wrist = self.create_orbita_actuator('wrist', self.luos_io, OrbitaWrist.orbita_config)
 
     def homing(self):
-        recent_speed = deque([], 10)
-
-        for d in self.wrist.disks:
-            d.setToZero()
-        time.sleep(0.1)
-
-        for d in self.wrist.disks:
-            d.compliant = False
-        time.sleep(0.1)
-
-        for d in self.wrist.disks:
-            d.target_rot_speed = 50
-            d.target_rot_position = -270
-
-        time.sleep(1)
-
-        while True:
-            recent_speed.append([d.rot_speed for d in self.wrist.disks])
-            avg_speed = np.mean(recent_speed, axis=0)
-
-            if np.all(avg_speed >= 0):
-                break
-
-            time.sleep(0.01)
-
-        for d in self.wrist.disks:
-            d.setToZero()
-
-        time.sleep(1)
-
-        for d in self.wrist.disks:
-            d.target_rot_position = 102
-        time.sleep(2.5)
-
-        for d in self.wrist.disks:
-            d.setToZero()
-        time.sleep(0.5)
-
-        self.wrist.model.reset_last_angles()
-        self.wrist.orient(Quaternion(axis=[0, 0, 1], angle=0))
-        time.sleep(2)
+        self.wrist.homing()

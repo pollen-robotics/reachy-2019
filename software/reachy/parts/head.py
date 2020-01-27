@@ -1,7 +1,6 @@
-import time
 import numpy as np
 
-from collections import OrderedDict, deque
+from collections import OrderedDict
 from scipy.spatial.transform import Rotation as R
 
 from .part import ReachyPart
@@ -71,46 +70,7 @@ class Head(ReachyPart):
         self.neck.moving_speed = speed
 
     def homing(self):
-        recent_speed = deque([], 10)
-
-        for d in self.neck.disks:
-            d.setToZero()
-        time.sleep(0.1)
-
-        self.compliant = False
-        time.sleep(0.1)
-
-        for d in self.neck.disks:
-            d.target_rot_speed = 50
-            d.target_rot_position = -270
-
-        time.sleep(1)
-
-        while True:
-            recent_speed.append([d.rot_speed for d in self.neck.disks])
-            avg_speed = np.mean(recent_speed, axis=0)
-
-            if np.all(avg_speed >= 0):
-                break
-
-            time.sleep(0.01)
-
-        for d in self.neck.disks:
-            d.setToZero()
-
-        time.sleep(1)
-
-        for d in self.neck.disks:
-            d.target_rot_position = 102
-        time.sleep(2.5)
-
-        for d in self.neck.disks:
-            d.setToZero()
-        time.sleep(0.5)
-
-        self.neck.model.reset_last_angles()
-        self.look_at(1, 0, 0)
-        time.sleep(2)
+        self.neck.homing()
 
     def get_image(self):
         _, img = self.cap.read()

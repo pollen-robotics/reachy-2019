@@ -1,6 +1,7 @@
 import time
 import numpy as np
 
+from collections import deque
 from pyquaternion import Quaternion
 from orbita import Actuator as OrbitaModel
 
@@ -208,3 +209,44 @@ class OrbitaActuator(object):
             # FIXME: temporary fix (see https://github.com/Luos-Robotics/pyluos/issues/53)
             time.sleep(0.1)
             disk.target_rot_speed = moving_speed
+
+    def homing(self, speed=50, limit_pos=-270, target_pos=102):
+        recent_speed = deque([], 10)
+
+        for d in self.disks:
+            d.setToZero()
+        time.sleep(0.1)
+
+        self.compliant = False
+        time.sleep(0.1)
+
+        for d in self.disks:
+            d.target_rot_speed = speed
+            d.target_rot_position = limit_pos
+
+        time.sleep(1)
+
+        while True:
+            recent_speed.append([d.rot_speed for d in self.disks])
+            avg_speed = np.mean(recent_speed, axis=0)
+
+            if np.all(avg_speed >= 0):
+                break
+
+            time.sleep(0.01)
+
+        for d in self.disks:
+            d.setToZero()
+
+        time.sleep(1)
+
+        for d in self.disks:
+            d.target_rot_position = target_pos
+        time.sleep(target_pos / speed + 0.25)
+
+        for d in self.disks:
+            d.setToZero()
+        time.sleep(0.1)
+
+        self.model.reset_last_angles()
+        self.orient(Quaternion(1, 0, 0, 0), wait=True)
