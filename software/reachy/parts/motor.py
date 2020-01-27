@@ -177,22 +177,6 @@ class OrbitaActuator(object):
         if wait:
             time.sleep(duration)
 
-    def find_quaternion_transform(model, v_origin, v_target):
-        v_origin = np.array(v_origin)
-        v_origin = v_origin / np.linalg.norm(v_origin)
-
-        v_target = np.array(v_target)
-        v_target = v_target / np.linalg.norm(v_target)
-
-        V = np.cross(v_origin, v_target)
-        V = V / np.linalg.norm(V)
-
-        alpha = np.arccos(np.vdot(v_origin, v_target))
-        if alpha == 0:
-            return Quaternion(1, 0, 0, 0)
-
-        return Quaternion(axis=V, radians=alpha)
-
     def setup(self, pid, reduction, wheel_size, encoder_res, moving_speed):
         for disk in self.disks:
             disk.limit_current = 0.4
