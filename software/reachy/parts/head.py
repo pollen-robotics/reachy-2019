@@ -49,7 +49,7 @@ class Head(ReachyPart):
         self.luos_io.close()
         self.cap.close()
 
-    def look_at(self, x, y, z, duration=-1, wait=False):
+    def look_at(self, x, y, z, duration, wait):
         q = self.neck.model.find_quaternion_transform([1, 0, 0], [x, y, z])
         self.neck.orient(q, duration=duration, wait=wait)
 
