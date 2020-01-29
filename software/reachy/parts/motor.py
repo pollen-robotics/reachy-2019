@@ -138,6 +138,9 @@ class OrbitaActuator(object):
              interpolation_mode='linear',
              ):
 
+        if len(thetas) != len(self.disks):
+            raise ValueError(f'Invalid thetas {thetas} (length should be {len(self.disks)}')
+
         if interpolation_mode not in interpolation_modes.keys():
             available = tuple(interpolation_modes.keys())
             raise ValueError(f'interpolation_mode should be one of {available}')
