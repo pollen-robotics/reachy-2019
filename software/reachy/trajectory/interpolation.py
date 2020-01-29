@@ -120,3 +120,9 @@ def cubic_smooth(traj, nb_kp, out_points=-1):
         }
     else:
         return SY
+
+
+interpolation_modes = {
+    'linear': Linear,
+    'minjerk': MinimumJerk,
+}

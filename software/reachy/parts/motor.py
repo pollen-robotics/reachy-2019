@@ -5,7 +5,7 @@ from collections import deque
 from pyquaternion import Quaternion
 from orbita import Actuator as OrbitaModel
 
-from ..trajectory.interpolation import Linear, MinimumJerk
+from ..trajectory.interpolation import interpolation_modes
 
 
 class DynamixelMotor(object):
@@ -87,16 +87,11 @@ class DynamixelMotor(object):
              goal_position, duration,
              starting_point='present_position',
              wait=False, interpolation_mode='linear'):
-        interpolations = {
-            'linear': Linear,
-            'minjerk': MinimumJerk,
-        }
-
-        if interpolation_mode not in interpolations.keys():
-            available = tuple(interpolations.keys())
+        if interpolation_mode not in interpolation_modes.keys():
+            available = tuple(interpolation_modes.keys())
             raise ValueError(f'interpolation_mode should be one of {available}')
 
-        traj_player = interpolations[interpolation_mode](getattr(self, starting_point), goal_position, duration)
+        traj_player = interpolation_modes[interpolation_mode](getattr(self, starting_point), goal_position, duration)
         traj_player.start(self)
 
         if wait:
@@ -112,17 +107,15 @@ class OrbitaActuator(object):
         pid, reduction, wheel_size, encoder_res,
     ):
         self.disk_bottom, self.disk_middle, self.disk_top = luos_disks_motor
-        self.model = OrbitaModel(Pc_z=Pc_z, Cp_z=Cp_z, R=R, R0=R0.tolist())
+        self.model = OrbitaModel(Pc_z=Pc_z, Cp_z=Cp_z, R=R, R0=R0)
 
         self._compliancy = False
-        self._moving_speed = 50
 
         self.setup(
             pid=pid,
             reduction=reduction,
             wheel_size=wheel_size,
             encoder_res=encoder_res,
-            moving_speed=self.moving_speed,
         )
 
     @property
@@ -140,45 +133,47 @@ class OrbitaActuator(object):
         for d in self.disks:
             d.compliant = compliancy
 
-    @property
-    def moving_speed(self):
-        return self._moving_speed
+    def goto(self,
+             thetas, duration, wait,
+             interpolation_mode='linear',
+             ):
 
-    @moving_speed.setter
-    def moving_speed(self, speed):
-        self._moving_speed = speed
+        if interpolation_mode not in interpolation_modes.keys():
+            available = tuple(interpolation_modes.keys())
+            raise ValueError(f'interpolation_mode should be one of {available}')
+        Traj = interpolation_modes[interpolation_mode]
 
-        for d in self.disks:
-            d.target_rot_speed = speed
+        trajs = [
+            Traj(
+                initial_position=disk.rot_position,
+                goal_position=angle,
+                duration=duration,
+            )
+            for disk, angle in zip(self.disks, thetas)
+        ]
 
-    def point_at(self, vector, angle):
+        for disk, traj in zip(self.disks, trajs):
+            traj.start(disk)
+
+        if wait:
+            for traj in trajs:
+                traj.wait()
+
+        return trajs
+
+    def point_at(self, vector, angle, duration, wait):
         thetas = self.model.get_angles_from_vector(vector, angle)
         # We used a reversed encoder so we need to inverse the angles
         thetas = [-q for q in thetas]
+        self.goto(thetas, duration=duration, wait=wait, interpolation_mode='minjerk')
 
-        for d, q in zip(self.disks, thetas):
-            d.target_rot_position = q
-
-    def orient(self, quat, duration=-1, wait=False):
+    def orient(self, quat, duration, wait):
         thetas = self.model.get_angles_from_quaternion(quat.w, quat.x, quat.y, quat.z)
         # We used a reversed encoder so we need to inverse the angles
         thetas = [-q for q in thetas]
+        self.goto(thetas, duration=duration, wait=wait, interpolation_mode='minjerk')
 
-        if duration > 0:
-            speeds = [
-                abs(q - d.rot_position) / duration
-                for d, q in zip(self.disks, thetas)
-            ]
-            for d, s in zip(self.disks, speeds):
-                d.target_rot_speed = s
-
-        for d, q in zip(self.disks, thetas):
-            d.target_rot_position = q
-
-        if wait:
-            time.sleep(duration)
-
-    def setup(self, pid, reduction, wheel_size, encoder_res, moving_speed):
+    def setup(self, pid, reduction, wheel_size, encoder_res):
         for disk in self.disks:
             disk.limit_current = 0.4
             disk.encoder_res = encoder_res
@@ -186,16 +181,12 @@ class OrbitaActuator(object):
             disk.wheel_size = wheel_size
             disk.positionPid = pid
             disk.rot_position_mode = True
-            disk.rot_speed_mode = True
+            disk.rot_speed_mode = False
             disk.rot_position = True
-            disk.rot_speed = True
+            disk.rot_speed = False
             disk.setToZero()
 
-            # FIXME: temporary fix (see https://github.com/Luos-Robotics/pyluos/issues/53)
-            time.sleep(0.1)
-            disk.target_rot_speed = moving_speed
-
-    def homing(self, speed=50, limit_pos=-270, target_pos=102):
+    def homing(self, limit_pos=-270, target_pos=102):
         recent_speed = deque([], 10)
 
         for d in self.disks:
@@ -205,9 +196,12 @@ class OrbitaActuator(object):
         self.compliant = False
         time.sleep(0.1)
 
-        for d in self.disks:
-            d.target_rot_speed = speed
-            d.target_rot_position = limit_pos
+        trajs = self.goto(
+            [limit_pos] * 3,
+            duration=2,
+            interpolation_mode='minjerk',
+            wait=False,
+        )
 
         time.sleep(1)
 
@@ -216,6 +210,9 @@ class OrbitaActuator(object):
             avg_speed = np.mean(recent_speed, axis=0)
 
             if np.all(avg_speed >= 0):
+                for traj in trajs:
+                    traj.stop()
+                    traj.wait()
                 break
 
             time.sleep(0.01)
@@ -225,13 +222,16 @@ class OrbitaActuator(object):
 
         time.sleep(1)
 
-        for d in self.disks:
-            d.target_rot_position = target_pos
-        time.sleep(target_pos / speed + 0.25)
+        self.goto(
+            [target_pos] * 3,
+            duration=2,
+            wait=True,
+            interpolation_mode='minjerk',
+        )
 
         for d in self.disks:
             d.setToZero()
         time.sleep(0.1)
 
         self.model.reset_last_angles()
-        self.orient(Quaternion(1, 0, 0, 0), wait=True)
+        self.orient(Quaternion(1, 0, 0, 0), duration=1, wait=True)
