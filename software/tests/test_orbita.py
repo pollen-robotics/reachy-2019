@@ -8,8 +8,8 @@ from mockup import mock_luos_io
 
 mock_luos_io()
 
-from reachy.io import SharedLuosIO
-from reachy.parts.motor import OrbitaActuator
+from reachy.io import SharedLuosIO  # noqa: E402
+from reachy.parts.motor import OrbitaActuator  # noqa: E402
 
 
 def rot(axis, deg):
