@@ -17,7 +17,7 @@ class Head(ReachyPart):
         'Cp_z': [0, 0, 0],
         'R': 36.7,
         'R0': np.dot(rot('z', 60), rot('y', 10)),
-        'pid': [10, 0.04, 90],
+        'pid': [8, 0.04, 0],
         'reduction': 77.35,
         'wheel_size': 62,
         'encoder_res': 3,
