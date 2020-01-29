@@ -8,7 +8,7 @@ from ..io import SharedLuosIO
 
 
 def rot(axis, deg):
-    return R.from_euler(axis, np.deg2rad(deg)).as_dcm()
+    return R.from_euler(axis, np.deg2rad(deg)).as_matrix()
 
 
 class Head(ReachyPart):
