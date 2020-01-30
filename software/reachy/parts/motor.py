@@ -201,10 +201,13 @@ class OrbitaActuator(object):
 
         trajs = self.goto(
             [limit_pos] * 3,
-            duration=2,
+            duration=4,
             interpolation_mode='minjerk',
             wait=False,
         )
+
+        for d in self.disks:
+            d.rot_speed = True
 
         time.sleep(1)
 
@@ -222,6 +225,9 @@ class OrbitaActuator(object):
 
         for d in self.disks:
             d.setToZero()
+
+        for d in self.disks:
+            d.rot_speed = False
 
         time.sleep(1)
 
