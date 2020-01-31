@@ -30,13 +30,13 @@ This section guides you through submitting a bug report for Atom. Following thes
 
 #### Before Submitting A Bug Report
 
-* **Check the [FAQs on the forum](https://discuss.atom.io/c/faq)** for a list of common questions and problems.
+* **Check the [FAQs on the forum](https://forum.pollen-robotics.com)** for a list of common questions and problems.
 * **Determine [which repository the problem should be reported in](#reachy-and-playgrounds)**.
 * **Perform a [cursory search](https://github.com/search?q=is%3Aissue+user%3Apollen-robotics)** to see if the problem has already been reported. If it has **and the issue is still open**, add a comment to the existing issue instead of opening a new one.
 
 #### How Do I Submit A (Good) Bug Report?
 
-Bugs are tracked as [GitHub issues](https://guides.github.com/features/issues/). After you've determined [which repository](#reachy-and-playgrounds) your bug is related to, create an issue on that repository and provide the following information by filling in [the template](https://github.com/pollen-robotics/reachy/.github/blob/master/.github/ISSUE_TEMPLATE.md).
+Bugs are tracked as [GitHub issues](https://guides.github.com/features/issues/). After you've determined [which repository](#reachy-and-playgrounds) your bug is related to, create an issue on that repository and provide the following information by filling in [the template](https://github.com/pollen-robotics/reachy-2.0/blob/master/.github/ISSUE_TEMPLATE/bug_report.md).
 
 Explain the problem and include additional details to help maintainers reproduce the problem:
 
