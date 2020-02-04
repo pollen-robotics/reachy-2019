@@ -37,9 +37,9 @@ setup(
 
     author='Pollen Robotics',
     author_email='contact@pollen-robotics.com',
-    url='https://github.com/pollen-robotics/reachy-2.0',
+    url='https://github.com/pollen-robotics/reachy',
 
-    description='A multi-purposed robotic arm',
+    description='Open source interactive robot to explore real-world applications!',
     long_description=long_description,
     long_description_content_type='text/markdown',
 )
