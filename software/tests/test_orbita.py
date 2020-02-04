@@ -13,7 +13,7 @@ from reachy.parts.motor import OrbitaActuator  # noqa: E402
 
 
 def rot(axis, deg):
-    return R.from_euler(axis, np.deg2rad(deg)).as_matrix()
+    return R.from_euler(axis, np.deg2rad(deg)).as_dcm()
 
 
 def test_orbita_goto():
