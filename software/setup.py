@@ -33,7 +33,10 @@ setup(
     extras_require={
         'head': ['opencv-python'],
         'log': ['zzlog'],
+
         'doc': ['sphinx', 'sphinx-autoapi'],
+        'lint': ['flake8', 'pydocstyle'],
+        'test': ['pytest'],
     },
 
     author='Pollen Robotics',
