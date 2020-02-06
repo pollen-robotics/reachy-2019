@@ -4,8 +4,11 @@ on: push
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '3.7'
     - uses: actions/checkout@v1
 
     - name: Setup Sphinx
