@@ -4,7 +4,7 @@ on: push
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
     - uses: actions/setup-python@v1
       with:
@@ -21,7 +21,7 @@ jobs:
         touch software/doc/_build/html/.nojekyll
 
     - name: Deploy
-      uses: peaceiris/actions-gh-pages@v2
+      uses: peaceiris/actions-gh-pages@v3
       env:
         ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
         PUBLISH_BRANCH: gh-pages
