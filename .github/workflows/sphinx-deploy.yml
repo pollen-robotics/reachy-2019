@@ -16,7 +16,7 @@ jobs:
         pip install -e ./software[doc]
 
     - name: Build
-      run:
+      run: |
         make -C software/doc html
         touch software/doc/_build/html/.nojekyll
 
