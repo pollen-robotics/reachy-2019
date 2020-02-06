@@ -1,4 +1,6 @@
+import time
 import logging
+import numpy as np
 
 from operator import attrgetter
 
@@ -74,3 +76,77 @@ class Reachy(object):
             motor = attrgetter(motor_name)(self)
             motor.goto(goal_pos, duration, starting_point,
                        wait=last, interpolation_mode=interpolation_mode)
+
+    def need_cooldown(self, temperature_limit=50):
+        """ Check if Reachy needs to cool down.
+
+        Parameters
+        ----------
+        temperature_limit : int, optional
+                            Temperature limit (in °C) for each motor.
+
+        Returns
+        -------
+        bool
+            Whether or not you should let the robot cool down
+
+        """
+
+        motor_temperature = np.array([
+            m.temperature for m in self.motors
+        ])
+        logger.info(
+            'Checking Reachy motors temperature',
+            extra={
+                'temperatures': {
+                    m.name: m.temperature for m in self.motors
+                }
+            }
+        )
+        return np.any(motor_temperature > temperature_limit)
+
+    def wait_for_cooldown(self, rest_position, goto_rest_duration=5, lower_temperature=45):
+        """ Wait for the robot to lower its temperature.
+
+        The robot will first go to the specified rest position and then, it will turn all motors compliant.
+        Finally, it will wait until the temperature of each motor goes below the lower_temperature parameters.
+
+        .. note:: The robot will stay compliant at the end of the function call. It is up to you, to put it back in the desired position.
+
+        Parameters
+        ----------
+        rest_position: dict
+                       the desired rest position for the robot
+        goto_rest_duration: float
+                            time in seconds to reach the rest position
+        lower_temeprature: int
+                           lower temperature threshold (in °C) to be reached by all motors before the end of cool down
+
+        """
+        self.goto(
+            goal_positions=rest_position,
+            duration=goto_rest_duration,
+            wait=True,
+        )
+
+        for m in self.motors:
+            m.compliant = True
+
+        while True:
+            motor_temperature = np.array([
+                m.temperature for m in self.motors
+            ])
+
+            logger.warning(
+                'Motors cooling down...',
+                extra={
+                    'temperatures': {
+                        m.name: m.temperature for m in self.motors
+                    }
+                },
+            )
+
+            if np.all(motor_temperature < lower_temperature):
+                break
+
+            time.sleep(30)
