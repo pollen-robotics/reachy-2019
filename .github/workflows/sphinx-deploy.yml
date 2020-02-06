@@ -18,6 +18,7 @@ jobs:
     - name: Build
       run:
         make -C software/doc html
+        touch software/doc/_build/html/.nojekyll
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v2
