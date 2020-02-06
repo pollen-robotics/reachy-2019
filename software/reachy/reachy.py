@@ -111,7 +111,8 @@ class Reachy(object):
         The robot will first go to the specified rest position and then, it will turn all motors compliant.
         Finally, it will wait until the temperature of each motor goes below the lower_temperature parameters.
 
-        .. note:: The robot will stay compliant at the end of the function call. It is up to you, to put it back in the desired position.
+        .. note:: The robot will stay compliant at the end of the function call.
+                  It is up to you, to put it back in the desired position.
 
         Parameters
         ----------
