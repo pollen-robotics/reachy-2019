@@ -80,15 +80,11 @@ class Reachy(object):
     def need_cooldown(self, temperature_limit=50):
         """ Check if Reachy needs to cool down.
 
-        Parameters
-        ----------
-        temperature_limit : int, optional
-                            Temperature limit (in °C) for each motor.
+        Args:
+            temperature_limit (int): Temperature limit (in °C) for each motor.
 
-        Returns
-        -------
-        bool
-            Whether or not you should let the robot cool down
+        Returns:
+            bool: Whether or not you should let the robot cool down
 
         """
 
@@ -111,17 +107,13 @@ class Reachy(object):
         The robot will first go to the specified rest position and then, it will turn all motors compliant.
         Finally, it will wait until the temperature of each motor goes below the lower_temperature parameters.
 
+        Args:
+            rest_position (dict): the desired rest position for the robot
+            goto_rest_duration (float): time in seconds to reach the rest position
+            lower_temeprature (int): lower temperature threshold (in °C) to be reached by all motors before the end of cool down
+
         .. note:: The robot will stay compliant at the end of the function call.
                   It is up to you, to put it back in the desired position.
-
-        Parameters
-        ----------
-        rest_position: dict
-                       the desired rest position for the robot
-        goto_rest_duration: float
-                            time in seconds to reach the rest position
-        lower_temeprature: int
-                           lower temperature threshold (in °C) to be reached by all motors before the end of cool down
 
         """
         self.goto(

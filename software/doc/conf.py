@@ -32,6 +32,7 @@ release = 'v1.0.0'
 # ones.
 extensions = [
     'autoapi.extension',
+    'sphinx.ext.napoleon',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
