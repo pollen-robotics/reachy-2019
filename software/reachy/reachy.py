@@ -78,7 +78,7 @@ class Reachy(object):
                        wait=last, interpolation_mode=interpolation_mode)
 
     def need_cooldown(self, temperature_limit=50):
-        """ Check if Reachy needs to cool down.
+        """Check if Reachy needs to cool down.
 
         Args:
             temperature_limit (int): Temperature limit (in °C) for each motor.
@@ -87,7 +87,6 @@ class Reachy(object):
             bool: Whether or not you should let the robot cool down
 
         """
-
         motor_temperature = np.array([
             m.temperature for m in self.motors
         ])
@@ -102,7 +101,7 @@ class Reachy(object):
         return np.any(motor_temperature > temperature_limit)
 
     def wait_for_cooldown(self, rest_position, goto_rest_duration=5, lower_temperature=45):
-        """ Wait for the robot to lower its temperature.
+        """Wait for the robot to lower its temperature.
 
         The robot will first go to the specified rest position and then, it will turn all motors compliant.
         Finally, it will wait until the temperature of each motor goes below the lower_temperature parameters.
