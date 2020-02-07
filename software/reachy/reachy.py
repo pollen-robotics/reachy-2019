@@ -1,3 +1,5 @@
+"""Reachy main module entry point."""
+
 import time
 import logging
 import numpy as np
@@ -11,11 +13,24 @@ logger = logging.getLogger(__name__)
 
 
 class Reachy(object):
+    """Class representing the connection with the hardware robot.
+
+    It can be used to monitor real time robot state and to send commands.
+    Mainly a container to hold the different parts of Reachy together.
+    """
+
     def __init__(self,
                  left_arm=None,
                  right_arm=None,
                  head=None):
+        """
+        Connect and synchronize with the hardware robot.
 
+        Args:
+            left_arm (reachy.parts.LeftArm): left arm part if present or None if absent
+            right_arm (reachy.parts.RightArm): right arm part if present or None if absent
+            head (reachy.parts.Head): hrad part if present or None if absent
+        """
         self._parts = []
 
         if left_arm is not None:
@@ -48,6 +63,7 @@ class Reachy(object):
         )
 
     def close(self):
+        """Close all communication with each attached parts."""
         logger.info(
             'Closing connection with reachy',
             extra={
@@ -59,17 +75,28 @@ class Reachy(object):
 
     @property
     def parts(self):
+        """List of all attached parts."""
         return self._parts
 
     @property
     def motors(self):
+        """List of all motors in the attached parts."""
         return sum([p.motors for p in self.parts], [])
 
     def goto(self,
              goal_positions, duration,
              starting_point='present_position',
              wait=False, interpolation_mode='linear'):
+        """
+        Goto specified goal positions.
 
+        Args:
+            goal_positions (dict): desired target position (in the form {'full_motor_name': target_position})
+            duration (float): move duration (in sec.)
+            starting_point (str): register to use to retrieve the starting point (e.g. 'present_postion' or 'goal_position')
+            wait (bool): whether or not to wait for the end motion before returning
+            interpolation_mode (str): interpolation used for computing the trajectory (e.g. 'linear' or 'minjerk')
+        """
         for i, (motor_name, goal_pos) in enumerate(goal_positions.items()):
             last = wait and (i == len(goal_positions) - 1)
 
@@ -78,7 +105,8 @@ class Reachy(object):
                        wait=last, interpolation_mode=interpolation_mode)
 
     def need_cooldown(self, temperature_limit=50):
-        """Check if Reachy needs to cool down.
+        """
+        Check if Reachy needs to cool down.
 
         Args:
             temperature_limit (int): Temperature limit (in °C) for each motor.
@@ -101,7 +129,8 @@ class Reachy(object):
         return np.any(motor_temperature > temperature_limit)
 
     def wait_for_cooldown(self, rest_position, goto_rest_duration=5, lower_temperature=45):
-        """Wait for the robot to lower its temperature.
+        """
+        Wait for the robot to lower its temperature.
 
         The robot will first go to the specified rest position and then, it will turn all motors compliant.
         Finally, it will wait until the temperature of each motor goes below the lower_temperature parameters.
