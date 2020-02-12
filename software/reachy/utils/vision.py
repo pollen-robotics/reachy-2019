@@ -8,7 +8,7 @@ from threading import Thread, Event, Lock
 class BackgroundVideoCapture(object):
     """Wrapper on OpenCV VideoCapture object.
 
-    This wrapper is reponsible for automatically polling image on the camera. 
+    This wrapper is reponsible for automatically polling image on the camera.
     This ensures that we can always access the most recent image.
     """
 
