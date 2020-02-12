@@ -1,3 +1,8 @@
+"""Arm part module.
+
+Implements a Right and a Left Arm.
+"""
+
 import numpy as np
 
 from collections import OrderedDict
@@ -14,7 +19,22 @@ hands = {
 
 
 class Arm(ReachyPart):
+    """Arm abstraction class.
+
+    Provides high-level access to:
+        * ordered list of motors
+        * forward and inverse kinematics
+    """
+
     def __init__(self, side, luos_port, dxl_motors, hand):
+        """Create a new Arm part.
+
+        Args:
+            side (str): 'right' or 'left'
+            luos_port (str): serial port where the Luos modules are attached
+            dxl_motors (dict): config of the dynamixel motors composing the arm
+            hand (str): name of the Hand to attached ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
+        """
         ReachyPart.__init__(self, name=f'{side}_arm')
 
         dxl_motors = OrderedDict(dxl_motors)
@@ -44,9 +64,19 @@ class Arm(ReachyPart):
         self.attach_kinematic_chain(dxl_motors)
 
     def teardown(self):
+        """Clean and close the Arm part."""
         self.luos_io.close()
 
     def forward_kinematics(self, joints_position, use_rad=False):
+        """Compute the forward kinematics of the Arm.
+
+        Args:
+            joints_position (np.array): angle joints configuration of the arm (in degrees by default)
+            use_rad (bool): whether or not to use radians for joints configuration
+
+        .. note:: the end effector will be the end of the Hand if one is attached.
+
+        """
         joints_position = np.array(joints_position)
         if len(joints_position.shape) == 1:
             joints_position = joints_position.reshape(1, -1)
@@ -61,6 +91,16 @@ class Arm(ReachyPart):
         return M
 
     def inverse_kinematics(self, target_pose, q0=None, use_rad=False):
+        """Approximate the inverse kinematics of the Arm.
+
+        Args:
+            target_pose (np.array): 4x4 homogeneous pose of the target end effector pose
+            q0 (np.array): joint initial angle configurations (used for bootstraping the optimization)
+            use_rad (bool): whether or not to use radians for joints configuration
+
+        .. note:: the end effector will be the end of the Hand if one is attached.
+
+        """
         if q0 is None:
             q0 = [m.present_position for m in self.motors]
 
@@ -87,6 +127,8 @@ class Arm(ReachyPart):
 
 
 class LeftArm(Arm):
+    """Left Arm part."""
+
     dxl_motors = OrderedDict([
         ('shoulder_pitch', {
             'id': 20, 'offset': 90.0, 'orientation': 'direct',
@@ -112,12 +154,20 @@ class LeftArm(Arm):
     ])
 
     def __init__(self, luos_port, hand=None):
+        """Create a new Left Arm part.
+
+        Args:
+            luos_port (str): serial port where the Luos modules are attached
+            hand (str): name of the Hand to attached ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
+        """
         Arm.__init__(self, side='left',
                      luos_port=luos_port, dxl_motors=LeftArm.dxl_motors,
                      hand=hand)
 
 
 class RightArm(Arm):
+    """Right Arm part."""
+
     dxl_motors = OrderedDict([
         ('shoulder_pitch', {
             'id': 10, 'offset': 90.0, 'orientation': 'indirect',
@@ -143,6 +193,12 @@ class RightArm(Arm):
     ])
 
     def __init__(self, luos_port, hand=None):
+        """Create a new Right Arm part.
+
+        Args:
+            luos_port (str): serial port where the Luos modules are attached
+            hand (str): name of the Hand to attached ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
+        """
         Arm.__init__(self, side='right',
                      luos_port=luos_port, dxl_motors=RightArm.dxl_motors,
                      hand=hand)

@@ -1,3 +1,8 @@
+"""Trajectory interpolation utility module.
+
+This module defines various interpolation technique (linear, minimum jerk). 
+They can be used in all goto functions.
+"""
 import time
 import numpy as np
 
@@ -6,7 +11,19 @@ from scipy.interpolate import interp1d
 
 
 class TrajectoryInterpolation(object):
+    """Trajectory interpolation abstraction class.
+
+    You can defined your own interpolation technique by respecting this abstraction so they can be used in goto functions.
+    """
+
     def __init__(self, initial_position, goal_position, duration):
+        """Create your interpolation object.
+
+        Args:
+            initial_position (float): starting position (in degrees)
+            goal_position (float): end position (in degrees)
+            duration (float): duration of the movement (in seconds)
+        """
         self.inital_position = initial_position
         self.goal_position = goal_position
         self.duration = duration
@@ -15,17 +32,33 @@ class TrajectoryInterpolation(object):
         self._running = Event()
 
     def interpolate(self, t):
+        """Interpolate the position at given time.
+
+        Args:
+            t (float): time where to interpolate
+
+        You are responsible for implementing this method in your own interpolation technique. 
+        Please refer to the implementation of Linear of MinimumJerk for examples.
+        """
         raise NotImplementedError
 
     def start(self, motor, update_freq=100):
+        """Start the interpolation trajectory thread.
+
+        Args:
+            motor (motor): motor to apply the trajectory to
+            update_freq (float): Update sample frequency (in Hz) 
+        """
         self._t = Thread(target=lambda: self._follow_traj_loop(motor, update_freq))
         self._running.set()
         self._t.start()
 
     def stop(self):
+        """Stop the interpolation trajectory."""
         self._running.clear()
 
     def wait(self):
+        """Block until the end of the trajectory interpolation."""
         if self._t is not None and self._t.is_alive():
             self._t.join()
 
@@ -47,16 +80,32 @@ class TrajectoryInterpolation(object):
 
 
 class Linear(TrajectoryInterpolation):
+    """Linear implementation implementation."""
+
     def interpolate(self, t):
+        """Linear interpolation at time t."""
         return self.inital_position + (self.goal_position - self.inital_position) * t / self.duration
 
 
 class MinimumJerk(TrajectoryInterpolation):
+    """Minimum Jerk interpolation implementation."""
+
     def __init__(
         self,
         initial_position, goal_position, duration,
         initial_velocity=0, final_velocity=0, initial_acceleration=0, final_acceleration=0,
     ):
+        """Create the minjerk interpolation.
+
+        Args:
+            initial_position (float): starting position (in degrees)
+            goal_position (float): end position (in degrees)
+            duration (float): duration of the movement (in seconds)
+            initial_velocity (float): initial velocity used for interpolation
+            final_velocity (float): final velocity used for interpolation
+            initial_acceleration (float): initial acceleration used for interpolation
+            final_acceleration (float): final acceleration used for interpolation
+        """
         TrajectoryInterpolation.__init__(self, initial_position, goal_position, duration)
 
         a0 = initial_position
@@ -87,6 +136,7 @@ class MinimumJerk(TrajectoryInterpolation):
         ]
 
     def interpolate(self, t):
+        """Minjerk interpolation at time t."""
         return np.sum([
             c * t ** i
             for i, c in enumerate(self._coeffs)
@@ -94,6 +144,13 @@ class MinimumJerk(TrajectoryInterpolation):
 
 
 def cubic_smooth(traj, nb_kp, out_points=-1):
+    """Trjaectory cubic smooth interpolation.
+
+    Args:
+        traj (dict): trajectory to smooth ({motor_name: list of motor pos})
+        nb_kp (int): number of keypoints to use for the cubic smoothing
+        out_points (int): number of samples in the output trajectory (use -1 to conserve the same number as the input trajectory)
+    """
     as_dict = isinstance(traj, dict) or isinstance(traj, np.lib.npyio.NpzFile)
 
     if as_dict:

@@ -1,3 +1,10 @@
+"""Hand part modules.
+
+Define different hand parts:
+* a ForceGripper
+* a OrbitaWrist
+"""
+
 import time
 import numpy as np
 
@@ -8,18 +15,32 @@ from .part import ReachyPart
 from ..io import SharedLuosIO
 
 
+# FIXME: this should be defined elsewhere
 def rot(axis, deg):
+    """Compute 3D rotation matrix given euler rotation."""
     return R.from_euler(axis, np.deg2rad(deg)).as_dcm()
 
 
 class Hand(ReachyPart):
+    """Hand abstraction part."""
+
     def __init__(self, side):
+        """Create hand part.
+
+        Args:
+            side (str): which side the hand is attached to ('left' or 'right')
+        """
         ReachyPart.__init__(self, name='hand')
 
         self.side = side
 
 
 class ForceGripper(Hand):
+    """Force Gripper Part.
+
+    Composed of three dynamixel motors and a force sensor for gripping pressure.
+    """
+
     dxl_motors = OrderedDict([
         ('wrist_pitch', {
             'id': 15, 'offset': 0.0, 'orientation': 'indirect',
@@ -36,6 +57,12 @@ class ForceGripper(Hand):
     ])
 
     def __init__(self, luos_port, side):
+        """Create a new Force Gripper Hand.
+        
+        Args:
+            luos_port (str): Luos port where the modules are attached
+            side (str): which side the part is attached to ('left' or 'right')
+        """
         Hand.__init__(self, side)
 
         self.luos_io = SharedLuosIO(luos_port)
@@ -56,6 +83,12 @@ class ForceGripper(Hand):
         self._load_sensor.scale = 10000
 
     def open(self, end_pos=-30, duration=1):
+        """Open the gripper.
+
+        Args:
+            end_pos (float): open end position (in degrees)
+            duration (float): open move duration (in seconds)
+        """
         self.gripper.goto(
             goal_position=end_pos,
             duration=duration,
@@ -64,6 +97,13 @@ class ForceGripper(Hand):
         )
 
     def close(self, end_pos=30, duration=1, target_grip_force=100):
+        """Close the gripper.
+
+        Args:
+            end_pos (float): close end position (in degrees)
+            duration (float): close move duration (in seconds)
+            target_grip_force (float): force threshold to stop closing the gripper
+        """
         motion = self.gripper.goto(
             goal_position=end_pos,
             duration=duration,
@@ -85,10 +125,16 @@ class ForceGripper(Hand):
 
     @property
     def grip_force(self):
+        """Get current grip force."""
         return self._load_sensor.load
 
 
 class OrbitaWrist(Hand):
+    """Orbita Wrist hand.
+
+    A 3dof Orbita Wrist at the end of the arm.
+    """
+
     dxl_motors = {}
     orbita_config = {
         'Pc_z': [0, 0, 25],
@@ -102,10 +148,17 @@ class OrbitaWrist(Hand):
     }
 
     def __init__(self, luos_port, side):
+        """Create a new OrbitaWrist Hand.
+
+        Args:
+            luos_port (str): Luos port where the modules are attached
+            side (str): which side the part is attached to ('left' or 'right')
+        """
         Hand.__init__(self, side)
 
         self.luos_io = SharedLuosIO(luos_port)
         self.wrist = self.create_orbita_actuator('wrist', self.luos_io, OrbitaWrist.orbita_config)
 
     def homing(self):
+        """Launch Wrist homing procedure."""
         self.wrist.homing()

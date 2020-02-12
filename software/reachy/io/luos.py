@@ -1,3 +1,4 @@
+"""Wrapper module on top of pyluos Robot object."""
 import logging
 
 from glob import glob
@@ -9,9 +10,23 @@ logger = logging.getLogger(__name__)
 
 
 class SharedLuosIO(object):
+    """
+    Abstraction class for pyluos Robot object.
+
+    The class is reponsible for holding active connections with Luos gate. A same gate can be shared among multiple IOs.
+    """
+
     opened_io = {}
 
     def __init__(self, luos_port):
+        """Create a new connection with a Luos gate.
+
+        Args:
+            luos_port (str): name of the serial port used (e.g. '/dev/ttyUSB0')
+
+        .. note:: If a connection on the same port already exists, the same IO will be used.
+
+        """
         if luos_port not in SharedLuosIO.opened_io:
             io = LuosIO(luos_port, log_conf='')
             SharedLuosIO.opened_io[luos_port] = io
@@ -29,6 +44,13 @@ class SharedLuosIO(object):
 
     @classmethod
     def with_gate(cls, name, port_template):
+        """Open a connection on the specified Luos gate.
+
+        Args:
+            name (str): name (or alias) of the searched Luos gate.
+            port_template (str): template name for the possible serial ports (e.g. '/dev/ttyUSB*')
+
+        """
         logger.info(f'Looking for gate "{name}" on ports "{port_template}"')
 
         available_ports = glob(port_template)
@@ -46,9 +68,14 @@ class SharedLuosIO(object):
 
     @property
     def gate_name(self):
+        """Retrieve the name of the Luos gate."""
         return self.shared_io.modules[0].alias
 
     def close(self):
+        """Close the IO.
+
+        .. warning:: You are responsible for handling correctly closing if you are using multiple connections on the same IO.
+        """
         self.shared_io.close()
         logger.info('Luos IO connection closed', extra={
             'gate_name': self.gate_name,
@@ -56,12 +83,22 @@ class SharedLuosIO(object):
         })
 
     def find_module(self, module_name):
+        """Retrieve a specified Luos module on the IO given its name.
+
+        Args:
+            module_name (str): name (or alias) of the researched module
+        """
         try:
             return getattr(self.shared_io, module_name)
         except AttributeError:
             raise IOError(f'Could not find module "{module_name}" on bus "{self.port}"')
 
     def find_dxl(self, dxl_id):
+        """Retrieve a specified Dynamixel motor on the IO given its id.
+
+        Args:
+            dxl_id (int): ID of the researched dynamixel motor
+        """
         module_name = 'dxl_{}'.format(dxl_id)
 
         m = self.find_module(module_name)
@@ -72,6 +109,7 @@ class SharedLuosIO(object):
         return m
 
     def find_orbital_disks(self):
+        """Retrieve the three Luos modules controlling each Orbita disk."""
         return [
             self.find_module(name)
             for name in ['disk_bottom', 'disk_middle', 'disk_top']
