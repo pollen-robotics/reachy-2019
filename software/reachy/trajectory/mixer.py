@@ -52,7 +52,7 @@ def _combine(m1, m2, overlap, r):
 
 def traj_as_array(traj):
     """Transform a trajectory dict into a numpy 2D array.
-    
+
     Args:
         traj (dict): {motor_name: list of positions}
     """

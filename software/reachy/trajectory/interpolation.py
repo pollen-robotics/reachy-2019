@@ -1,6 +1,6 @@
 """Trajectory interpolation utility module.
 
-This module defines various interpolation technique (linear, minimum jerk). 
+This module defines various interpolation technique (linear, minimum jerk).
 They can be used in all goto functions.
 """
 import time
@@ -37,7 +37,7 @@ class TrajectoryInterpolation(object):
         Args:
             t (float): time where to interpolate
 
-        You are responsible for implementing this method in your own interpolation technique. 
+        You are responsible for implementing this method in your own interpolation technique.
         Please refer to the implementation of Linear of MinimumJerk for examples.
         """
         raise NotImplementedError
@@ -47,7 +47,7 @@ class TrajectoryInterpolation(object):
 
         Args:
             motor (motor): motor to apply the trajectory to
-            update_freq (float): Update sample frequency (in Hz) 
+            update_freq (float): Update sample frequency (in Hz)
         """
         self._t = Thread(target=lambda: self._follow_traj_loop(motor, update_freq))
         self._running.set()

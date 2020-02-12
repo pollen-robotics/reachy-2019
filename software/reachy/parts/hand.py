@@ -58,7 +58,7 @@ class ForceGripper(Hand):
 
     def __init__(self, luos_port, side):
         """Create a new Force Gripper Hand.
-        
+
         Args:
             luos_port (str): Luos port where the modules are attached
             side (str): which side the part is attached to ('left' or 'right')
