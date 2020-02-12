@@ -1,0 +1,30 @@
+name: sphinx-deploy
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build-deploy:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '3.7'
+    - uses: actions/checkout@v1
+
+    - name: Setup Sphinx
+      run:
+        pip install -e ./software[doc]
+
+    - name: Build
+      run: |
+        make -C software/doc html
+        touch software/doc/_build/html/.nojekyll
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+        publish_branch: gh-pages
+        publish_dir: ./software/doc/_build/html

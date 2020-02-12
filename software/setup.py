@@ -8,7 +8,8 @@ from os import path
 
 def version():
     with open('reachy/_version.py') as f:
-        return re.search(r"^__version__ = ['\"]([^'\"]*)['\"]", f.read()).group(1)
+        _, version = f.readlines()
+        return re.search(r"^__version__ = ['\"]([^'\"]*)['\"]", version).group(1)
 
 
 here = path.abspath(path.dirname(__file__))
@@ -33,6 +34,10 @@ setup(
     extras_require={
         'head': ['opencv-python'],
         'log': ['zzlog'],
+
+        'doc': ['sphinx', 'sphinx-autoapi'],
+        'lint': ['flake8', 'pydocstyle'],
+        'test': ['pytest'],
     },
 
     author='Pollen Robotics',

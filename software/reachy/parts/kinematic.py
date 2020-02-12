@@ -1,3 +1,10 @@
+"""Kinematic forward and inverse utility module.
+
+* Allow the creation of kinematic chain (following a simplified DH notation)
+* Compute the forward kinematic
+* Provide optimization via scipy for inverse approximation
+"""
+
 import numpy as np
 
 from scipy.spatial.transform import Rotation
@@ -5,11 +12,24 @@ from scipy.optimize import minimize
 
 
 class Link(object):
+    """Simplified Link following DH notation."""
+
     def __init__(self, translation, rotation):
+        """Create a new link.
+
+        Args:
+            translation (numpy.array): 3d translation from the previous link
+            rotation (numpy.array): 3d euler rotation (xyz) from the previous link
+        """
         self.T = translation_matrix(translation)
         self.rotation = np.array(rotation).reshape(1, 3)
 
     def transformation_matrix(self, theta):
+        """Compute local transformation matrix for given angle.
+
+        Args:
+            theta (float): joint rotation angle (in radians)
+        """
         R = np.zeros((theta.shape[0], 4, 4))
         theta = theta.reshape(1, -1)
 
@@ -19,10 +39,24 @@ class Link(object):
 
 
 class Chain(object):
+    """Chain of Link forming a kinematic chain."""
+
     def __init__(self, links):
+        """Create the chain given the links."""
         self.links = links
 
     def forward(self, joints):
+        """
+        Compute forward kinematics of the chain given joints configurations.
+
+        Args:
+            joints (np.array): N*J array joint rotation angle for each link (in radians)
+
+        Returns:
+            numpy.array: 4x4 homogeneous matrix pose of the end effector
+
+        .. warning:: this is a vectorized version of the forward!
+        """
         M = np.eye(4)
 
         for l, theta in zip(self.links, joints.T):
@@ -31,6 +65,15 @@ class Chain(object):
         return M
 
     def inverse(self, poses, q0s):
+        """
+        Approximate the inverse kinematics of the chain given end pose.
+
+        Args:
+            poses (np.array): N*4*4 homogeneous matrix poses for the end effector
+            q0s (np.array): N*J initial joint configuration used to bootstrap the optimization
+
+        .. warning:: this is a vectorized version of the forward!
+        """
         return np.array([
             self._inverse(p, q0)
             for p, q0 in zip(poses, q0s)
@@ -47,16 +90,19 @@ class Chain(object):
 
 
 def translation_matrix(translation):
+    """Create homogenous matrix given a 3D translation vector."""
     M = np.eye(4)
     M[:3, 3] = translation
     return M
 
 
 def position_dist(P, Q):
+    """Compute euclidian distance between two 3D position."""
     return np.linalg.norm(P - Q)
 
 
 def rotation_dist(P, Q):
+    """Compute rotation distance between two 3D rotation."""
     R = np.matmul(P, Q.T)
 
     A = (np.trace(R) - 1) / 2
@@ -67,6 +113,10 @@ def rotation_dist(P, Q):
 
 
 def pose_dist(M1, M2, threshold=-1):
+    """Compute distance between two pose.
+
+    The distance is defined as the sum of the position distance and the rotation distance where 1° of error is equal to 1mm error distance.
+    """
     P1, R1 = M1[:3, 3], M1[:3, :3]
     P2, R2 = M2[:3, 3], M2[:3, :3]
 
