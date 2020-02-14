@@ -42,6 +42,11 @@ class SharedLuosIO(object):
         self.shared_io = SharedLuosIO.opened_io[luos_port]
         self.port = luos_port
 
+    def __repr__(self):
+        """Shared IO representation."""
+        mod = [m.alias for m in self.shared_io.modules]
+        return f'<SharedLuosIO "port": "{self.port}" "modules": {mod}>'
+
     @classmethod
     def with_gate(cls, name, port_template):
         """Open a connection on the specified Luos gate.

@@ -82,6 +82,10 @@ class ForceGripper(Hand):
         self._load_sensor.offset = 4
         self._load_sensor.scale = 10000
 
+    def __repr__(self):
+        """Force gripper representation."""
+        return f'<ForceGripper "grip force": {self.grip_force}>'
+
     def open(self, end_pos=-30, duration=1):
         """Open the gripper.
 
@@ -158,6 +162,10 @@ class OrbitaWrist(Hand):
 
         self.luos_io = SharedLuosIO(luos_port)
         self.wrist = self.create_orbita_actuator('wrist', self.luos_io, OrbitaWrist.orbita_config)
+
+    def __repr__(self):
+        """Orbita wrist representation."""
+        return f'<OrbitaWrist "wrist": {self.wrist}>'
 
     def homing(self):
         """Launch Wrist homing procedure."""

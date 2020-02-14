@@ -64,6 +64,10 @@ class Head(ReachyPart):
         from ..utils.vision import BackgroundVideoCapture
         self.cap = BackgroundVideoCapture(camera_id)
 
+    def __repr__(self):
+        """Head representation."""
+        return f'<Head "neck": {self.neck}>'
+
     def teardown(self):
         """Clean and close head part."""
         self.luos_io.close()

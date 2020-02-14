@@ -63,6 +63,10 @@ class Arm(ReachyPart):
 
         self.attach_kinematic_chain(dxl_motors)
 
+    def __repr__(self):
+        """Arm representation."""
+        return f'<{self.side.capitalize()}Arm "motors": {self.motors} "hand": {self.hand}>'
+
     def teardown(self):
         """Clean and close the Arm part."""
         self.luos_io.close()

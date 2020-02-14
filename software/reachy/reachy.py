@@ -62,6 +62,10 @@ class Reachy(object):
             }
         )
 
+    def __repr__(self):
+        """Reachy representation."""
+        return f'<Reachy: {self.parts}>'
+
     def close(self):
         """Close all communication with each attached parts."""
         logger.info(

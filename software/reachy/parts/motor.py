@@ -41,7 +41,7 @@ class DynamixelMotor(object):
     def __repr__(self):
         """Motor representation."""
         mode = 'compliant' if self.compliant else 'stiff'
-        return f'<Motor "{self.name}" pos="{self.present_position}" mode="{mode}">'
+        return f'<DxlMotor "{self.name}" pos="{self.present_position}" mode="{mode}">'
 
     @property
     def name(self):
@@ -182,6 +182,13 @@ class OrbitaActuator(object):
             wheel_size=wheel_size,
             encoder_res=encoder_res,
         )
+
+    def __repr__(self):
+        """Orbita representation."""
+        return (f'<Orbita '
+                f'"top disk": {self.disk_top.present_position} '
+                f'"middle disk": {self.disk_middle.present_position} '
+                f'"bottom disk": {self.disk_bottom.present_position}>')
 
     @property
     def disks(self):
