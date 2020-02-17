@@ -28,7 +28,7 @@ class DynamixelMotor(object):
     """
 
     def __init__(self, root_part, name, luos_motor, config):
-        """Create a DynamixelMotor given its pyluos equivalent. """
+        """Create a DynamixelMotor given its pyluos equivalent."""
         self._root_part = root_part
         self._name = name
 

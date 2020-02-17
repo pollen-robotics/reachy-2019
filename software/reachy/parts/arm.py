@@ -129,10 +129,10 @@ class Arm(ReachyPart):
 class LeftArm(Arm):
     """Left Arm part.
 
-       Args:
-            luos_port (str): serial port where the Luos modules are attached
-            hand (str): name of the :py:class:`~reachy.parts.hand.Hand` to attached ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
-        """
+    Args:
+        luos_port (str): serial port where the Luos modules are attached
+        hand (str): name of the :py:class:`~reachy.parts.hand.Hand` to attached ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
+    """
 
     dxl_motors = OrderedDict([
         ('shoulder_pitch', {
