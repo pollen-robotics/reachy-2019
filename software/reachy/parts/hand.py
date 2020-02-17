@@ -6,19 +6,12 @@ Define different hand parts:
 """
 
 import time
-import numpy as np
 
 from collections import OrderedDict
-from scipy.spatial.transform import Rotation as R
 
+from ..utils import rot
 from .part import ReachyPart
 from ..io import SharedLuosIO
-
-
-# FIXME: this should be defined elsewhere
-def rot(axis, deg):
-    """Compute 3D rotation matrix given euler rotation."""
-    return R.from_euler(axis, np.deg2rad(deg)).as_dcm()
 
 
 class Hand(ReachyPart):
