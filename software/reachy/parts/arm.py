@@ -36,6 +36,7 @@ class Arm(ReachyPart):
             hand (str): name of the Hand to attached ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
         """
         ReachyPart.__init__(self, name=f'{side}_arm')
+        self.side = side
 
         dxl_motors = OrderedDict(dxl_motors)
 
