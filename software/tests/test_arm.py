@@ -32,9 +32,9 @@ class ArmTestCase(unittest.TestCase):
         )
 
     def test_motors(self):
-        self.assertEqual(len(self.left_arm.motors), 5)
+        self.assertEqual(len(self.left_arm.motors), 4)
         self.assertEqual(len(self.left_arm_with_gripper.motors), 8)
-        self.assertEqual(len(self.right_arm.motors), 5)
+        self.assertEqual(len(self.right_arm.motors), 4)
         self.assertEqual(len(self.right_arm_with_gripper.motors), 8)
         self.assertEqual(len(self.right_arm_with_wrist.motors), 4)
 
