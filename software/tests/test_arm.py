@@ -32,16 +32,16 @@ class ArmTestCase(unittest.TestCase):
         )
 
     def test_motors(self):
-        self.assertEqual(len(self.left_arm.motors), 5)
+        self.assertEqual(len(self.left_arm.motors), 4)
         self.assertEqual(len(self.left_arm_with_gripper.motors), 8)
-        self.assertEqual(len(self.right_arm.motors), 5)
+        self.assertEqual(len(self.right_arm.motors), 4)
         self.assertEqual(len(self.right_arm_with_gripper.motors), 8)
         self.assertEqual(len(self.right_arm_with_wrist.motors), 4)
 
     def test_zero_forward_no_hand(self):
         N = np.random.randint(2, 100)
 
-        J0 = np.zeros((N, 5))
+        J0 = np.zeros((N, len(self.left_arm.motors)))
         lm0 = np.array((
             (1, 0, 0, 0),
             (0, 1, 0, 0.19),
@@ -76,17 +76,17 @@ class ArmTestCase(unittest.TestCase):
     def test_zero_forward_gripper(self):
         N = np.random.randint(2, 100)
 
-        J0 = np.zeros((N, 7))
+        J0 = np.zeros((N, len(self.right_arm_with_gripper.motors)))
         lm0 = np.array((
             (1, 0, 0, 0),
-            (0, 1, 0, 0.19),
-            (0, 0, 1, -0.56413),
+            (0, 1, 0, 0.1715),
+            (0, 0, 1, -0.62413),
             (0, 0, 0, 1),
         ))
         rm0 = np.array((
             (1, 0, 0, 0),
-            (0, 1, 0, -0.19),
-            (0, 0, 1, -0.56413),
+            (0, 1, 0, -0.2085),
+            (0, 0, 1, -0.62413),
             (0, 0, 0, 1),
         ))
 
