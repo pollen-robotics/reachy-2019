@@ -314,7 +314,7 @@ class OrbitaActuator(object):
 
         for d in self.disks:
             d.setToZero()
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         self.compliant = False
         time.sleep(0.1)
@@ -360,7 +360,7 @@ class OrbitaActuator(object):
 
         for d in self.disks:
             d.setToZero()
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         self.model.reset_last_angles()
         self.orient(Quaternion(1, 0, 0, 0), duration=1, wait=True)
