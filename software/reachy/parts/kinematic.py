@@ -12,15 +12,15 @@ from scipy.optimize import minimize
 
 
 class Link(object):
-    """Simplified Link following DH notation."""
+    """Simplified Link following DH notation.
+
+    Args:
+        translation (:py:class:`~numpy.ndarray`): 3d translation from the previous link
+        rotation (:py:class:`~numpy.ndarray`): 3d euler rotation (xyz) from the previous link
+    """
 
     def __init__(self, translation, rotation):
-        """Create a new link.
-
-        Args:
-            translation (numpy.array): 3d translation from the previous link
-            rotation (numpy.array): 3d euler rotation (xyz) from the previous link
-        """
+        """Create a new link."""
         self.T = translation_matrix(translation)
         self.rotation = np.array(rotation).reshape(1, 3)
 
@@ -39,7 +39,11 @@ class Link(object):
 
 
 class Chain(object):
-    """Chain of Link forming a kinematic chain."""
+    """Chain of Link forming a kinematic chain.
+    
+    Args:
+        links (list): list of :py:class:`Link`
+    """
 
     def __init__(self, links):
         """Create the chain given the links."""
@@ -50,10 +54,10 @@ class Chain(object):
         Compute forward kinematics of the chain given joints configurations.
 
         Args:
-            joints (np.array): N*J array joint rotation angle for each link (in radians)
+            joints (:py:class:`~numpy.ndarray`): N*J array joint rotation angle for each link (in radians)
 
         Returns:
-            numpy.array: 4x4 homogeneous matrix pose of the end effector
+            :py:class:`~numpy.ndarray`: 4x4 homogeneous matrix pose of the end effector
 
         .. warning:: this is a vectorized version of the forward!
         """
@@ -69,8 +73,8 @@ class Chain(object):
         Approximate the inverse kinematics of the chain given end pose.
 
         Args:
-            poses (np.array): N*4*4 homogeneous matrix poses for the end effector
-            q0s (np.array): N*J initial joint configuration used to bootstrap the optimization
+            poses (:py:class:`~numpy.ndarray`): N*4*4 homogeneous matrix poses for the end effector
+            q0s (:py:class:`~numpy.ndarray`): N*J initial joint configuration used to bootstrap the optimization
 
         .. warning:: this is a vectorized version of the forward!
         """

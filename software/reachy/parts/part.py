@@ -7,16 +7,15 @@ from .kinematic import Link, Chain
 class ReachyPart(object):
     """Part abstraction class.
 
+    Args:
+        name (str): name of the new part, can be composed if it's a subpart (eg. right_arm.hand)
+
     Define instantiation, teardown functionalities.
     Also provides attach function for dynamixel motors and orbita actuator.
     """
 
     def __init__(self, name):
-        """Create a new part.
-
-        Args:
-            name (str): name of the new part, can be composed if it's a subpart (eg. right_arm.hand)
-        """
+        """Create a new part."""
         self.name = name
         self.motors = []
 

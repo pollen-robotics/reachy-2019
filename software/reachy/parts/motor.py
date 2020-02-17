@@ -18,18 +18,18 @@ from ..trajectory.interpolation import interpolation_modes
 class DynamixelMotor(object):
     """DynamixelMotor abstraction class.
 
+    Args:
+        root_part (str): name of the part where the motor is attached to (eg 'right_arm.hand')
+        name (str): name of the motor (eg. 'shoulder_pitch')
+        luos_motor (:py:class:`pyluos.modules.DxlMotor`): pyluos motor
+        config (dict): extra motor config (must include 'offset' and 'orientation' fields)
+       
+
     Wrap the pyluos motor object to simplify and make the API homogeneous.
     """
 
     def __init__(self, root_part, name, luos_motor, config):
-        """Create a DynamixelMotor given its pyluos equivalent.
-
-        Args:
-            root_part (str): name of the part where the motor is attached to (eg 'right_arm.hand')
-            name (str): name of the motor (eg. 'shoulder_pitch')
-            luos_motor (pyluos.Motor): pyluos motor
-            config (dict): extra motor config (must include 'offset' and 'orientation' fields)
-        """
+        """Create a DynamixelMotor given its pyluos equivalent. """
         self._root_part = root_part
         self._name = name
 
@@ -145,7 +145,21 @@ class DynamixelMotor(object):
 class OrbitaActuator(object):
     """Orbita Actuator abstraction.
 
+    Args:
+        root_part (str): name of the part where the motor is attached to (eg 'head')
+        name (str): name of the acutator (eg. 'neck')
+        luos_disks_motor (list of :py:class:`pyluos.motor_controller`): list of the three disks controllers
+        Pc_z (float, float, float): TODO
+        Cp_z (float, float, float): TODO
+        R (float): TODO
+        R0 (matrix): rotation matrix for the initial rotation
+        pid (float, float, float): coefficient for the pid position controller
+        reduction (float): reduction factor
+        wheel_size (float): size of the wheel (in mm)
+        encoder_res (int): encoder resolution
+
     Wrap the three disk and the computation model of Orbita to expose higher-level functionalities such as:
+
     * quaternion control
     * compliancy mode
     * goto
@@ -156,21 +170,7 @@ class OrbitaActuator(object):
         Pc_z, Cp_z, R, R0,
         pid, reduction, wheel_size, encoder_res,
     ):
-        """Create a OrbitaActuator given its three disks controllers.
-
-        Args:
-            root_part (str): name of the part where the motor is attached to (eg 'head')
-            name (str): name of the acutator (eg. 'neck')
-            luos_disks_motor (list of pyluos.motor_controller): list of the three disks controllers
-            Pc_z (float, float, float): TODO
-            Cp_z (float, float, float): TODO
-            R (float): TODO
-            R0 (matrix): rotation matrix for the initial rotation
-            pid (float, float, float): coefficient for the pid position controller
-            reduction (float): reduction factor
-            wheel_size (float): size of the wheel (in mm)
-            encoder_res (int): encoder resolution
-        """
+        """Create a OrbitaActuator given its three disks controllers."""
         self.disk_bottom, self.disk_middle, self.disk_top = luos_disks_motor
         self.model = OrbitaModel(Pc_z=Pc_z, Cp_z=Cp_z, R=R, R0=R0)
 

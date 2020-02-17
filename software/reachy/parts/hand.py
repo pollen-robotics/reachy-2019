@@ -1,8 +1,9 @@
 """Hand part modules.
 
 Define different hand parts:
-* a ForceGripper
-* a OrbitaWrist
+
+* a :py:class:`~reachy.parts.hand.ForceGripper`
+* a :py:class:`~reachy.parts.hand.OrbitaWrist`
 """
 
 import time
@@ -15,14 +16,14 @@ from ..io import SharedLuosIO
 
 
 class Hand(ReachyPart):
-    """Hand abstraction part."""
+    """Hand abstraction part.
+
+    Args:
+        side (str): which side the hand is attached to ('left' or 'right')
+    """
 
     def __init__(self, side):
-        """Create hand part.
-
-        Args:
-            side (str): which side the hand is attached to ('left' or 'right')
-        """
+        """Create hand part."""
         ReachyPart.__init__(self, name='hand')
 
         self.side = side
@@ -30,6 +31,10 @@ class Hand(ReachyPart):
 
 class ForceGripper(Hand):
     """Force Gripper Part.
+
+    Args:
+        luos_port (str): Luos port where the modules are attached
+        side (str): which side the part is attached to ('left' or 'right')
 
     Composed of three dynamixel motors and a force sensor for gripping pressure.
     """
@@ -54,12 +59,7 @@ class ForceGripper(Hand):
     ])
 
     def __init__(self, luos_port, side):
-        """Create a new Force Gripper Hand.
-
-        Args:
-            luos_port (str): Luos port where the modules are attached
-            side (str): which side the part is attached to ('left' or 'right')
-        """
+        """Create a new Force Gripper Hand."""
         Hand.__init__(self, side)
 
         self.luos_io = SharedLuosIO(luos_port)
@@ -133,6 +133,10 @@ class ForceGripper(Hand):
 class OrbitaWrist(Hand):
     """Orbita Wrist hand.
 
+    Args:
+        luos_port (str): Luos port where the modules are attached
+        side (str): which side the part is attached to ('left' or 'right')
+
     A 3dof Orbita Wrist at the end of the arm.
     """
 
@@ -149,12 +153,7 @@ class OrbitaWrist(Hand):
     }
 
     def __init__(self, luos_port, side):
-        """Create a new OrbitaWrist Hand.
-
-        Args:
-            luos_port (str): Luos port where the modules are attached
-            side (str): which side the part is attached to ('left' or 'right')
-        """
+        """Create a new OrbitaWrist Hand."""
         Hand.__init__(self, side)
 
         self.luos_io = SharedLuosIO(luos_port)
