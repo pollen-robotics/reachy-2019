@@ -149,10 +149,10 @@ class OrbitaActuator(object):
         root_part (str): name of the part where the motor is attached to (eg 'head')
         name (str): name of the acutator (eg. 'neck')
         luos_disks_motor (list of :py:class:`pyluos.motor_controller`): list of the three disks controllers
-        Pc_z (float, float, float): TODO
-        Cp_z (float, float, float): TODO
-        R (float): TODO
-        R0 (matrix): rotation matrix for the initial rotation
+        Pc_z (float, float, float): 3D coordinates of the center of the platform (in mm)
+        Cp_z (float, float, float): center of the disks rotation circle (in mm)
+        R (float): radius of the arms rotation circle around the platform (in mm)
+        R0 (:py:class:`~numpy.ndarray`): rotation matrix for the initial rotation
         pid (float, float, float): coefficient for the pid position controller
         reduction (float): reduction factor
         wheel_size (float): size of the wheel (in mm)
