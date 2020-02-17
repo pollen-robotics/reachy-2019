@@ -28,7 +28,7 @@ class ReachyPart(object):
         """Attach given dynamixel motors to a part.
 
         Args:
-            luos_io (SharedLuosIO): io to the Luos gate where the motors are connected
+            luos_io (reachy.io.SharedLuosIO): io to the Luos gate where the motors are connected
             dxl_motors (dict): motors config, the config must at least include an id for each motor (see attach_kinematic_chain for extra parameters)
         """
         self.motors = []
@@ -43,7 +43,7 @@ class ReachyPart(object):
 
         Args:
             name (str): name of the orbita actuator (eg neck for the head part)
-            luos_io (SharedLuosIO): io to the Luos gate where the Orbita disk controller are connected
+            luos_io (reachy.io.SharedLuosIO): io to the Luos gate where the Orbita disk controller are connected
             config (dict): orbita configuration (see OrbitaActuator for details)
         """
         luos_disks_motor = luos_io.find_orbital_disks()

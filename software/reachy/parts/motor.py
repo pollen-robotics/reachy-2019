@@ -127,7 +127,7 @@ class DynamixelMotor(object):
             interpolation_mode (str): interpolation technique used for computing the trajectory ('linear', 'minjerk')
 
         Returns:
-            TrajectoryPlayer: trajectory player that can be used to monitor the trajectory, stop it, etc
+            reachy.trajectory.TrajectoryPlayer: trajectory player that can be used to monitor the trajectory, stop it, etc
         """
         if interpolation_mode not in interpolation_modes.keys():
             available = tuple(interpolation_modes.keys())
@@ -220,7 +220,7 @@ class OrbitaActuator(object):
             interpolation_mode (str): interpolation technique used for computing the trajectory ('linear', 'minjerk')
 
         Returns:
-            TrajectoryPlayer: trajectory player that can be used to monitor the trajectory, stop it, etc
+            reachy.trajectory.TrajectoryPlayer: trajectory player that can be used to monitor the trajectory, stop it, etc
         """
         if len(thetas) != len(self.disks):
             raise ValueError(f'Invalid thetas {thetas} (length should be {len(self.disks)}')
@@ -258,7 +258,7 @@ class OrbitaActuator(object):
             wait (bool): whether or not to wait for the end of the motion
 
         Returns:
-            TrajectoryPlayer: trajectory player that can be used to monitor the trajectory, stop it, etc
+            reachy.trajectory.TrajectoryPlayer: trajectory player that can be used to monitor the trajectory, stop it, etc
         """
         thetas = self.model.get_angles_from_vector(vector, angle)
         # We used a reversed encoder so we need to inverse the angles
@@ -274,7 +274,7 @@ class OrbitaActuator(object):
             wait (bool): whether or not to wait for the end of the motion
 
         Returns:
-            TrajectoryPlayer: trajectory player that can be used to monitor the trajectory, stop it, etc
+            reachy.trajectory.TrajectoryPlayer: trajectory player that can be used to monitor the trajectory, stop it, etc
         """
         thetas = self.model.get_angles_from_quaternion(quat.w, quat.x, quat.y, quat.z)
         # We used a reversed encoder so we need to inverse the angles
