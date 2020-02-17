@@ -21,20 +21,19 @@ hands = {
 class Arm(ReachyPart):
     """Arm abstraction class.
 
+    Args:
+        side (str): 'right' or 'left'
+        luos_port (str): serial port where the Luos modules are attached
+        dxl_motors (dict): config of the dynamixel motors composing the arm
+        hand (str): name of the Hand to attached ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
+
     Provides high-level access to:
         * ordered list of motors
         * forward and inverse kinematics
     """
 
     def __init__(self, side, luos_port, dxl_motors, hand):
-        """Create a new Arm part.
-
-        Args:
-            side (str): 'right' or 'left'
-            luos_port (str): serial port where the Luos modules are attached
-            dxl_motors (dict): config of the dynamixel motors composing the arm
-            hand (str): name of the Hand to attached ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
-        """
+        """Create a new Arm part."""
         ReachyPart.__init__(self, name=f'{side}_arm')
         self.side = side
 
@@ -72,7 +71,7 @@ class Arm(ReachyPart):
         """Compute the forward kinematics of the Arm.
 
         Args:
-            joints_position (np.array): angle joints configuration of the arm (in degrees by default)
+            joints_position (:py:class:`~numpy.ndarray`): angle joints configuration of the arm (in degrees by default)
             use_rad (bool): whether or not to use radians for joints configuration
 
         .. note:: the end effector will be the end of the Hand if one is attached.
@@ -95,8 +94,8 @@ class Arm(ReachyPart):
         """Approximate the inverse kinematics of the Arm.
 
         Args:
-            target_pose (np.array): 4x4 homogeneous pose of the target end effector pose
-            q0 (np.array): joint initial angle configurations (used for bootstraping the optimization)
+            target_pose (:py:class:`~numpy.ndarray`): 4x4 homogeneous pose of the target end effector pose
+            q0 (:py:class:`~numpy.ndarray`): joint initial angle configurations (used for bootstraping the optimization)
             use_rad (bool): whether or not to use radians for joints configuration
 
         .. note:: the end effector will be the end of the Hand if one is attached.
@@ -128,7 +127,12 @@ class Arm(ReachyPart):
 
 
 class LeftArm(Arm):
-    """Left Arm part."""
+    """Left Arm part.
+
+    Args:
+        luos_port (str): serial port where the Luos modules are attached
+        hand (str): name of the :py:class:`~reachy.parts.hand.Hand` to attached ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
+    """
 
     dxl_motors = OrderedDict([
         ('shoulder_pitch', {
@@ -150,19 +154,19 @@ class LeftArm(Arm):
     ])
 
     def __init__(self, luos_port, hand=None):
-        """Create a new Left Arm part.
-
-        Args:
-            luos_port (str): serial port where the Luos modules are attached
-            hand (str): name of the Hand to attached ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
-        """
+        """Create a new Left Arm part."""
         Arm.__init__(self, side='left',
                      luos_port=luos_port, dxl_motors=LeftArm.dxl_motors,
                      hand=hand)
 
 
 class RightArm(Arm):
-    """Right Arm part."""
+    """Right Arm part.
+
+    Args:
+        luos_port (str): serial port where the Luos modules are attached
+        hand (str): name of the :py:class:`~reachy.parts.hand.Hand` to attached ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
+    """
 
     dxl_motors = OrderedDict([
         ('shoulder_pitch', {
@@ -184,12 +188,7 @@ class RightArm(Arm):
     ])
 
     def __init__(self, luos_port, hand=None):
-        """Create a new Right Arm part.
-
-        Args:
-            luos_port (str): serial port where the Luos modules are attached
-            hand (str): name of the Hand to attached ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
-        """
+        """Create a new Right Arm part."""
         Arm.__init__(self, side='right',
                      luos_port=luos_port, dxl_motors=RightArm.dxl_motors,
                      hand=hand)

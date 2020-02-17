@@ -9,19 +9,18 @@ from threading import Event, Thread
 class TrajectoryRecorder(object):
     """Trajectory Recorder utility class.
 
+    Args:
+        motors (list): list of motors to record (eg. [reachy.right_arm.elbow_pitch, reachy.right_arm.shoulder_pitch])
+        position_field (str): register to record as trajectories (default use the 'present_position', 'goal_position' can also be useful in some specific case)
+        freq (float): record sample frequency (in Hz)
+
+    .. note:: A same recorder can be used to record multiple trajectories.
+
     Facilitates the recording of a full trajectory on multiple motors.
     """
 
     def __init__(self, motors, position_field='present_position', freq=100):
-        """Create the recorder.
-
-        Args:
-            motors (list): list of motors to record (eg. [reachy.right_arm.elbow_pitch, reachy.right_arm.shoulder_pitch])
-            position_field (str): register to record as trajectories (default use the 'present_position', 'goal_position' can also be useful in some specific case)
-            freq (float): record sample frequency (in Hz)
-
-        .. note:: A same recorder can be used to record multiple trajectories.
-        """
+        """Create the recorder."""
         self.motors = motors
 
         self._data = []

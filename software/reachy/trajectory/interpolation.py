@@ -13,17 +13,16 @@ from scipy.interpolate import interp1d
 class TrajectoryInterpolation(object):
     """Trajectory interpolation abstraction class.
 
+    Args:
+        initial_position (float): starting position (in degrees)
+        goal_position (float): end position (in degrees)
+        duration (float): duration of the movement (in seconds)
+
     You can defined your own interpolation technique by respecting this abstraction so they can be used in goto functions.
     """
 
     def __init__(self, initial_position, goal_position, duration):
-        """Create your interpolation object.
-
-        Args:
-            initial_position (float): starting position (in degrees)
-            goal_position (float): end position (in degrees)
-            duration (float): duration of the movement (in seconds)
-        """
+        """Create your interpolation object."""
         self.inital_position = initial_position
         self.goal_position = goal_position
         self.duration = duration
@@ -88,24 +87,24 @@ class Linear(TrajectoryInterpolation):
 
 
 class MinimumJerk(TrajectoryInterpolation):
-    """Minimum Jerk interpolation implementation."""
+    """Minimum Jerk interpolation implementation.
+
+    Args:
+        initial_position (float): starting position (in degrees)
+        goal_position (float): end position (in degrees)
+        duration (float): duration of the movement (in seconds)
+        initial_velocity (float): initial velocity used for interpolation
+        final_velocity (float): final velocity used for interpolation
+        initial_acceleration (float): initial acceleration used for interpolation
+        final_acceleration (float): final acceleration used for interpolation
+    """
 
     def __init__(
         self,
         initial_position, goal_position, duration,
         initial_velocity=0, final_velocity=0, initial_acceleration=0, final_acceleration=0,
     ):
-        """Create the minjerk interpolation.
-
-        Args:
-            initial_position (float): starting position (in degrees)
-            goal_position (float): end position (in degrees)
-            duration (float): duration of the movement (in seconds)
-            initial_velocity (float): initial velocity used for interpolation
-            final_velocity (float): final velocity used for interpolation
-            initial_acceleration (float): initial acceleration used for interpolation
-            final_acceleration (float): final acceleration used for interpolation
-        """
+        """Create the minjerk interpolation."""
         TrajectoryInterpolation.__init__(self, initial_position, goal_position, duration)
 
         a0 = initial_position

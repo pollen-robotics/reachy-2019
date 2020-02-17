@@ -1,9 +1,10 @@
 """Reachy parts submodule.
 
 Used to define all parts in Reachy:
-* RightArm, LeftArm
-* ForceGripper
-* Head
+
+* :py:class:`RightArm`, :py:class:`LeftArm`
+* :py:class:`~reachy.parts.hand.ForceGripper`
+* :py:class:`Head`
 """
 
 from .arm import LeftArm, RightArm # noqa

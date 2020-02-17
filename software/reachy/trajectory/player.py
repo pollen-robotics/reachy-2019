@@ -10,6 +10,11 @@ from operator import attrgetter
 class TrajectoryPlayer(object):
     """Trajectory player abstraction.
 
+    Args:
+        reachy (:py:class:`~reachy.Reachy`): robot which will play the trajectory
+        trajectories (dict): Trajectory to play (such as {motor_name: list of positions})
+        freq (float): Replay sample frequency (in Hz)
+
     Provides high-level features to:
         * play a pre-defined trajectory
         * wait for the end of the replay
@@ -17,13 +22,7 @@ class TrajectoryPlayer(object):
     """
 
     def __init__(self, reachy, trajectories, freq=100):
-        """Create the Trajectory Player.
-
-        Args:
-            reachy (Reachy): robot which will play the trajectory
-            trajectories (dict): Trajectory to play (such as {motor_name: list of positions})
-            freq (float): Replay sample frequency (in Hz)
-        """
+        """Create the Trajectory Player."""
         motor_names, trajectories = zip(*trajectories.items())
 
         self._reachy = reachy

@@ -12,6 +12,10 @@ from ..io import SharedLuosIO
 class Head(ReachyPart):
     """Head part.
 
+    Args:
+        camera_id (int): index of the camera
+        luos_port (str): serial port where the Luos modules are attached
+
     Composed of an orbita actuator as neck, two controlled antennas and one camera.
     """
 
@@ -36,12 +40,7 @@ class Head(ReachyPart):
     ])
 
     def __init__(self, camera_id, luos_port):
-        """Create new Head part.
-
-        Args:
-            camera_id (int): index of the camera
-            luos_port (str): serial port where the Luos modules are attached
-        """
+        """Create new Head part."""
         ReachyPart.__init__(self, name='head')
 
         self.luos_io = SharedLuosIO.with_gate('r_head', luos_port)

@@ -33,6 +33,7 @@ release = 'v1.0.0'
 extensions = [
     'autoapi.extension',
     'sphinx.ext.napoleon',
+    'sphinx.ext.intersphinx',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -59,3 +60,9 @@ html_static_path = ['_static']
 autoapi_dirs = ['../reachy']
 autoapi_template_dir = './_templates'
 autoapi_add_toctree_entry = False
+
+intersphinx_mapping = {
+    'python': ('http://docs.python.org/3', None),
+    'numpy': ('http://docs.scipy.org/doc/numpy/', None),
+    'scipy': ('http://docs.scipy.org/doc/scipy/reference/', None),
+}

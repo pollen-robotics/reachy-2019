@@ -11,7 +11,12 @@ logger = logging.getLogger(__name__)
 
 class SharedLuosIO(object):
     """
-    Abstraction class for pyluos Robot object.
+    Abstraction class for pyluos Robot object. Create a new connection with a Luos gate.
+
+    Args:
+        luos_port (str): name of the serial port used (e.g. '/dev/ttyUSB0')
+
+    .. note:: If a connection on the same port already exists, the same IO will be used.
 
     The class is reponsible for holding active connections with Luos gate. A same gate can be shared among multiple IOs.
     """
@@ -19,14 +24,7 @@ class SharedLuosIO(object):
     opened_io = {}
 
     def __init__(self, luos_port):
-        """Create a new connection with a Luos gate.
-
-        Args:
-            luos_port (str): name of the serial port used (e.g. '/dev/ttyUSB0')
-
-        .. note:: If a connection on the same port already exists, the same IO will be used.
-
-        """
+        """Create a new connection with a Luos gate."""
         if luos_port not in SharedLuosIO.opened_io:
             io = LuosIO(luos_port, log_conf='')
             SharedLuosIO.opened_io[luos_port] = io
