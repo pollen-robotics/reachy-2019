@@ -17,7 +17,7 @@ class SharedLuosIO(object):
         luos_port (str): name of the serial port used (e.g. '/dev/ttyUSB0')
 
     .. note:: If a connection on the same port already exists, the same IO will be used.
-    
+
     The class is reponsible for holding active connections with Luos gate. A same gate can be shared among multiple IOs.
     """
 

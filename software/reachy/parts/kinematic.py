@@ -40,7 +40,7 @@ class Link(object):
 
 class Chain(object):
     """Chain of Link forming a kinematic chain.
-    
+
     Args:
         links (list): list of :py:class:`Link`
     """

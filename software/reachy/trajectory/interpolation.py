@@ -96,7 +96,7 @@ class MinimumJerk(TrajectoryInterpolation):
         initial_velocity (float): initial velocity used for interpolation
         final_velocity (float): final velocity used for interpolation
         initial_acceleration (float): initial acceleration used for interpolation
-        final_acceleration (float): final acceleration used for interpolation    
+        final_acceleration (float): final acceleration used for interpolation
     """
 
     def __init__(

@@ -23,7 +23,6 @@ class DynamixelMotor(object):
         name (str): name of the motor (eg. 'shoulder_pitch')
         luos_motor (:py:class:`pyluos.modules.DxlMotor`): pyluos motor
         config (dict): extra motor config (must include 'offset' and 'orientation' fields)
-       
 
     Wrap the pyluos motor object to simplify and make the API homogeneous.
     """
