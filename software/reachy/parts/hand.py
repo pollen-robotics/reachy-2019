@@ -90,6 +90,10 @@ class ForceGripper(Hand):
             end_pos (float): open end position (in degrees)
             duration (float): open move duration (in seconds)
         """
+
+        if self.side == 'left':
+            end_pos = -end_pos
+
         self.gripper.goto(
             goal_position=end_pos,
             duration=duration,
@@ -105,24 +109,31 @@ class ForceGripper(Hand):
             duration (float): close move duration (in seconds)
             target_grip_force (float): force threshold to stop closing the gripper
         """
+        release_threshold = 2
+
+        if self.side == 'left':
+            end_pos = -end_pos
+            release_threshold = -release_threshold
+
         motion = self.gripper.goto(
             goal_position=end_pos,
             duration=duration,
             wait=False,
             interpolation_mode='minjerk',
         )
-        while self.grip_force < target_grip_force and self.gripper.present_position < 15:
-            time.sleep(0.01)
+
+        if self.side == 'left':
+            while self.grip_force > -target_grip_force and motion.is_playing:
+                time.sleep(0.01)
+        else:
+            while self.grip_force < target_grip_force and motion.is_playing:
+                time.sleep(0.01)
 
         motion.stop()
         time.sleep(0.1)
 
-        self.gripper.goal_position = self.gripper.present_position - 2
+        self.gripper.goal_position = self.gripper.present_position - release_threshold
         time.sleep(0.5)
-
-        # while self.grip_force > target_grip_force + 30:
-        #     self.gripper.goal_position -= 0.1
-        #     time.sleep(0.02)
 
     @property
     def grip_force(self):

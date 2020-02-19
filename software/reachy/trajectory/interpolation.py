@@ -52,13 +52,17 @@ class TrajectoryInterpolation(object):
         self._running.set()
         self._t.start()
 
+    @property
+    def is_playing(self):
+        return self._t is not None and self._t.is_alive()
+
     def stop(self):
         """Stop the interpolation trajectory."""
         self._running.clear()
 
     def wait(self):
         """Block until the end of the trajectory interpolation."""
-        if self._t is not None and self._t.is_alive():
+        if self.is_playing:
             self._t.join()
 
     def _follow_traj_loop(self, motor, update_freq):
