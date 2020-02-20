@@ -54,6 +54,7 @@ class TrajectoryInterpolation(object):
 
     @property
     def is_playing(self):
+        """Check if the trajectory is currently playing."""
         return self._t is not None and self._t.is_alive()
 
     def stop(self):

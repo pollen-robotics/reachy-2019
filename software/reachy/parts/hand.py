@@ -90,7 +90,6 @@ class ForceGripper(Hand):
             end_pos (float): open end position (in degrees)
             duration (float): open move duration (in seconds)
         """
-
         if self.side == 'left':
             end_pos = -end_pos
 
