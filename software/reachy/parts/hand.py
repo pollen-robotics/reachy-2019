@@ -123,6 +123,8 @@ class ForceGripper(Hand):
 
 
 class LeftForceGripper(ForceGripper):
+    """Left Force Gripper Part."""
+
     dxl_motors = OrderedDict([
         ('forearm_yaw', {
             'id': 14, 'offset': 0.0, 'orientation': 'indirect',
@@ -148,6 +150,8 @@ class LeftForceGripper(ForceGripper):
 
 
 class RightForceGripper(ForceGripper):
+    """Right Force Gripper Part."""
+
     dxl_motors = OrderedDict([
         ('forearm_yaw', {
             'id': 14, 'offset': 0.0, 'orientation': 'indirect',

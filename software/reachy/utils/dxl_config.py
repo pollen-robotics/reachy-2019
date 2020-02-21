@@ -1,3 +1,14 @@
+"""Command line utility tool for configuring dynamixel motor.
+
+This tool let you configure one of the dynamixel motor used in Reachy. It can be used when you have to change a broken motor for instance.
+In more details, this tool will:
+
+* change the id
+* set the angle limits
+
+.. warning:: Make sure to have only one dynamixel motor connected when you configure it!
+"""
+
 import time
 import argparse
 
