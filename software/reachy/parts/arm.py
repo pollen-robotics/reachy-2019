@@ -137,18 +137,22 @@ class LeftArm(Arm):
     dxl_motors = OrderedDict([
         ('shoulder_pitch', {
             'id': 20, 'offset': 90.0, 'orientation': 'direct',
+            'angle-limits': [-90, 180],
             'link-translation': [0, 0.19, 0], 'link-rotation': [0, 1, 0]
         }),
         ('shoulder_roll', {
             'id': 21, 'offset': -90.0, 'orientation': 'indirect',
+            'angle-limits': [-90, 100],
             'link-translation': [0, 0, 0], 'link-rotation': [1, 0, 0],
         }),
         ('arm_yaw', {
             'id': 22, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [-90, 90],
             'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
         }),
         ('elbow_pitch', {
             'id': 23, 'offset': 0.0, 'orientation': 'direct',
+            'angle-limits': [-125, 0],
             'link-translation': [0, 0, -0.30745], 'link-rotation': [0, 1, 0],
         }),
     ])
@@ -171,18 +175,22 @@ class RightArm(Arm):
     dxl_motors = OrderedDict([
         ('shoulder_pitch', {
             'id': 10, 'offset': 90.0, 'orientation': 'indirect',
+            'angle-limits': [-180, 90],
             'link-translation': [0, -0.19, 0], 'link-rotation': [0, 1, 0],
         }),
         ('shoulder_roll', {
             'id': 11, 'offset': 90.0, 'orientation': 'indirect',
+            'angle-limits': [-100, 90],
             'link-translation': [0, 0, 0], 'link-rotation': [1, 0, 0],
         }),
         ('arm_yaw', {
             'id': 12, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [-90, 90],
             'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
         }),
         ('elbow_pitch', {
             'id': 13, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [0, 125],
             'link-translation': [0, 0, -0.30745], 'link-rotation': [0, 1, 0],
         }),
     ])

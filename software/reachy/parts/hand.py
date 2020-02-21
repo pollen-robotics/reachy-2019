@@ -42,18 +42,22 @@ class ForceGripper(Hand):
     dxl_motors = OrderedDict([
         ('forearm_yaw', {
             'id': 14, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [-150, 150],
             'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
         }),
         ('wrist_pitch', {
             'id': 15, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [-50, 50],
             'link-translation': [0, 0, -0.22425], 'link-rotation': [0, 1, 0],
         }),
         ('wrist_roll', {
             'id': 16, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [-45, 45],
             'link-translation': [0, 0, -0.03243], 'link-rotation': [1, 0, 0],
         }),
         ('gripper', {
             'id': 17, 'offset': 0.0, 'orientation': 'direct',
+            'angle-limits': [-69, 20],
             'link-translation': [0, -0.0185, -0.06], 'link-rotation': [0, 0, 0],
         }),
     ])
