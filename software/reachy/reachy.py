@@ -15,6 +15,13 @@ logger = logging.getLogger(__name__)
 class Reachy(object):
     """Class representing the connection with the hardware robot.
 
+    Args:
+        left_arm (reachy.parts.LeftArm): left arm part if present or None if absent
+        right_arm (reachy.parts.RightArm): right arm part if present or None if absent
+        head (reachy.parts.Head): hrad part if present or None if absent
+
+    Connect and synchronize with the hardware robot.
+
     It can be used to monitor real time robot state and to send commands.
     Mainly a container to hold the different parts of Reachy together.
     """
