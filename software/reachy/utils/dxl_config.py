@@ -26,7 +26,7 @@ reachy_config.update({f'left_arm.hand.{m}': c for m, c in LeftForceGripper.dxl_m
 reachy_config.update({f'head.{m}': c for m, c in Head.dxl_motors.items()})
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('luos_port')
     parser.add_argument('motor_name', choices=reachy_config.keys())
@@ -59,3 +59,7 @@ if __name__ == '__main__':
 
         time.sleep(0.25)
         print('Done!')
+
+
+if __name__ == '__main__':
+    main()

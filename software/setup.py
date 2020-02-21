@@ -40,6 +40,10 @@ setup(
         'test': ['pytest'],
     },
 
+    entry_points={
+        'console_scripts': ['dxl-config=reachy.utils.dxl_config:main'],
+    },
+
     author='Pollen Robotics',
     author_email='contact@pollen-robotics.com',
     url='https://github.com/pollen-robotics/reachy',
