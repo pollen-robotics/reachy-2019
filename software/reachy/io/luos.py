@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 def attempt_luos_connection(port, trials=5):
+    """Try to connect to a Luos Gate."""
     io = LuosIO(port, log_conf='')
     gate_name = io.modules[0].alias
 
