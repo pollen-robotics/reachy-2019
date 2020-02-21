@@ -27,6 +27,7 @@ reachy_config.update({f'head.{m}': c for m, c in Head.dxl_motors.items()})
 
 
 def main():
+    """Main dxl-config entry point."""
     parser = argparse.ArgumentParser()
     parser.add_argument('luos_port')
     parser.add_argument('motor_name', choices=reachy_config.keys())
