@@ -7,14 +7,14 @@ import numpy as np
 
 from collections import OrderedDict
 
-from .hand import ForceGripper, OrbitaWrist
+from .hand import LeftForceGripper, RightForceGripper, OrbitaWrist
 from .part import ReachyPart
 from ..io import SharedLuosIO
 
 
 hands = {
-    'force_gripper': ForceGripper,
-    'orbita_wrist': OrbitaWrist,
+    'force_gripper': {'left': LeftForceGripper, 'right': RightForceGripper},
+    'orbita_wrist': {'left': OrbitaWrist, 'right': OrbitaWrist},
 }
 
 
@@ -46,12 +46,14 @@ class Arm(ReachyPart):
             raise ValueError(f'"hand" must be one of {list(hands.keys())} or None!')
 
         if hand is not None:
-            hand_part = hands[hand](luos_port=self.luos_io.port, side=side)
+            hand_cls = hands[hand][side]
+
+            hand_part = hand_cls(luos_port=self.luos_io.port, side=side)
             hand_part.name = f'{self.name}.hand'
             self.motors += hand_part.motors
             self.hand = hand_part
 
-            for m, conf in hands[hand].dxl_motors.items():
+            for m, conf in hand_cls.dxl_motors.items():
                 dxl_motors[m] = conf
 
         else:
