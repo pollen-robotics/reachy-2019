@@ -1,4 +1,5 @@
 """Wrapper module on top of pyluos Robot object."""
+import time
 import logging
 
 from glob import glob
@@ -7,6 +8,20 @@ from pyluos import Robot as LuosIO
 from pyluos.modules import DynamixelMotor
 
 logger = logging.getLogger(__name__)
+
+
+def attempt_luos_connection(port, trials=5):
+    io = LuosIO(port, log_conf='')
+    gate_name = io.modules[0].alias
+
+    if trials > 0 and gate_name in ('r_right_arm', 'r_left_arm'):
+        # TEMP: check if the dxl did respond
+        if len(io.modules) < 3:
+            io.close()
+            time.sleep(0.1)
+            return attempt_luos_connection(port, trials-1)
+
+    return io
 
 
 class SharedLuosIO(object):
@@ -26,7 +41,7 @@ class SharedLuosIO(object):
     def __init__(self, luos_port):
         """Create a new connection with a Luos gate."""
         if luos_port not in SharedLuosIO.opened_io:
-            io = LuosIO(luos_port, log_conf='')
+            io = attempt_luos_connection(luos_port)
             SharedLuosIO.opened_io[luos_port] = io
 
             logger.info('Connected to new Luos IO', extra={
