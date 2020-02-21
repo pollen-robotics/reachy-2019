@@ -141,7 +141,7 @@ class LeftForceGripper(ForceGripper):
         }),
         ('gripper', {
             'id': 17, 'offset': 0.0, 'orientation': 'direct',
-            'angle-limits': [-69, 20],
+            'angle-limits': [-20, 69],
             'link-translation': [0, -0.0185, -0.06], 'link-rotation': [0, 0, 0],
         }),
     ])
