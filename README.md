@@ -17,6 +17,7 @@ Follow [@PollenRobotics](https://twitter.com/pollenrobotics) on Twitter for impo
 
 This project adheres to the Contributor [code of conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [contact@pollen-robotics.com](mailto:contact@pollen-robotics.com).
 
-## Documentation
+## Documentation (WIP)
 
-**WIP**
+* The full documentation is available at: [https://pollen-robotics.github.io/reachy-docs/](https://pollen-robotics.github.io/reachy-docs/)
+* The APIs can be found at: [https://pollen-robotics.github.io/reachy/](https://pollen-robotics.github.io/reachy/)
