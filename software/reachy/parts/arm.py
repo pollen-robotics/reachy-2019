@@ -154,7 +154,7 @@ class LeftArm(Arm):
         }),
         ('elbow_pitch', {
             'id': 23, 'offset': 0.0, 'orientation': 'direct',
-            'angle-limits': [-125, 0],
+            'angle-limits': [0, 125],
             'link-translation': [0, 0, -0.30745], 'link-rotation': [0, 1, 0],
         }),
     ])
