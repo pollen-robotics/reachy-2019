@@ -47,9 +47,6 @@ class Head(ReachyPart):
 
         self.neck = self.create_orbita_actuator('neck', self.luos_io, Head.orbita_config)
 
-        # self.antenna_io = SharedLuosIO.with_gate('r_antenna', luos_port)
-        # self.attach_dxl_motors(self.antenna_io, Head.dxl_motors)
-
         self.attach_dxl_motors(self.luos_io, Head.dxl_motors)
 
         # We import vision here to avoid OpenCV ImportError issue
