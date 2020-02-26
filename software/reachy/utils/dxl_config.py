@@ -61,6 +61,12 @@ def main():
         time.sleep(0.25)
         print('Done!')
 
+    print('Checking if everything went well...')
+    with closing(LuosIO(args.luos_port)) as io:
+        m = getattr(io, f'dx_{id}')
+        assert m.rot_position_limit == conf['angle_limit']
+    print('Ok!')
+
 
 if __name__ == '__main__':
     main()
