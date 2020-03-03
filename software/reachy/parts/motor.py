@@ -186,9 +186,9 @@ class OrbitaActuator(object):
     def __repr__(self):
         """Orbita representation."""
         return (f'<Orbita '
-                f'"top disk": {self.disk_top.present_position} '
-                f'"middle disk": {self.disk_middle.present_position} '
-                f'"bottom disk": {self.disk_bottom.present_position}>')
+                f'"top disk": {self.disk_top.rot_position} '
+                f'"middle disk": {self.disk_middle.rot_position} '
+                f'"bottom disk": {self.disk_bottom.rot_position}>')
 
     @property
     def disks(self):
