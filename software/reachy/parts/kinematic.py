@@ -68,27 +68,28 @@ class Chain(object):
 
         return M
 
-    def inverse(self, poses, q0s):
+    def inverse(self, poses, q0s, maxiter=10):
         """
         Approximate the inverse kinematics of the chain given end pose.
 
         Args:
             poses (:py:class:`~numpy.ndarray`): N*4*4 homogeneous matrix poses for the end effector
             q0s (:py:class:`~numpy.ndarray`): N*J initial joint configuration used to bootstrap the optimization
+            maxiter (int): maximum number of iteration to run on the optimizer
 
         .. warning:: this is a vectorized version of the forward!
         """
         return np.array([
-            self._inverse(p, q0)
+            self._inverse(p, q0, maxiter)
             for p, q0 in zip(poses, q0s)
         ])
 
-    def _inverse(self, target, q0):
+    def _inverse(self, target, q0, maxiter):
         return minimize(
             lambda j: pose_dist(self.forward(np.array(j).reshape(1, -1))[0], target),
             x0=q0,
             options={
-                'maxiter': 100,
+                'maxiter': maxiter,
             }
         ).x
 
