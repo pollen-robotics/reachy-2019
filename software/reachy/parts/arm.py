@@ -92,13 +92,14 @@ class Arm(ReachyPart):
             M = M[0]
         return M
 
-    def inverse_kinematics(self, target_pose, q0=None, use_rad=False):
+    def inverse_kinematics(self, target_pose, q0=None, use_rad=False, maxiter=10):
         """Approximate the inverse kinematics of the Arm.
 
         Args:
             target_pose (:py:class:`~numpy.ndarray`): 4x4 homogeneous pose of the target end effector pose
             q0 (:py:class:`~numpy.ndarray`): joint initial angle configurations (used for bootstraping the optimization)
             use_rad (bool): whether or not to use radians for joints configuration
+            maxiter (int): maximum number of iteration to run on the optimizer
 
         .. note:: the end effector will be the end of the Hand if one is attached.
 
@@ -117,7 +118,7 @@ class Arm(ReachyPart):
         if not use_rad:
             q0 = np.deg2rad(q0)
 
-        J = self.kin_chain.inverse(target_pose, q0)
+        J = self.kin_chain.inverse(target_pose, q0, maxiter=maxiter)
 
         if J.shape[0] == 1:
             J = J[0]
