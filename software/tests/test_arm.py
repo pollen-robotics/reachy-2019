@@ -120,7 +120,7 @@ class ArmTestCase(unittest.TestCase):
             Q0 = J0 + joint_noise
 
             J1 = arm.inverse_kinematics(M0, Q0, maxiter=100)
-            M1 = arm.forward_kinematics(J1, maxiter=100)
+            M1 = arm.forward_kinematics(J1)
 
             if N > 1:
                 err = np.linalg.norm(M0 - M1, axis=(0, 1))
