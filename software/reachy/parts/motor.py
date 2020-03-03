@@ -60,7 +60,8 @@ class DynamixelMotor(object):
 
     @goal_position.setter
     def goal_position(self, value):
-        self._motor.target_rot_position = self._to_motor_pos(value)
+        if not self.compliant:
+            self._motor.target_rot_position = self._to_motor_pos(value)
 
     @property
     def offset(self):
