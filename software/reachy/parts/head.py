@@ -33,9 +33,11 @@ class Head(ReachyPart):
     dxl_motors = OrderedDict([
         ('left_antenna', {
             'id': 30, 'offset': 0.0, 'orientation': 'direct',
+            'angle-limits': [-150, 150],
         }),
         ('right_antenna', {
             'id': 31, 'offset': 0.0, 'orientation': 'direct',
+            'angle-limits': [-150, 150],
         }),
     ])
 

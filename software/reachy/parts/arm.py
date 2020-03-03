@@ -7,14 +7,14 @@ import numpy as np
 
 from collections import OrderedDict
 
-from .hand import ForceGripper, OrbitaWrist
+from .hand import LeftForceGripper, RightForceGripper, OrbitaWrist
 from .part import ReachyPart
 from ..io import SharedLuosIO
 
 
 hands = {
-    'force_gripper': ForceGripper,
-    'orbita_wrist': OrbitaWrist,
+    'force_gripper': {'left': LeftForceGripper, 'right': RightForceGripper},
+    'orbita_wrist': {'left': OrbitaWrist, 'right': OrbitaWrist},
 }
 
 
@@ -46,12 +46,14 @@ class Arm(ReachyPart):
             raise ValueError(f'"hand" must be one of {list(hands.keys())} or None!')
 
         if hand is not None:
-            hand_part = hands[hand](luos_port=self.luos_io.port, side=side)
+            hand_cls = hands[hand][side]
+
+            hand_part = hand_cls(luos_port=self.luos_io.port, side=side)
             hand_part.name = f'{self.name}.hand'
             self.motors += hand_part.motors
             self.hand = hand_part
 
-            for m, conf in hands[hand].dxl_motors.items():
+            for m, conf in hand_cls.dxl_motors.items():
                 dxl_motors[m] = conf
 
         else:
@@ -137,18 +139,22 @@ class LeftArm(Arm):
     dxl_motors = OrderedDict([
         ('shoulder_pitch', {
             'id': 20, 'offset': 90.0, 'orientation': 'direct',
+            'angle-limits': [-90, 180],
             'link-translation': [0, 0.19, 0], 'link-rotation': [0, 1, 0]
         }),
         ('shoulder_roll', {
             'id': 21, 'offset': -90.0, 'orientation': 'indirect',
+            'angle-limits': [-90, 100],
             'link-translation': [0, 0, 0], 'link-rotation': [1, 0, 0],
         }),
         ('arm_yaw', {
             'id': 22, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [-90, 90],
             'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
         }),
         ('elbow_pitch', {
-            'id': 23, 'offset': 0.0, 'orientation': 'direct',
+            'id': 23, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [0, 125],
             'link-translation': [0, 0, -0.30745], 'link-rotation': [0, 1, 0],
         }),
     ])
@@ -171,18 +177,22 @@ class RightArm(Arm):
     dxl_motors = OrderedDict([
         ('shoulder_pitch', {
             'id': 10, 'offset': 90.0, 'orientation': 'indirect',
+            'angle-limits': [-180, 90],
             'link-translation': [0, -0.19, 0], 'link-rotation': [0, 1, 0],
         }),
         ('shoulder_roll', {
             'id': 11, 'offset': 90.0, 'orientation': 'indirect',
+            'angle-limits': [-100, 90],
             'link-translation': [0, 0, 0], 'link-rotation': [1, 0, 0],
         }),
         ('arm_yaw', {
             'id': 12, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [-90, 90],
             'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
         }),
         ('elbow_pitch', {
             'id': 13, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [0, 125],
             'link-translation': [0, 0, -0.30745], 'link-rotation': [0, 1, 0],
         }),
     ])

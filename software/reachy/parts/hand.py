@@ -39,25 +39,6 @@ class ForceGripper(Hand):
     Composed of three dynamixel motors and a force sensor for gripping pressure.
     """
 
-    dxl_motors = OrderedDict([
-        ('forearm_yaw', {
-            'id': 14, 'offset': 0.0, 'orientation': 'indirect',
-            'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
-        }),
-        ('wrist_pitch', {
-            'id': 15, 'offset': 0.0, 'orientation': 'indirect',
-            'link-translation': [0, 0, -0.22425], 'link-rotation': [0, 1, 0],
-        }),
-        ('wrist_roll', {
-            'id': 16, 'offset': 0.0, 'orientation': 'indirect',
-            'link-translation': [0, 0, -0.03243], 'link-rotation': [1, 0, 0],
-        }),
-        ('gripper', {
-            'id': 17, 'offset': 0.0, 'orientation': 'direct',
-            'link-translation': [0, -0.0185, -0.06], 'link-rotation': [0, 0, 0],
-        }),
-    ])
-
     def __init__(self, luos_port, side):
         """Create a new Force Gripper Hand."""
         Hand.__init__(self, side)
@@ -66,7 +47,7 @@ class ForceGripper(Hand):
 
         dxl_motors = OrderedDict({
             name: dict(conf)
-            for name, conf in ForceGripper.dxl_motors.items()
+            for name, conf in self.dxl_motors.items()
         })
 
         if self.side == 'left':
@@ -139,6 +120,60 @@ class ForceGripper(Hand):
     def grip_force(self):
         """Get current grip force."""
         return self._load_sensor.load
+
+
+class LeftForceGripper(ForceGripper):
+    """Left Force Gripper Part."""
+
+    dxl_motors = OrderedDict([
+        ('forearm_yaw', {
+            'id': 14, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [-150, 150],
+            'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
+        }),
+        ('wrist_pitch', {
+            'id': 15, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [-50, 50],
+            'link-translation': [0, 0, -0.22425], 'link-rotation': [0, 1, 0],
+        }),
+        ('wrist_roll', {
+            'id': 16, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [-45, 45],
+            'link-translation': [0, 0, -0.03243], 'link-rotation': [1, 0, 0],
+        }),
+        ('gripper', {
+            'id': 17, 'offset': 0.0, 'orientation': 'direct',
+            'angle-limits': [-20, 69],
+            'link-translation': [0, -0.0185, -0.06], 'link-rotation': [0, 0, 0],
+        }),
+    ])
+
+
+class RightForceGripper(ForceGripper):
+    """Right Force Gripper Part."""
+
+    dxl_motors = OrderedDict([
+        ('forearm_yaw', {
+            'id': 14, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [-150, 150],
+            'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
+        }),
+        ('wrist_pitch', {
+            'id': 15, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [-50, 50],
+            'link-translation': [0, 0, -0.22425], 'link-rotation': [0, 1, 0],
+        }),
+        ('wrist_roll', {
+            'id': 16, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [-45, 45],
+            'link-translation': [0, 0, -0.03243], 'link-rotation': [1, 0, 0],
+        }),
+        ('gripper', {
+            'id': 17, 'offset': 0.0, 'orientation': 'direct',
+            'angle-limits': [-69, 20],
+            'link-translation': [0, -0.0185, -0.06], 'link-rotation': [0, 0, 0],
+        }),
+    ])
 
 
 class OrbitaWrist(Hand):
