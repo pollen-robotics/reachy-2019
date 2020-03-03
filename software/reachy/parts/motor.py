@@ -147,7 +147,7 @@ class OrbitaActuator(object):
 
     Args:
         root_part (str): name of the part where the motor is attached to (eg 'head')
-        name (str): name of the acutator (eg. 'neck')
+        name (str): name of the actuator (eg. 'neck')
         luos_disks_motor (list of :py:class:`pyluos.motor_controller`): list of the three disks controllers
         Pc_z (float, float, float): 3D coordinates of the center of the platform (in mm)
         Cp_z (float, float, float): center of the disks rotation circle (in mm)
