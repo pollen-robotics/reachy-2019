@@ -23,7 +23,7 @@ class TrajectoryInterpolation(object):
 
     def __init__(self, initial_position, goal_position, duration):
         """Create your interpolation object."""
-        self.inital_position = initial_position
+        self.initial_position = initial_position
         self.goal_position = goal_position
         self.duration = duration
 
@@ -88,7 +88,7 @@ class Linear(TrajectoryInterpolation):
 
     def interpolate(self, t):
         """Linear interpolation at time t."""
-        return self.inital_position + (self.goal_position - self.inital_position) * t / self.duration
+        return self.initial_position + (self.goal_position - self.initial_position) * t / self.duration
 
 
 class MinimumJerk(TrajectoryInterpolation):
