@@ -107,13 +107,21 @@ class Reachy(object):
             starting_point (str): register to use to retrieve the starting point (e.g. 'present_postion' or 'goal_position')
             wait (bool): whether or not to wait for the end motion before returning
             interpolation_mode (str): interpolation used for computing the trajectory (e.g. 'linear' or 'minjerk')
+
+        Returns:
+            list: list of reachy.trajectory.TrajectoryPlayer (one for each controlled motor)
+
         """
+        trajs = []
+
         for i, (motor_name, goal_pos) in enumerate(goal_positions.items()):
             last = wait and (i == len(goal_positions) - 1)
 
             motor = attrgetter(motor_name)(self)
-            motor.goto(goal_pos, duration, starting_point,
-                       wait=last, interpolation_mode=interpolation_mode)
+            trajs.append(motor.goto(goal_pos, duration, starting_point,
+                         wait=last, interpolation_mode=interpolation_mode))
+
+        return trajs
 
     def need_cooldown(self, temperature_limit=50):
         """
