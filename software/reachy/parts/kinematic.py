@@ -85,13 +85,20 @@ class Chain(object):
         ])
 
     def _inverse(self, target, q0, maxiter):
-        return minimize(
-            lambda j: pose_dist(self.forward(np.array(j).reshape(1, -1))[0], target),
+        def forward_error(j):
+            M = self.forward(np.array(j).reshape(1, -1))[0]
+            d = pose_dist(M, target)
+
+            return d
+
+        sol = minimize(
+            forward_error,
             x0=q0,
             options={
                 'maxiter': maxiter,
             }
-        ).x
+        )
+        return sol.x
 
 
 def translation_matrix(translation):
