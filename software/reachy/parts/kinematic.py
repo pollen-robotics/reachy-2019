@@ -19,10 +19,11 @@ class Link(object):
         rotation (:py:class:`~numpy.ndarray`): 3d euler rotation (xyz) from the previous link
     """
 
-    def __init__(self, translation, rotation):
+    def __init__(self, translation, rotation, bounds):
         """Create a new link."""
         self.T = translation_matrix(translation)
         self.rotation = np.array(rotation).reshape(1, 3)
+        self.bounds = bounds
 
     def transformation_matrix(self, theta):
         """Compute local transformation matrix for given angle.
@@ -48,6 +49,10 @@ class Chain(object):
     def __init__(self, links):
         """Create the chain given the links."""
         self.links = links
+
+    @property
+    def bounds(self):
+        return [l.bounds for l in self.links]
 
     def forward(self, joints):
         """
@@ -96,7 +101,8 @@ class Chain(object):
             x0=q0,
             options={
                 'maxiter': maxiter,
-            }
+            },
+            bounds=self.bounds,
         )
         return sol.x
 

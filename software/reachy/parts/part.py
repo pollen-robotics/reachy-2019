@@ -1,5 +1,7 @@
 """Part abstraction module."""
 
+import numpy as np
+
 from .motor import DynamixelMotor, OrbitaActuator
 from .kinematic import Link, Chain
 
@@ -56,7 +58,17 @@ class ReachyPart(object):
         Args:
             dxl_motors (dict): dynamixel motors config (as given in attach_dxl_motors), the config should also include 'link-translation' and 'link-rotation' for each motor
         """
+        def compute_bounds(m):
+            bounds = [
+                np.deg2rad(a + m['offset']) * (1 if m['orientation'] == 'direct' else -1)
+                for a in m['angle-limits']
+            ]
+            lb = min(bounds)
+            rb = max(bounds)
+
+            return (lb, rb)
+
         self.kin_chain = Chain([
-            Link(m['link-translation'], m['link-rotation'])
+            Link(m['link-translation'], m['link-rotation'], compute_bounds(m))
             for m in dxl_motors.values()
         ])
