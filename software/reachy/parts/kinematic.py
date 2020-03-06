@@ -141,7 +141,7 @@ def pose_dist(M1, M2, threshold=-1):
     PD = position_dist(P1, P2)
     RD = rotation_dist(R1, R2)
 
-    # meaning 1mm pos error ~ 1° rot error
-    E = PD + np.rad2deg(RD) * 1e-3
+    # meaning 1m pos error ~ 0.2 rad rot error
+    E = PD + 0.2 * RD
 
     return E if E > threshold else 0
