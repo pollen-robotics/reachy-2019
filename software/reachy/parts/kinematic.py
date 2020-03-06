@@ -52,6 +52,7 @@ class Chain(object):
 
     @property
     def bounds(self):
+        """Get bounds for each link."""
         return [l.bounds for l in self.links]
 
     def forward(self, joints):
