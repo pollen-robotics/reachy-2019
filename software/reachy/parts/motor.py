@@ -6,13 +6,18 @@ Define:
 """
 
 import time
+import logging
 import numpy as np
 
+from threading import Timer
 from collections import deque
 from pyquaternion import Quaternion
 from orbita import Actuator as OrbitaModel
 
 from ..trajectory.interpolation import interpolation_modes
+
+
+logger = logging.getLogger(__name__)
 
 
 class DynamixelMotor(object):
@@ -36,6 +41,8 @@ class DynamixelMotor(object):
 
         self._offset = config['offset']
         self._direct = config['orientation'] == 'direct'
+
+        self._timer = None
 
     def __repr__(self):
         """Motor representation."""
@@ -62,6 +69,7 @@ class DynamixelMotor(object):
     def goal_position(self, value):
         if not self.compliant:
             self._motor.target_rot_position = self._to_motor_pos(value)
+            self._schedule_static_error_fix(delay=1)
 
     @property
     def offset(self):
@@ -140,6 +148,28 @@ class DynamixelMotor(object):
             traj_player.wait()
 
         return traj_player
+
+    # Patch dynamixel controller issue when the motor forces
+    # while not managing to reachy the goal position
+    def _schedule_static_error_fix(self, delay):
+        if self._timer is not None:
+            self._timer.cancel()
+        self._timer = Timer(delay, self._fix_static_error)
+        self._timer.start()
+
+    def _fix_static_error(self, threshold=2):
+        error = (self.present_position - self.goal_position)
+
+        if abs(error) > threshold:
+            pos = self.goal_position + error / 2
+            logger.info(f'Fix static error controller', extra={
+                'goal_position': self.goal_position,
+                'present_position': self.present_position,
+                'fixed_goal_position': pos,
+            })
+
+            self._motor.target_rot_position = self._to_motor_pos(pos)
+            self._timer = None
 
 
 class OrbitaActuator(object):
