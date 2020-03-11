@@ -43,6 +43,7 @@ class DynamixelMotor(object):
         self._direct = config['orientation'] == 'direct'
 
         self._timer = None
+        self._use_static_fix = False
 
     def __repr__(self):
         """Motor representation."""
@@ -69,7 +70,9 @@ class DynamixelMotor(object):
     def goal_position(self, value):
         if not self.compliant:
             self._motor.target_rot_position = self._to_motor_pos(value)
-            self._schedule_static_error_fix(delay=1)
+
+            if self._use_static_fix:
+                self._schedule_static_error_fix(delay=1)
 
     @property
     def offset(self):
@@ -149,8 +152,18 @@ class DynamixelMotor(object):
 
         return traj_player
 
+    def use_static_error_fix(self, activate):
+        """Trigger the static error fix.
+
+        Args:
+            activate (bool): whether to activate/deactivate the static error issue fix
+        
+        If activated, the static error fix will check the reach position a fixed delay after the send of a new goal position. The static error may result in the motor forcing, and yet not managing to move. To prevent this behavior we automatically adjust the target goal position to reduce this error.
+        """
+        self._use_static_fix = activate
+
     # Patch dynamixel controller issue when the motor forces
-    # while not managing to reachy the goal position
+    # while not managing to reach the goal position
     def _schedule_static_error_fix(self, delay):
         if self._timer is not None:
             self._timer.cancel()
