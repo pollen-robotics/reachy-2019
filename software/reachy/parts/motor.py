@@ -159,7 +159,7 @@ class DynamixelMotor(object):
             activate (bool): whether to activate/deactivate the static error issue fix
 
         If activated, the static error fix will check the reach position a fixed delay after the send of a new goal position.
-        The static error may result in the motor's load increasing, and yet not managing to move. 
+        The static error may result in the motor's load increasing, and yet not managing to move.
         To prevent this behavior we automatically adjust the target goal position to reduce this error.
         """
         self._use_static_fix = activate
