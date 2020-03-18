@@ -56,15 +56,11 @@ def main():
         time.sleep(0.25)
 
         print(f'\t and limits {limits}...')
-        dxl_motor.rot_position_limit = conf['angle_limit']
+        dxl_motor.rot_position_limit = conf['angle-limits']
 
         time.sleep(0.25)
         print('Done!')
 
-    print('Checking if everything went well...')
-    with closing(LuosIO(args.luos_port)) as io:
-        m = getattr(io, f'dx_{id}')
-        assert m.rot_position_limit == conf['angle_limit']
     print('Ok!')
 
 
