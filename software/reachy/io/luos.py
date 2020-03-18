@@ -76,6 +76,10 @@ class SharedLuosIO(object):
         logger.info(f'Looking for gate "{name}" on ports "{port_template}"')
 
         available_ports = glob(port_template)
+
+        if len(available_ports) == 0:
+            return cls(port_template)
+
         if len(available_ports) == 1:
             return cls(available_ports[0])
 
