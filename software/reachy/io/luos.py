@@ -7,6 +7,9 @@ from glob import glob
 from pyluos import Robot as LuosIO
 from pyluos.modules import DynamixelMotor
 
+from ..error import LuosModuleNotFoundError, LuosGateNotFoundError
+
+
 logger = logging.getLogger(__name__)
 
 
@@ -83,7 +86,7 @@ class SharedLuosIO(object):
                 logger.info(f'Found gate "{io.gate_name}" on port "{p}"')
                 return io
         else:
-            return cls(port_template)
+            raise LuosGateNotFoundError(f'Gate "{name}" not found on ports "{port_template}"')
 
     @property
     def gate_name(self):
@@ -110,7 +113,10 @@ class SharedLuosIO(object):
         try:
             return getattr(self.shared_io, module_name)
         except AttributeError:
-            raise IOError(f'Could not find module "{module_name}" on bus "{self.port}"')
+            raise LuosModuleNotFoundError(
+                message=f'Could not find module "{module_name}" on bus "{self.port}"',
+                missing_module=module_name,
+            )
 
     def find_dxl(self, dxl_id):
         """Retrieve a specified Dynamixel motor on the IO given its id.
@@ -123,7 +129,7 @@ class SharedLuosIO(object):
         m = self.find_module(module_name)
 
         if not isinstance(m, DynamixelMotor):
-            raise IOError(f'Wrong module type found for module "{module_name}" on bus "{self.port}"')
+            raise LuosModuleNotFoundError(f'Wrong module type found for module "{module_name}" on bus "{self.port}"')
 
         return m
 
