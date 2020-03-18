@@ -4,6 +4,8 @@ import cv2 as cv
 
 from threading import Thread, Event, Lock
 
+from ..error import CameraNotFoundError
+
 
 class BackgroundVideoCapture(object):
     """Wrapper on OpenCV VideoCapture object.
@@ -21,6 +23,13 @@ class BackgroundVideoCapture(object):
     def __init__(self, camera_index, resolution=(720, 960)):
         """Open video capture on the specified camera."""
         self.cap = cv.VideoCapture(camera_index)
+
+        if not self.cap.isOpened():
+            raise CameraNotFoundError(
+                message=f'Camera {camera_index} not found!',
+                camera_id=camera_index,
+            )
+
         self.cap.set(cv.CAP_PROP_FRAME_HEIGHT, resolution[0])
         self.cap.set(cv.CAP_PROP_FRAME_WIDTH, resolution[1])
 
@@ -39,6 +48,8 @@ class BackgroundVideoCapture(object):
 
         if self._t.is_alive():
             self._t.join()
+
+        self.cap.release()
 
     def _read_loop(self):
         self.running.set()
