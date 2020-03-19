@@ -6,7 +6,6 @@ orbita==0.3.1
 pyluos==1.1.1b1
 pyquaternion==0.9.5
 pyserial==3.4
-reachy==1.0.0a2
 scipy==1.4.1
 SimpleWebSocketServer==0.1.1
 six==1.14.0
