@@ -5,6 +5,7 @@ Provide automatic detection mechanisms to check which parts are present on your 
 """
 
 from reachy import parts
+from reachy.io import SharedLuosIO
 from reachy.error import LuosModuleNotFoundError, LuosGateNotFoundError, CameraNotFoundError
 
 
