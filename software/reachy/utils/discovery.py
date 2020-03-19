@@ -72,17 +72,18 @@ def discover_arm(side, luos_port='/dev/ttyUSB*', hand='force_gripper'):
 
 def discover_all():
     """Check which part is connected to a Reachy."""
-    return [
-        discover_arm(side='left'),
-        discover_head(),
-        discover_arm(side='right'),
-    ]
+    SharedLuosIO.close_all_cached_gates()
+
+    return {
+        'left_arm': discover_arm(side='left'),
+        'head': discover_head(),
+        'right_arm': discover_arm(side='right'),
+    }
 
 
 def main():
     """Check which part is connected to a Reachy."""
-    for part in discover_all():
-        name = part['part_name']
+    for name, part in discover_all.items():
         status = part['status']
         details = part['details']
 

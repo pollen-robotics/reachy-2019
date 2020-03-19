@@ -92,6 +92,13 @@ class SharedLuosIO(object):
         else:
             raise LuosGateNotFoundError(f'Gate "{name}" not found on ports "{port_template}"')
 
+    @classmethod
+    def close_all_cached_gates(cls):
+        """Close all connections to the Luos gate."""
+        for io in SharedLuosIO.opened_io.values():
+            io.close()
+        SharedLuosIO.opened_io.clear()
+
     @property
     def gate_name(self):
         """Retrieve the name of the Luos gate."""
