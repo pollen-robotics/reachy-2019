@@ -29,6 +29,7 @@ setup(
         'scipy',
         'orbita>=0.3.1',
         'pyquaternion',
+        'websockets',
     ],
 
     extras_require={

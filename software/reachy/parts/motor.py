@@ -15,7 +15,7 @@ from pyquaternion import Quaternion
 from orbita import Actuator as OrbitaModel
 
 from ..trajectory.interpolation import interpolation_modes
-
+from ..io.ws import WsMotor
 
 logger = logging.getLogger(__name__)
 
@@ -38,6 +38,7 @@ class DynamixelMotor(object):
         self._name = name
 
         self._motor = luos_motor
+        self._cvt_pos = False if isinstance(luos_motor, WsMotor) else True
 
         self._offset = config['offset']
         self._direct = config['orientation'] == 'direct'
@@ -84,10 +85,14 @@ class DynamixelMotor(object):
         return self._direct
 
     def _as_local_pos(self, pos):
-        return (pos if self.is_direct() else -pos) - self.offset
+        if self._cvt_pos:
+            return (pos if self.is_direct() else -pos) - self.offset
+        return pos
 
     def _to_motor_pos(self, pos):
-        return (pos + self.offset) * (1 if self.is_direct() else -1)
+        if self._cvt_pos:
+            return (pos + self.offset) * (1 if self.is_direct() else -1)
+        return pos
 
     # Speed
     @property

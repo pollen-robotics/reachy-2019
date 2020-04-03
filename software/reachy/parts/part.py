@@ -5,7 +5,7 @@ import numpy as np
 from .motor import DynamixelMotor, OrbitaActuator
 from .kinematic import Link, Chain
 
-from ..io import IO, luos
+from ..io import IO, luos, ws
 
 
 class ReachyPart(object):
@@ -26,6 +26,8 @@ class ReachyPart(object):
 
         if isinstance(io, IO):
             self.io = io
+        elif isinstance(io, str) and io == 'ws':
+            self.io = ws.WsIO.shared_server(self.name)
         else:
             gate_name = self.name.split('.')[0]
             gate_name = f'r_{gate_name}'
