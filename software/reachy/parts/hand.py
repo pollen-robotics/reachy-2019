@@ -12,7 +12,6 @@ from collections import OrderedDict
 
 from ..utils import rot
 from .part import ReachyPart
-from ..io import SharedLuosIO
 
 
 class Hand(ReachyPart):
@@ -20,30 +19,29 @@ class Hand(ReachyPart):
 
     Args:
         side (str): which side the hand is attached to ('left' or 'right')
+        io (str): port name where the modules can be found
     """
 
-    def __init__(self, side):
+    def __init__(self, root, io):
         """Create hand part."""
-        ReachyPart.__init__(self, name='hand')
+        ReachyPart.__init__(self, name=f'{root.name}.hand', io=io)
 
-        self.side = side
+        self.side = root.side
 
 
 class ForceGripper(Hand):
     """Force Gripper Part.
 
     Args:
-        luos_port (str): Luos port where the modules are attached
+        io (str): port name where the modules can be found
         side (str): which side the part is attached to ('left' or 'right')
 
     Composed of three dynamixel motors and a force sensor for gripping pressure.
     """
 
-    def __init__(self, luos_port, side):
+    def __init__(self, root, io):
         """Create a new Force Gripper Hand."""
-        Hand.__init__(self, side)
-
-        self.luos_io = SharedLuosIO(luos_port)
+        Hand.__init__(self, root=root, io=io)
 
         dxl_motors = OrderedDict({
             name: dict(conf)
@@ -54,9 +52,9 @@ class ForceGripper(Hand):
             for name, conf in dxl_motors.items():
                 conf['id'] += 10
 
-        self.attach_dxl_motors(self.luos_io, dxl_motors)
+        self.attach_dxl_motors(dxl_motors)
 
-        self._load_sensor = self.luos_io.find_module('force_gripper')
+        self._load_sensor = self.io.find_module('force_gripper')
         self._load_sensor.offset = 4
         self._load_sensor.scale = 10000
 
@@ -180,7 +178,7 @@ class OrbitaWrist(Hand):
     """Orbita Wrist hand.
 
     Args:
-        luos_port (str): Luos port where the modules are attached
+        io (str): port name where the modules can be found
         side (str): which side the part is attached to ('left' or 'right')
 
     A 3dof Orbita Wrist at the end of the arm.
@@ -198,12 +196,11 @@ class OrbitaWrist(Hand):
         'encoder_res': 3,
     }
 
-    def __init__(self, luos_port, side):
+    def __init__(self, root, io):
         """Create a new OrbitaWrist Hand."""
-        Hand.__init__(self, side)
+        Hand.__init__(self, root=root, io=io)
 
-        self.luos_io = SharedLuosIO(luos_port)
-        self.wrist = self.create_orbita_actuator('wrist', self.luos_io, OrbitaWrist.orbita_config)
+        self.wrist = self.create_orbita_actuator('wrist', OrbitaWrist.orbita_config)
 
     def __repr__(self):
         """Orbita wrist representation."""

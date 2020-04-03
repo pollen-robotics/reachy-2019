@@ -11,23 +11,23 @@ mock_luos_io()
 class ArmTestCase(unittest.TestCase):
     def setUp(self):
         self.left_arm = parts.LeftArm(
-            luos_port='',
+            io='',
             hand=None,
         )
         self.left_arm_with_gripper = parts.LeftArm(
-            luos_port='',
+            io='',
             hand='force_gripper',
         )
         self.right_arm = parts.RightArm(
-            luos_port='',
+            io='',
             hand=None,
         )
         self.right_arm_with_gripper = parts.RightArm(
-            luos_port='',
+            io='',
             hand='force_gripper',
         )
         self.right_arm_with_wrist = parts.RightArm(
-            luos_port='',
+            io='',
             hand='orbita_wrist',
         )
 

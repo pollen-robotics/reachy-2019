@@ -8,7 +8,7 @@ from pyluos import Robot as LuosIO
 from pyluos.modules import DynamixelMotor
 
 from ..error import LuosModuleNotFoundError, LuosGateNotFoundError
-
+from .io import IO
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +28,7 @@ def attempt_luos_connection(port, trials=5):
     return io
 
 
-class SharedLuosIO(object):
+class SharedLuosIO(IO):
     """
     Abstraction class for pyluos Robot object. Create a new connection with a Luos gate.
 
@@ -129,7 +129,7 @@ class SharedLuosIO(object):
                 missing_module=module_name,
             )
 
-    def find_dxl(self, dxl_id):
+    def find_dxl(self, dxl_name, dxl_id):
         """Retrieve a specified Dynamixel motor on the IO given its id.
 
         Args:
