@@ -8,7 +8,7 @@ from mockup import mock_luos_io
 
 mock_luos_io()
 
-from reachy.io import SharedLuosIO  # noqa: E402
+from reachy.io.luos import SharedLuosIO  # noqa: E402
 from reachy.parts.motor import OrbitaActuator  # noqa: E402
 
 

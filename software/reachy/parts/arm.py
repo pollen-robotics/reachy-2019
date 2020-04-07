@@ -9,7 +9,6 @@ from collections import OrderedDict
 
 from .hand import LeftForceGripper, RightForceGripper, OrbitaWrist
 from .part import ReachyPart
-from ..io import SharedLuosIO
 
 
 hands = {
@@ -23,7 +22,7 @@ class Arm(ReachyPart):
 
     Args:
         side (str): 'right' or 'left'
-        luos_port (str): serial port where the Luos modules are attached
+        io (str): port name where the modules can be found
         dxl_motors (dict): config of the dynamixel motors composing the arm
         hand (str): name of the Hand to attached ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
 
@@ -32,15 +31,14 @@ class Arm(ReachyPart):
         * forward and inverse kinematics
     """
 
-    def __init__(self, side, luos_port, dxl_motors, hand):
+    def __init__(self, side, io, dxl_motors, hand):
         """Create a new Arm part."""
-        ReachyPart.__init__(self, name=f'{side}_arm')
+        ReachyPart.__init__(self, name=f'{side}_arm', io=io)
         self.side = side
 
         dxl_motors = OrderedDict(dxl_motors)
 
-        self.luos_io = SharedLuosIO.with_gate(f'r_{side}_arm', luos_port)
-        self.attach_dxl_motors(self.luos_io, dxl_motors)
+        self.attach_dxl_motors(dxl_motors)
 
         if hand is not None and hand not in hands.keys():
             raise ValueError(f'"hand" must be one of {list(hands.keys())} or None!')
@@ -48,8 +46,7 @@ class Arm(ReachyPart):
         if hand is not None:
             hand_cls = hands[hand][side]
 
-            hand_part = hand_cls(luos_port=self.luos_io.port, side=side)
-            hand_part.name = f'{self.name}.hand'
+            hand_part = hand_cls(root=self, io=io)
             self.motors += hand_part.motors
             self.hand = hand_part
 
@@ -64,10 +61,6 @@ class Arm(ReachyPart):
     def __repr__(self):
         """Arm representation."""
         return f'<{self.side.capitalize()}Arm "motors": {self.motors} "hand": {self.hand}>'
-
-    def teardown(self):
-        """Clean and close the Arm part."""
-        self.luos_io.close()
 
     def forward_kinematics(self, joints_position, use_rad=False):
         """Compute the forward kinematics of the Arm.
@@ -133,7 +126,7 @@ class LeftArm(Arm):
     """Left Arm part.
 
     Args:
-        luos_port (str): serial port where the Luos modules are attached
+        io (str): port name where the modules can be found
         hand (str): name of the :py:class:`~reachy.parts.hand.Hand` to attached ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
     """
 
@@ -160,10 +153,10 @@ class LeftArm(Arm):
         }),
     ])
 
-    def __init__(self, luos_port, hand=None):
+    def __init__(self, io, hand=None):
         """Create a new Left Arm part."""
         Arm.__init__(self, side='left',
-                     luos_port=luos_port, dxl_motors=LeftArm.dxl_motors,
+                     io=io, dxl_motors=LeftArm.dxl_motors,
                      hand=hand)
 
 
@@ -171,7 +164,7 @@ class RightArm(Arm):
     """Right Arm part.
 
     Args:
-        luos_port (str): serial port where the Luos modules are attached
+        io (str): port name where the modules can be found
         hand (str): name of the :py:class:`~reachy.parts.hand.Hand` to attached ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
     """
 
@@ -198,8 +191,8 @@ class RightArm(Arm):
         }),
     ])
 
-    def __init__(self, luos_port, hand=None):
+    def __init__(self, io, hand=None):
         """Create a new Right Arm part."""
         Arm.__init__(self, side='right',
-                     luos_port=luos_port, dxl_motors=RightArm.dxl_motors,
+                     io=io, dxl_motors=RightArm.dxl_motors,
                      hand=hand)

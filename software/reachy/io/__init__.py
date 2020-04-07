@@ -1,3 +1,4 @@
 """Reachy submodule responsible for low-level IO."""
 
-from .luos import SharedLuosIO # noqa
+
+from .io import IO  # noqa F401

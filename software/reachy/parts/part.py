@@ -5,49 +5,59 @@ import numpy as np
 from .motor import DynamixelMotor, OrbitaActuator
 from .kinematic import Link, Chain
 
+from ..io import IO, luos, ws
+
 
 class ReachyPart(object):
     """Part abstraction class.
 
     Args:
         name (str): name of the new part, can be composed if it's a subpart (eg. right_arm.hand)
+        io (str): port name where the modules can be found
 
     Define instantiation, teardown functionalities.
     Also provides attach function for dynamixel motors and orbita actuator.
     """
 
-    def __init__(self, name):
+    def __init__(self, name, io):
         """Create a new part."""
         self.name = name
         self.motors = []
 
+        if isinstance(io, IO):
+            self.io = io
+        elif isinstance(io, str) and io == 'ws':
+            self.io = ws.WsIO.shared_server(self.name)
+        else:
+            gate_name = self.name.split('.')[0]
+            gate_name = f'r_{gate_name}'
+            self.io = luos.SharedLuosIO.with_gate(gate_name, io)
+
     def teardown(self):
         """Clean up before closing."""
-        pass
+        self.io.close()
 
-    def attach_dxl_motors(self, luos_io, dxl_motors):
+    def attach_dxl_motors(self, dxl_motors):
         """Attach given dynamixel motors to a part.
 
         Args:
-            luos_io (reachy.io.SharedLuosIO): io to the Luos gate where the motors are connected
             dxl_motors (dict): motors config, the config must at least include an id for each motor (see attach_kinematic_chain for extra parameters)
         """
         self.motors = []
 
         for motor_name, config in dxl_motors.items():
-            m = DynamixelMotor(self, motor_name, luos_io.find_dxl(config['id']), config)
+            m = DynamixelMotor(self, motor_name, self.io.find_dxl(motor_name, config['id']), config)
             setattr(self, motor_name, m)
             self.motors.append(m)
 
-    def create_orbita_actuator(self, name, luos_io, config):
+    def create_orbita_actuator(self, name, config):
         """Attach an orbita actuator to a part.
 
         Args:
             name (str): name of the orbita actuator (eg neck for the head part)
-            luos_io (reachy.io.SharedLuosIO): io to the Luos gate where the Orbita disk controller are connected
             config (dict): orbita configuration (see OrbitaActuator for details)
         """
-        luos_disks_motor = luos_io.find_orbital_disks()
+        luos_disks_motor = self.io.find_orbital_disks()
         orb = OrbitaActuator(self, name, luos_disks_motor, **config)
         setattr(self, name, orb)
         return orb
