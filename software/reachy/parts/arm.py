@@ -24,7 +24,7 @@ class Arm(ReachyPart):
         side (str): 'right' or 'left'
         io (str): port name where the modules can be found
         dxl_motors (dict): config of the dynamixel motors composing the arm
-        hand (str): name of the Hand to attached ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
+        hand (str): name of the Hand to attach ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
 
     Provides high-level access to:
         * ordered list of motors
@@ -127,7 +127,7 @@ class LeftArm(Arm):
 
     Args:
         io (str): port name where the modules can be found
-        hand (str): name of the :py:class:`~reachy.parts.hand.Hand` to attached ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
+        hand (str): name of the :py:class:`~reachy.parts.hand.Hand` to attach ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
     """
 
     dxl_motors = OrderedDict([
@@ -165,7 +165,7 @@ class RightArm(Arm):
 
     Args:
         io (str): port name where the modules can be found
-        hand (str): name of the :py:class:`~reachy.parts.hand.Hand` to attached ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
+        hand (str): name of the :py:class:`~reachy.parts.hand.Hand` to attach ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
     """
 
     dxl_motors = OrderedDict([
