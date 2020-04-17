@@ -57,7 +57,10 @@ class WsIO(IO):
 
         Not currently supported.
         """
-        raise NotImplementedError
+        bottomOrb =  WsFakeOrbitalDisk()
+        middleOrb =  WsFakeOrbitalDisk()
+        topOrb =  WsFakeOrbitalDisk()
+        return [bottomOrb, middleOrb, topOrb]
 
     def close(self):
         """Close the WS."""
@@ -77,6 +80,28 @@ class WsMotor(object):
         self.compliant = False
         self.rot_position = 0
         self.target_rot_position = 0
+
+class WsFakeOrbitalDisk():
+    """Orbital disk placeholder.
+    """
+
+    def __init__(self):
+        self.compliant = False
+        self.target_rot_position = 0
+        self.limit_current = 0
+        self.encoder_res = 0
+        self.reduction = 0
+        self.wheel_size = 0
+        self.positionPid = 0
+        self.rot_position_mode = True
+        self.rot_speed_mode = False
+        self.rot_position = True
+        self.rot_speed = False
+            
+    def setToZero(self):
+        """nothing
+        """
+    
 
 
 class WsFakeForceSensor(object):
