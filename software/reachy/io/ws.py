@@ -130,6 +130,9 @@ class WsServer(object):
         self.running.set()
 
         while self.running.is_set():
+            if not websocket.open:
+                break
+
             msg = json.dumps({
                 'motors': [
                     {'name': m.name, 'goal_position': m.target_rot_position}
@@ -137,7 +140,7 @@ class WsServer(object):
                 ]
             })
             await websocket.send(msg.encode('UTF-8'))
-            time.sleep(0.01)
+            await asyncio.sleep(0.01)
 
     def close(self):
         """Stop the sync loop."""
