@@ -1,7 +1,6 @@
 """WebSocket IO definition."""
 
 import json
-import time
 import asyncio
 import websockets
 import numpy as np
