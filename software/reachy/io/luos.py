@@ -144,7 +144,7 @@ class SharedLuosIO(IO):
 
         return m
 
-    def find_orbital_disks(self):
+    def find_orbita_disks(self):
         """Retrieve the three Luos modules controlling each Orbita disk."""
         return [
             self.find_module(name)

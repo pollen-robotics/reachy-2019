@@ -57,7 +57,7 @@ class ReachyPart(object):
             name (str): name of the orbita actuator (eg neck for the head part)
             config (dict): orbita configuration (see OrbitaActuator for details)
         """
-        luos_disks_motor = self.io.find_orbital_disks()
+        luos_disks_motor = self.io.find_orbita_disks()
         orb = OrbitaActuator(self, name, luos_disks_motor, **config)
         setattr(self, name, orb)
         return orb
