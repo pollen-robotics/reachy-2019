@@ -52,14 +52,14 @@ class WsIO(IO):
         self.motors.append(m)
         return m
 
-    def find_orbital_disks(self):
+    def find_orbita_disks(self):
         """Get a specific orbita module from the IO.
 
         Not currently supported.
         """
-        bottomOrb =  WsFakeOrbitalDisk()
-        middleOrb =  WsFakeOrbitalDisk()
-        topOrb =  WsFakeOrbitalDisk()
+        bottomOrb = WsFakeOrbitaDisk()
+        middleOrb = WsFakeOrbitaDisk()
+        topOrb = WsFakeOrbitaDisk()
         return [bottomOrb, middleOrb, topOrb]
 
     def close(self):
@@ -81,11 +81,12 @@ class WsMotor(object):
         self.rot_position = 0
         self.target_rot_position = 0
 
-class WsFakeOrbitalDisk():
-    """Orbital disk placeholder.
-    """
+
+class WsFakeOrbitaDisk(object):
+    """Orbital disk placeholder."""
 
     def __init__(self):
+        """Create fake Orbita disk."""
         self.compliant = False
         self.target_rot_position = 0
         self.limit_current = 0
@@ -97,11 +98,10 @@ class WsFakeOrbitalDisk():
         self.rot_speed_mode = False
         self.rot_position = True
         self.rot_speed = False
-            
+
     def setToZero(self):
-        """nothing
-        """
-    
+        """Do nothing atm."""
+        pass
 
 
 class WsFakeForceSensor(object):

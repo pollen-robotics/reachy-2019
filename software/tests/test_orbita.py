@@ -18,7 +18,7 @@ def rot(axis, deg):
 
 def test_orbita_goto():
     luos_io = SharedLuosIO.with_gate('gate', '')
-    luos_disks_motor = luos_io.find_orbital_disks()
+    luos_disks_motor = luos_io.find_orbita_disks()
 
     config = {
         'Pc_z': [0, 0, 25],

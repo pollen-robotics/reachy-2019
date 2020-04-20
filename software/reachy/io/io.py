@@ -15,8 +15,8 @@ class IO(object):
         """Get a specific dynamixel motor from the IO."""
         raise NotImplementedError
 
-    def find_orbital_disks(self):
-        """Get a specific orbital disk from the IO."""
+    def find_orbita_disks(self):
+        """Get a specific orbita disk from the IO."""
         raise NotImplementedError
 
     def close(self):
