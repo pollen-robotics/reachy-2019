@@ -77,8 +77,12 @@ class WsMotor(object):
         self.name = name
 
         self.compliant = False
-        self.rot_position = 0
         self.target_rot_position = 0
+
+    @property
+    def rot_position(self):
+        """Get the present position."""
+        return self.target_rot_position
 
 
 class WsFakeOrbitaDisk(object):
