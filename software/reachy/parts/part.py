@@ -46,7 +46,7 @@ class ReachyPart(object):
         self.motors = []
 
         for motor_name, config in dxl_motors.items():
-            m = DynamixelMotor(self, motor_name, self.io.find_dxl(motor_name, config['id']), config)
+            m = DynamixelMotor(self, motor_name, self.io.find_dxl(motor_name, config), config)
             setattr(self, motor_name, m)
             self.motors.append(m)
 

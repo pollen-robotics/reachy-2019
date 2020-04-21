@@ -42,7 +42,7 @@ class WsIO(IO):
 
         raise NotImplementedError
 
-    def find_dxl(self, dxl_name, dxl_id):
+    def find_dxl(self, dxl_name, dxl_config):
         """Get a specific dynamixel motor from the IO.
 
         Only goal position is used atm.

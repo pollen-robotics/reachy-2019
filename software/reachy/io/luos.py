@@ -129,13 +129,13 @@ class SharedLuosIO(IO):
                 missing_module=module_name,
             )
 
-    def find_dxl(self, dxl_name, dxl_id):
+    def find_dxl(self, dxl_name, dxl_config):
         """Retrieve a specified Dynamixel motor on the IO given its id.
 
         Args:
-            dxl_id (int): ID of the researched dynamixel motor
+            dxl_config (dict): configuration of the searched dynamixel (including its id)
         """
-        module_name = 'dxl_{}'.format(dxl_id)
+        module_name = 'dxl_{}'.format(dxl_config['id'])
 
         m = self.find_module(module_name)
 
