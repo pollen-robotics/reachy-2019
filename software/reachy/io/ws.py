@@ -47,7 +47,8 @@ class WsIO(IO):
 
         Only goal position is used atm.
         """
-        m = WsMotor(name=f'{self.part_name}.{dxl_name}')
+        pos = dxl_config['offset'] * (-1 if dxl_config['orientation'] == 'indirect' else 1)
+        m = WsMotor(name=f'{self.part_name}.{dxl_name}', initial_position=pos)
         self.motors.append(m)
         return m
 
@@ -72,12 +73,12 @@ class WsMotor(object):
     Only the goal position (ie. target_rot_position) is currently used.
     """
 
-    def __init__(self, name):
+    def __init__(self, name, initial_position):
         """Init the fake motor."""
         self.name = name
 
         self.compliant = False
-        self.target_rot_position = 0
+        self.target_rot_position = initial_position
 
     @property
     def rot_position(self):
