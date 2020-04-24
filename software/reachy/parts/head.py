@@ -48,10 +48,7 @@ class Head(ReachyPart):
 
         self.attach_dxl_motors(Head.dxl_motors)
 
-        # We import vision here to avoid OpenCV ImportError issue
-        # if we are not using the Head part.
-        from ..utils.vision import BackgroundVideoCapture
-        self.cap = BackgroundVideoCapture(camera_id)
+        self.cam = self.io.attach_camera(camera_id)
 
     def __repr__(self):
         """Head representation."""
@@ -60,7 +57,7 @@ class Head(ReachyPart):
     def teardown(self):
         """Clean and close head part."""
         self.luos_io.close()
-        self.cap.close()
+        self.cam.close()
 
     def look_at(self, x, y, z, duration, wait):
         """Make the head look at a 3D point in space.
@@ -99,5 +96,5 @@ class Head(ReachyPart):
 
     def get_image(self):
         """Get lat grabbed image from the camera."""
-        _, img = self.cap.read()
+        _, img = self.cam.read()
         return img

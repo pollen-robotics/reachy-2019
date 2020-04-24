@@ -62,6 +62,10 @@ class WsIO(IO):
         topOrb = WsFakeOrbitaDisk()
         return [bottomOrb, middleOrb, topOrb]
 
+    def attach_camera(self, camera_id):
+        """Return a camera associated to the specified id."""
+        return WsCamera()
+
     def close(self):
         """Close the WS."""
         self.ws.close()
@@ -117,6 +121,18 @@ class WsFakeForceSensor(object):
     def __init__(self):
         """Init the fake force sensor."""
         self.load = np.nan
+
+
+class WsCamera(object):
+    """Remote Camera."""
+
+    def read(self):
+        """Get latest received frame."""
+        return True, np.zeros((640, 480, 3), dtype=np.uint8)
+
+    def close(self):
+        """Close the camera."""
+        pass
 
 
 class WsServer(object):

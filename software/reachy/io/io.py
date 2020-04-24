@@ -22,3 +22,12 @@ class IO(object):
     def close(self):
         """Close and clean the IO."""
         raise NotImplementedError
+
+    def attach_camera(self, camera_id):
+        """Return a camera with specified id.
+
+        The camera object must implement following methods:
+            * read() -> bool, img
+            * close()
+        """
+        raise NotImplementedError
