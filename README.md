@@ -21,3 +21,8 @@ This project adheres to the Contributor [code of conduct](CODE_OF_CONDUCT.md). B
 
 * The full documentation is available at: [https://pollen-robotics.github.io/reachy-docs/](https://pollen-robotics.github.io/reachy-docs/)
 * The APIs can be found at: [https://pollen-robotics.github.io/reachy/](https://pollen-robotics.github.io/reachy/)
+
+## Installation
+
+* From Pypi: ```pip install reachy```
+* Or from the source: ```pip install -e ./software/```
