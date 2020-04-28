@@ -50,6 +50,7 @@ class WsIO(IO):
         pos = dxl_config['offset'] * (-1 if dxl_config['orientation'] == 'indirect' else 1)
         m = WsMotor(name=f'{self.part_name}.{dxl_name}', initial_position=pos)
         self.motors.append(m)
+        self.ws.motors[m.name] = m
         return m
 
     def find_orbita_disks(self):
@@ -85,11 +86,7 @@ class WsMotor(object):
 
         self.compliant = False
         self.target_rot_position = initial_position
-
-    @property
-    def rot_position(self):
-        """Get the present position."""
-        return self.target_rot_position
+        self.rot_position = initial_position
 
 
 class WsFakeOrbitaDisk(object):
@@ -148,6 +145,7 @@ class WsServer(object):
         self.running = Event()
 
         self.parts = []
+        self.motors = {}
 
     async def sync(self, websocket, path):
         """Sync loop that exchange modules state with the client."""
@@ -168,6 +166,8 @@ class WsServer(object):
 
             img = np.ones((640, 480, 3), dtype=np.uint8)
             self.cam.frame = img
+
+            self.motors['right_arm.shoulder_pitch'].rot_position = 42
 
     def close(self):
         """Stop the sync loop."""
