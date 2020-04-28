@@ -64,7 +64,9 @@ class WsIO(IO):
 
     def attach_camera(self, camera_id):
         """Return a camera associated to the specified id."""
-        return WsCamera()
+        cam = WsCamera()
+        self.ws.cam = cam
+        return cam
 
     def close(self):
         """Close the WS."""
@@ -125,10 +127,12 @@ class WsFakeForceSensor(object):
 
 class WsCamera(object):
     """Remote Camera."""
+    def __init__(self):
+        self.frame = np.zeros((640, 480, 3), dtype=np.uint8)
 
     def read(self):
         """Get latest received frame."""
-        return True, np.zeros((640, 480, 3), dtype=np.uint8)
+        return True, self.frame
 
     def close(self):
         """Close the camera."""
@@ -161,6 +165,9 @@ class WsServer(object):
             })
             await websocket.send(msg.encode('UTF-8'))
             await asyncio.sleep(0.01)
+
+            img = np.ones((640, 480, 3), dtype=np.uint8)
+            self.cam.frame = img
 
     def close(self):
         """Stop the sync loop."""
