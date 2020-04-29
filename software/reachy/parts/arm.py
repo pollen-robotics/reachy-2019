@@ -58,6 +58,12 @@ class Arm(ReachyPart):
 
         self.attach_kinematic_chain(dxl_motors)
 
+    def teardown(self):
+        """Clean up before closing."""
+        if self.hand is not None:
+            self.hand.teardown()
+        ReachyPart.teardown(self)
+
     def __repr__(self):
         """Arm representation."""
         return f'<{self.side.capitalize()}Arm "motors": {self.motors} "hand": {self.hand}>'
