@@ -125,7 +125,7 @@ class WsFakeForceSensor(object):
 class WsCamera(object):
     """Remote Camera."""
     def __init__(self):
-        self.frame = np.zeros((640, 480, 3), dtype=np.uint8)
+        self.frame = np.zeros((300,480,3), dtype=np.uint8)
 
     def read(self):
         """Get latest received frame."""
@@ -151,6 +151,8 @@ class WsServer(object):
         """Sync loop that exchange modules state with the client."""
         self.running.set()
 
+        websocket.max_size = 3548250
+
         while self.running.is_set():
             if not websocket.open:
                 break
@@ -164,10 +166,24 @@ class WsServer(object):
             await websocket.send(msg.encode('UTF-8'))
             await asyncio.sleep(0.01)
 
-            img = np.ones((640, 480, 3), dtype=np.uint8)
-            self.cam.frame = img
+            byte_state = await websocket.recv()
 
-            self.motors['right_arm.shoulder_pitch'].rot_position = 42
+            json_state = byte_state.decode('utf-8')
+            state = json.loads(json_state)
+            cams = state.get("cameras")
+            
+            imgRight = cams.get("binaryRightCamera")
+            imgRight = np.reshape(imgRight, (300,480,3))
+            imgRight = np.flipud(imgRight)
+
+            self.cam.frame = imgRight
+
+            motorStateList = state.get("motors")
+            for m in motorStateList:
+                name = m.get('apiName')
+                self.motors[name].rot_position = m.get("presentPosition")
+
+            
 
     def close(self):
         """Stop the sync loop."""
