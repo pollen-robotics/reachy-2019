@@ -127,7 +127,9 @@ class WsFakeForceSensor(object):
 
 class WsCamera(object):
     """Remote Camera."""
+
     def __init__(self):
+        """Set remote camera up."""
         self.frame = np.zeros((300, 480, 3), dtype=np.uint8)
 
     def read(self):
@@ -165,7 +167,7 @@ class WsServer(object):
                 ]
             })
             await websocket.send(msg.encode('UTF-8'))
-            # await asyncio.sleep(0.01)
+
             resp = await websocket.recv()
             state = json.loads(resp)
 
