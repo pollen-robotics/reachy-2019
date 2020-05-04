@@ -30,6 +30,7 @@ setup(
         'orbita>=0.3.1',
         'pyquaternion',
         'websockets',
+        'Pillow',
     ],
 
     extras_require={

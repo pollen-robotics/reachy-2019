@@ -6,6 +6,9 @@ import websockets
 import numpy as np
 
 from threading import Thread, Event
+from base64 import b64decode
+from io import BytesIO
+from PIL import Image
 
 from .io import IO
 
@@ -125,7 +128,7 @@ class WsFakeForceSensor(object):
 class WsCamera(object):
     """Remote Camera."""
     def __init__(self):
-        self.frame = np.zeros((300,480,3), dtype=np.uint8)
+        self.frame = np.zeros((300, 480, 3), dtype=np.uint8)
 
     def read(self):
         """Get latest received frame."""
@@ -151,8 +154,6 @@ class WsServer(object):
         """Sync loop that exchange modules state with the client."""
         self.running.set()
 
-        websocket.max_size = 3548250
-
         while self.running.is_set():
             if not websocket.open:
                 break
@@ -164,27 +165,15 @@ class WsServer(object):
                 ]
             })
             await websocket.send(msg.encode('UTF-8'))
-            await asyncio.sleep(0.01)
+            # await asyncio.sleep(0.01)
+            resp = await websocket.recv()
+            state = json.loads(resp)
 
-            byte_state = await websocket.recv()
-            #when the connection first start, the unity websocket doesn't send camera in a first time
-            if (len(byte_state) > 1000000):
-                json_state = byte_state.decode('utf-8')
-                state = json.loads(json_state)
-                cams = state.get("cameras")
-                
-                imgRight = cams.get("binaryRightCamera")
-                imgRight = np.reshape(imgRight, (300,480,3))
-                imgRight = np.flipud(imgRight)
+            jpeg_data = b64decode(state['left_eye'])
+            self.cam.frame = np.array(Image.open(BytesIO(jpeg_data)))
 
-                self.cam.frame = imgRight
-
-                motorStateList = state.get("motors")
-                for m in motorStateList:
-                    name = m.get('apiName')
-                    self.motors[name].rot_position = m.get("presentPosition")
-
-            
+            for m in state['motors']:
+                self.motors[m['name']].rot_position = m['present_position']
 
     def close(self):
         """Stop the sync loop."""
