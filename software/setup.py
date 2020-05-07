@@ -26,7 +26,7 @@ setup(
     install_requires=[
         'pyluos==1.1.1b1',
         'numpy',
-        'scipy',
+        'scipy>=1.4.0',
         'orbita>=0.3.1',
         'pyquaternion',
         'websockets',
