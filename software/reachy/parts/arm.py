@@ -58,6 +58,12 @@ class Arm(ReachyPart):
 
         self.attach_kinematic_chain(dxl_motors)
 
+    def teardown(self):
+        """Clean up before closing."""
+        if self.hand is not None:
+            self.hand.teardown()
+        ReachyPart.teardown(self)
+
     def __repr__(self):
         """Arm representation."""
         return f'<{self.side.capitalize()}Arm "motors": {self.motors} "hand": {self.hand}>'
@@ -149,7 +155,7 @@ class LeftArm(Arm):
         ('elbow_pitch', {
             'id': 23, 'offset': 0.0, 'orientation': 'indirect',
             'angle-limits': [0, 125],
-            'link-translation': [0, 0, -0.30745], 'link-rotation': [0, 1, 0],
+            'link-translation': [0, 0, -0.28], 'link-rotation': [0, 1, 0],
         }),
     ])
 
@@ -187,7 +193,7 @@ class RightArm(Arm):
         ('elbow_pitch', {
             'id': 13, 'offset': 0.0, 'orientation': 'indirect',
             'angle-limits': [0, 125],
-            'link-translation': [0, 0, -0.30745], 'link-rotation': [0, 1, 0],
+            'link-translation': [0, 0, -0.28], 'link-rotation': [0, 1, 0],
         }),
     ])
 

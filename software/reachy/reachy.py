@@ -44,16 +44,12 @@ class Reachy(object):
             if not isinstance(left_arm, LeftArm):
                 raise ValueError('"left_arm" must be a LeftArm or None!')
             self._parts.append(left_arm)
-            if left_arm.hand is not None:
-                self._parts.append(left_arm.hand)
         self.left_arm = left_arm
 
         if right_arm is not None:
             if not isinstance(right_arm, RightArm):
                 raise ValueError('"right_arm" must be a RightArm or None!')
             self._parts.append(right_arm)
-            if right_arm.hand is not None:
-                self._parts.append(right_arm.hand)
         self.right_arm = right_arm
 
         if head is not None:

@@ -34,7 +34,7 @@ class Link(object):
         R = np.zeros((theta.shape[0], 4, 4))
         theta = theta.reshape(1, -1)
 
-        R[:, :3, :3] = Rotation.from_rotvec(np.dot(theta.T, self.rotation)).as_dcm()
+        R[:, :3, :3] = Rotation.from_rotvec(np.dot(theta.T, self.rotation)).as_matrix()
         R[:, 3, 3] = 1
         return np.matmul(self.T, R)
 
