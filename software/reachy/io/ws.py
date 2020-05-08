@@ -41,7 +41,14 @@ class WsIO(IO):
         For the moment no module are really implemented. Only placeholders for code compatibility are provided.
         """
         if module_name == 'force_gripper':
-            return WsFakeForceSensor()
+            force_sensor = WsFakeForceSensor()
+
+            if self.part_name == 'left_arm.hand':
+                self.ws.left_force_sensor = force_sensor
+            elif self.part_name == 'right_arm.hand':
+                self.ws.right_force_sensor = force_sensor
+
+            return force_sensor
 
         raise NotImplementedError
 
@@ -176,6 +183,11 @@ class WsServer(object):
 
             for m in state['motors']:
                 self.motors[m['name']].rot_position = m['present_position']
+
+            if hasattr(self, 'left_force_sensor') and 'left_force_sensor' in state:
+                self.left_force_sensor.load = state['left_force_sensor']
+            if hasattr(self, 'right_force_sensor') and 'right_force_sensor' in state:
+                self.right_force_sensor.load = state['right_force_sensor']
 
     def close(self):
         """Stop the sync loop."""
