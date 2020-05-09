@@ -178,11 +178,13 @@ class WsServer(object):
             resp = await websocket.recv()
             state = json.loads(resp)
 
-            jpeg_data = b64decode(state['left_eye'])
-            self.cam.frame = np.array(Image.open(BytesIO(jpeg_data)))
+            if hasattr(self, 'cam') and 'left_eye' in state:
+                jpeg_data = b64decode(state['left_eye'])
+                self.cam.frame = np.array(Image.open(BytesIO(jpeg_data)))
 
             for m in state['motors']:
-                self.motors[m['name']].rot_position = m['present_position']
+                if m['name'] in self.motors:
+                    self.motors[m['name']].rot_position = m['present_position']
 
             if hasattr(self, 'left_force_sensor') and 'left_force_sensor' in state:
                 self.left_force_sensor.load = state['left_force_sensor']
