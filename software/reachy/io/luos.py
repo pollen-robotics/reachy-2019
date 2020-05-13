@@ -151,9 +151,9 @@ class SharedLuosIO(IO):
             for name in ['disk_bottom', 'disk_middle', 'disk_top']
         ]
 
-    def attach_camera(self, camera_id):
-        """Attach a camera to the specified camera_id."""
-        # We import vision here to avoid OpenCV ImportError issue
+    def find_dual_camera(self, default_camera):
+        """Retrieve a dual camera."""
+        # We import DualCamera here to avoid OpenCV/smbus/gpiozero ImportError
         # if we are not using the Head part.
-        from ..utils.vision import BackgroundVideoCapture
-        return BackgroundVideoCapture(camera_id)
+        from .cam import DualCamera
+        return DualCamera(default_camera)

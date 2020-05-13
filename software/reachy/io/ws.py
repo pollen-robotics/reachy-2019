@@ -73,9 +73,9 @@ class WsIO(IO):
         topOrb = WsFakeOrbitaDisk()
         return [bottomOrb, middleOrb, topOrb]
 
-    def attach_camera(self, camera_id):
-        """Return a camera associated to the specified id."""
-        cam = WsCamera()
+    def find_dual_camera(self, default_camera):
+        """Retrieve a dual camera."""
+        cam = WsDualCamera(default_camera)
         self.ws.cam = cam
         return cam
 
@@ -132,12 +132,22 @@ class WsFakeForceSensor(object):
         self.load = np.nan
 
 
-class WsCamera(object):
+class WsDualCamera(object):
     """Remote Camera."""
 
-    def __init__(self):
+    def __init__(self, default_camera):
         """Set remote camera up."""
+        self.set_active(default_camera)
         self.frame = np.zeros((300, 480, 3), dtype=np.uint8)
+
+    @property
+    def active_side(self):
+        """Get the active camera side."""
+        return self._camera_side
+
+    def set_active(self, camera_side):
+        """Set one of the camera active (left or right)."""
+        self._camera_side = camera_side
 
     def read(self):
         """Get latest received frame."""
@@ -178,9 +188,11 @@ class WsServer(object):
             resp = await websocket.recv()
             state = json.loads(resp)
 
-            if hasattr(self, 'cam') and 'left_eye' in state:
-                jpeg_data = b64decode(state['left_eye'])
-                self.cam.frame = np.array(Image.open(BytesIO(jpeg_data)))
+            if hasattr(self, 'cam'):
+                eye = f'{self.cam.active_side}_eye'
+                if eye in state:
+                    jpeg_data = b64decode(state[eye])
+                    self.cam.frame = np.array(Image.open(BytesIO(jpeg_data)))
 
             for m in state['motors']:
                 if m['name'] in self.motors:

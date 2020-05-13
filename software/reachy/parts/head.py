@@ -12,8 +12,8 @@ class Head(ReachyPart):
     """Head part.
 
     Args:
-        camera_id (int): index of the camera
         io (str): port name where the modules can be found
+        default_camera (str): default camera to enable ('left' or 'right')
 
     Composed of an orbita actuator as neck, two controlled antennas and one camera.
     """
@@ -40,15 +40,13 @@ class Head(ReachyPart):
         }),
     ])
 
-    def __init__(self, camera_id, io):
+    def __init__(self, io, default_camera='left'):
         """Create new Head part."""
         ReachyPart.__init__(self, name='head', io=io)
 
         self.neck = self.create_orbita_actuator('neck', Head.orbita_config)
-
         self.attach_dxl_motors(Head.dxl_motors)
-
-        self.cam = self.io.attach_camera(camera_id)
+        self.camera = self.io.find_dual_camera(default_camera)
 
     def __repr__(self):
         """Head representation."""
@@ -94,7 +92,16 @@ class Head(ReachyPart):
         """Launch neck homing procedure."""
         self.neck.homing()
 
+    @property
+    def active_camera(self):
+        """Get the active camera side (left or right)."""
+        return self.camera.active_side
+
+    def enable_camera(self, camera_side):
+        """Enable one of the camera active (left or right)."""
+        self.camera.set_active(camera_side)
+
     def get_image(self):
-        """Get lat grabbed image from the camera."""
-        _, img = self.cam.read()
+        """Get last grabbed image from the camera."""
+        _, img = self.camera.read()
         return img
