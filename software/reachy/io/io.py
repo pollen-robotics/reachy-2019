@@ -23,11 +23,15 @@ class IO(object):
         """Close and clean the IO."""
         raise NotImplementedError
 
-    def attach_camera(self, camera_id):
-        """Return a camera with specified id.
+    def find_dual_camera(self, default_camera):
+        """Return a dual camera.
 
         The camera object must implement following methods:
             * read() -> bool, img
             * close()
+            * set_active(side)
+
+        and the property:
+            * active_side --> 'left' or 'right'
         """
         raise NotImplementedError
