@@ -53,7 +53,7 @@ class Chain(object):
     @property
     def bounds(self):
         """Get bounds for each link."""
-        return [l.bounds for l in self.links]
+        return [link.bounds for link in self.links]
 
     def forward(self, joints):
         """
@@ -69,8 +69,8 @@ class Chain(object):
         """
         M = np.eye(4)
 
-        for l, theta in zip(self.links, joints.T):
-            M = np.matmul(M, l.transformation_matrix(theta))
+        for link, theta in zip(self.links, joints.T):
+            M = np.matmul(M, link.transformation_matrix(theta))
 
         return M
 
