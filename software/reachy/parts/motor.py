@@ -176,7 +176,7 @@ class DynamixelMotor(object):
 
         if abs(error) > threshold:
             pos = self.goal_position + error / 2
-            logger.info(f'Fix static error controller', extra={
+            logger.info('Fix static error controller', extra={
                 'goal_position': self.goal_position,
                 'present_position': self.present_position,
                 'fixed_goal_position': pos,
