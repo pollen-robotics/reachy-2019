@@ -1,5 +1,11 @@
 # Version 1.0.0
 
-### Bugfix v1.0.1
+### Bugfix
 
 * remove Hands from parts (avoid duplicate motors in reachy.motors)
+* Adjust parts length in kinematic definition to match new version.
+
+## Version 1.1.0
+
+* Add support for sensors in WsIO (eg. for Unity simulation)
+* Add support for dual camera (left or right), only one can be active at the same time.

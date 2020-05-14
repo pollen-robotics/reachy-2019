@@ -150,3 +150,10 @@ class SharedLuosIO(IO):
             self.find_module(name)
             for name in ['disk_bottom', 'disk_middle', 'disk_top']
         ]
+
+    def find_dual_camera(self, default_camera):
+        """Retrieve a dual camera."""
+        # We import DualCamera here to avoid OpenCV/smbus/gpiozero ImportError
+        # if we are not using the Head part.
+        from .cam import DualCamera
+        return DualCamera(default_camera)

@@ -12,8 +12,8 @@ class Head(ReachyPart):
     """Head part.
 
     Args:
-        camera_id (int): index of the camera
         io (str): port name where the modules can be found
+        default_camera (str): default camera to enable ('left' or 'right')
 
     Composed of an orbita actuator as neck, two controlled antennas and one camera.
     """
@@ -40,18 +40,13 @@ class Head(ReachyPart):
         }),
     ])
 
-    def __init__(self, camera_id, io):
+    def __init__(self, io, default_camera='left'):
         """Create new Head part."""
         ReachyPart.__init__(self, name='head', io=io)
 
         self.neck = self.create_orbita_actuator('neck', Head.orbita_config)
-
         self.attach_dxl_motors(Head.dxl_motors)
-
-        # We import vision here to avoid OpenCV ImportError issue
-        # if we are not using the Head part.
-        from ..utils.vision import BackgroundVideoCapture
-        self.cap = BackgroundVideoCapture(camera_id)
+        self.camera = self.io.find_dual_camera(default_camera)
 
     def __repr__(self):
         """Head representation."""
@@ -60,7 +55,7 @@ class Head(ReachyPart):
     def teardown(self):
         """Clean and close head part."""
         self.luos_io.close()
-        self.cap.close()
+        self.cam.close()
 
     def look_at(self, x, y, z, duration, wait):
         """Make the head look at a 3D point in space.
@@ -97,7 +92,16 @@ class Head(ReachyPart):
         """Launch neck homing procedure."""
         self.neck.homing()
 
+    @property
+    def active_camera(self):
+        """Get the active camera side (left or right)."""
+        return self.camera.active_side
+
+    def enable_camera(self, camera_side):
+        """Enable one of the camera active (left or right)."""
+        self.camera.set_active(camera_side)
+
     def get_image(self):
-        """Get lat grabbed image from the camera."""
-        _, img = self.cap.read()
+        """Get last grabbed image from the camera."""
+        _, img = self.camera.read()
         return img

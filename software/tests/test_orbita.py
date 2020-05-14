@@ -1,19 +1,14 @@
 import pytest
-import numpy as np
 
 from pyquaternion import Quaternion
-from scipy.spatial.transform import Rotation as R
 
 from mockup import mock_luos_io
 
 mock_luos_io()
 
+from reachy.utils import rot  # noqa: E402
 from reachy.io.luos import SharedLuosIO  # noqa: E402
 from reachy.parts.motor import OrbitaActuator  # noqa: E402
-
-
-def rot(axis, deg):
-    return R.from_euler(axis, np.deg2rad(deg)).as_dcm()
 
 
 def test_orbita_goto():

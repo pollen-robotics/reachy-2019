@@ -34,7 +34,7 @@ class Link(object):
         R = np.zeros((theta.shape[0], 4, 4))
         theta = theta.reshape(1, -1)
 
-        R[:, :3, :3] = Rotation.from_rotvec(np.dot(theta.T, self.rotation)).as_dcm()
+        R[:, :3, :3] = Rotation.from_rotvec(np.dot(theta.T, self.rotation)).as_matrix()
         R[:, 3, 3] = 1
         return np.matmul(self.T, R)
 
@@ -53,7 +53,7 @@ class Chain(object):
     @property
     def bounds(self):
         """Get bounds for each link."""
-        return [l.bounds for l in self.links]
+        return [link.bounds for link in self.links]
 
     def forward(self, joints):
         """
@@ -69,8 +69,8 @@ class Chain(object):
         """
         M = np.eye(4)
 
-        for l, theta in zip(self.links, joints.T):
-            M = np.matmul(M, l.transformation_matrix(theta))
+        for link, theta in zip(self.links, joints.T):
+            M = np.matmul(M, link.transformation_matrix(theta))
 
         return M
 
