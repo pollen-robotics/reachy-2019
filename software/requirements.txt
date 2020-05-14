@@ -3,7 +3,7 @@ future==0.18.2
 ifaddr==0.1.6
 numpy==1.18.2
 orbita==0.3.1
-pyluos==1.1.1b1
+pyluos==1.2.1
 pyquaternion==0.9.5
 pyserial==3.4
 scipy==1.4.1

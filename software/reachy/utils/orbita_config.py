@@ -10,7 +10,7 @@ import time
 import argparse
 
 from contextlib import closing
-from pyluos import Robot as LuosIO
+from pyluos import Device as LuosDevice
 
 
 def main():
@@ -20,7 +20,7 @@ def main():
     parser.add_argument('part_name', choices=['head'])
     args = parser.parse_args()
 
-    with closing(LuosIO(args.luos_port)) as io:
+    with closing(LuosDevice(args.luos_port)) as io:
         if len(io.modules) != 4:
             names = [m.alias for m in io.modules]
             raise ValueError(f'Incoherent modules found: {names}!')

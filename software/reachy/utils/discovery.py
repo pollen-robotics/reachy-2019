@@ -5,7 +5,7 @@ Provide automatic detection mechanisms to check which parts are present on your 
 """
 
 from reachy import parts
-from reachy.io import SharedLuosIO
+from reachy.io.luos import SharedLuosIO
 from reachy.error import LuosModuleNotFoundError, LuosGateNotFoundError, CameraNotFoundError
 
 
@@ -15,7 +15,7 @@ def discover_head(luos_port='/dev/ttyUSB*', camera_id=0):
 
     try:
         head = parts.Head(
-            luos_port=luos_port,
+            io=luos_port,
             camera_id=camera_id,
         )
         head.teardown()
@@ -49,7 +49,7 @@ def discover_arm(side, luos_port='/dev/ttyUSB*', hand='force_gripper'):
 
     try:
         arm = Arm(
-            luos_port=luos_port,
+            io=luos_port,
             hand=hand,
         )
         arm.teardown()

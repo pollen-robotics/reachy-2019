@@ -18,4 +18,4 @@ class MockDxlMotor(MagicMock, DynamixelMotor):
 
 
 def mock_luos_io():
-    reachy.io.luos.LuosIO = MockLuosIO()
+    reachy.io.luos.LuosDevice = MockLuosIO()
