@@ -13,7 +13,7 @@ import time
 import argparse
 
 from contextlib import closing
-from pyluos import Robot as LuosIO
+from pyluos import Device as LuosDevice
 
 from reachy.parts import RightArm, LeftArm, Head
 from reachy.parts.hand import LeftForceGripper, RightForceGripper
@@ -38,7 +38,7 @@ def main():
     id = conf['id']
     limits = conf['angle-limits']
 
-    with closing(LuosIO(args.luos_port)) as io:
+    with closing(LuosDevice(args.luos_port)) as io:
         print(f'Will configure motor {name}...')
 
         dxl_motors_found = [m for m in io.modules if m.alias.startswith('dxl_')]

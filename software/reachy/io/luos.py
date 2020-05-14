@@ -4,7 +4,7 @@ import logging
 
 from glob import glob
 
-from pyluos import Robot as LuosIO
+from pyluos import Device as LuosDevice
 from pyluos.modules import DynamixelMotor
 
 from ..error import LuosModuleNotFoundError, LuosGateNotFoundError
@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 def attempt_luos_connection(port, trials=5):
     """Try to connect to a Luos Gate."""
-    io = LuosIO(port, log_conf='')
+    io = LuosDevice(port, log_conf='')
     gate_name = io.modules[0].alias
 
     if trials > 0 and gate_name in ('r_right_arm', 'r_left_arm'):
