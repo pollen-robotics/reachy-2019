@@ -56,7 +56,7 @@ class EmptyHand(Hand):
 
 
 class LeftEmptyHand(EmptyHand):
-    """Left Force Gripper Part."""
+    """Left Empty Hand Part."""
 
     dxl_motors = OrderedDict([
         ('forearm_yaw', {
@@ -78,7 +78,7 @@ class LeftEmptyHand(EmptyHand):
 
 
 class RightEmptyHand(EmptyHand):
-    """Right Force Gripper Part."""
+    """Right Empty Hand Part."""
 
     dxl_motors = OrderedDict([
         ('forearm_yaw', {
