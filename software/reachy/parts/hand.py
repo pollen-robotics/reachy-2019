@@ -29,6 +29,76 @@ class Hand(ReachyPart):
         self.side = root.side
 
 
+class EmptyHand(Hand):
+    """Wrist with no hand Part.
+
+    Args:
+        io (str): port name where the modules can be found
+        side (str): which side the part is attached to ('left' or 'right')
+
+    Composed of three dynamixel motors.
+    """
+
+    def __init__(self, root, io):
+        """Create a new Empty Hand."""
+        Hand.__init__(self, root=root, io=io)
+
+        dxl_motors = OrderedDict({
+            name: dict(conf)
+            for name, conf in self.dxl_motors.items()
+        })
+
+        if self.side == 'left':
+            for name, conf in dxl_motors.items():
+                conf['id'] += 10
+
+        self.attach_dxl_motors(dxl_motors)
+
+
+class LeftEmptyHand(EmptyHand):
+    """Left Empty Hand Part."""
+
+    dxl_motors = OrderedDict([
+        ('forearm_yaw', {
+            'id': 14, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [-150, 150],
+            'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
+        }),
+        ('wrist_pitch', {
+            'id': 15, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [-50, 50],
+            'link-translation': [0, 0, -0.25], 'link-rotation': [0, 1, 0],
+        }),
+        ('wrist_roll', {
+            'id': 16, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [-45, 45],
+            'link-translation': [0, 0, -0.0325], 'link-rotation': [1, 0, 0],
+        }),
+    ])
+
+
+class RightEmptyHand(EmptyHand):
+    """Right Empty Hand Part."""
+
+    dxl_motors = OrderedDict([
+        ('forearm_yaw', {
+            'id': 14, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [-150, 150],
+            'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
+        }),
+        ('wrist_pitch', {
+            'id': 15, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [-50, 50],
+            'link-translation': [0, 0, -0.25], 'link-rotation': [0, 1, 0],
+        }),
+        ('wrist_roll', {
+            'id': 16, 'offset': 0.0, 'orientation': 'indirect',
+            'angle-limits': [-45, 45],
+            'link-translation': [0, 0, -0.0325], 'link-rotation': [1, 0, 0],
+        }),
+    ])
+
+
 class ForceGripper(Hand):
     """Force Gripper Part.
 

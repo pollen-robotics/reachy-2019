@@ -7,13 +7,14 @@ import numpy as np
 
 from collections import OrderedDict
 
-from .hand import LeftForceGripper, RightForceGripper, OrbitaWrist
+from .hand import LeftEmptyHand, RightEmptyHand, LeftForceGripper, RightForceGripper, OrbitaWrist
 from .part import ReachyPart
 
 
 hands = {
     'force_gripper': {'left': LeftForceGripper, 'right': RightForceGripper},
     'orbita_wrist': {'left': OrbitaWrist, 'right': OrbitaWrist},
+    'empty_hand': {'left': LeftEmptyHand, 'right': RightEmptyHand},
 }
 
 
