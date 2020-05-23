@@ -144,6 +144,10 @@ class SharedLuosIO(IO):
 
         return m
 
+    def find_fan(self, fan_name):
+        """Get a specific fan from its name."""
+        return Fan(fan_name, self.find_module(fan_name))
+
     def find_orbita_disks(self):
         """Retrieve the three Luos modules controlling each Orbita disk."""
         return [
@@ -157,3 +161,22 @@ class SharedLuosIO(IO):
         # if we are not using the Head part.
         from .cam import DualCamera
         return DualCamera(default_camera)
+
+
+class Fan(object):
+    def __init__(self, name, mod):
+        self.name = name
+        self.mod = mod
+
+    def __repr__(self):
+        return f'<Fan "{self.name}" is "{self.status}">'
+
+    @property
+    def status(self):
+        return 'on' if self.mod.state else 'off'
+
+    def on(self):
+        self.mod.state = True
+
+    def off(self):
+        self.mod.state = False

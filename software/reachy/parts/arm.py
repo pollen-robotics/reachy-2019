@@ -3,9 +3,12 @@
 Implements a Right and a Left Arm.
 """
 
+import time
 import numpy as np
 
+from operator import attrgetter
 from collections import OrderedDict
+from threading import Thread, Event
 
 from .hand import LeftEmptyHand, RightEmptyHand, LeftForceGripper, RightForceGripper, OrbitaWrist
 from .part import ReachyPart
@@ -31,6 +34,12 @@ class Arm(ReachyPart):
         * ordered list of motors
         * forward and inverse kinematics
     """
+
+    fans = {
+        'shoulder_fan': 'shoulder_pitch',
+        'elbow_fan': 'elbow_pitch',
+    }
+    lower_temp_threshold, upper_temp_threshold = 40, 45
 
     def __init__(self, side, io, dxl_motors, hand):
         """Create a new Arm part."""
@@ -58,6 +67,17 @@ class Arm(ReachyPart):
             self.hand = None
 
         self.attach_kinematic_chain(dxl_motors)
+
+        self.fans = dict(Arm.fans)
+        if hand is not None:
+            self.fans.update(hand_cls.fans)
+
+        for name in self.fans.keys():
+            setattr(self, name, self.io.find_fan(name))
+
+        self._monitor_temp = Event()
+        self._monitor_temp_loop = None
+        self.enable_temperature_monitoring()
 
     def teardown(self):
         """Clean up before closing."""
@@ -127,6 +147,30 @@ class Arm(ReachyPart):
             J = np.rad2deg(J)
 
         return J
+
+    def enable_temperature_monitoring(self):
+        if not self._monitor_temp.is_set():
+            self._monitor_temp.set()
+            self._monitor_temp_loop = Thread(target=self.temperature_monitoring)
+            self._monitor_temp_loop.daemon = True
+            self._monitor_temp_loop.start()
+
+    def disable_temperature_monitoring(self):
+        if self._monitor_temp.is_set():
+            self._monitor_temp.clear()
+
+    def temperature_monitoring(self):
+        while self._monitor_temp.is_set():
+            for fan_name, motor_name in self.fans.items():
+                fan = attrgetter(fan_name)(self)
+                motor = attrgetter(motor_name)(self)
+
+                if motor.temperature >= self.upper_temp_threshold:
+                    fan.on()
+                elif motor.temperature <= self.lower_temp_threshold:
+                    fan.off()
+
+            time.sleep(30)
 
 
 class LeftArm(Arm):
