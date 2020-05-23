@@ -40,7 +40,7 @@ class Head(ReachyPart):
         }),
     ])
 
-    def __init__(self, io, default_camera='left'):
+    def __init__(self, io, default_camera='right'):
         """Create new Head part."""
         ReachyPart.__init__(self, name='head', io=io)
 

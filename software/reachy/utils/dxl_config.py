@@ -44,7 +44,10 @@ def main():
         dxl_motors_found = [m for m in io.modules if m.alias.startswith('dxl_')]
 
         if len(dxl_motors_found) == 0:
-            raise EnvironmentError(f'No motors found on {args.luos_port}! Check the cable and try again.')
+            print('No motor found with 1M baudrate. Trying to setup the correct baudrate...')
+            io.void_dxl.dxl_detect()
+            time.sleep(0.5)
+            print('Unplug/Replug the modules and power supply and try again.')
 
         if len(dxl_motors_found) > 1:
             raise EnvironmentError(f'{len(dxl_motors_found)} motors found on {args.luos_port}! Connect only the motor you want to configure and try again!')
