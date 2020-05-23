@@ -14,7 +14,9 @@ class MockLuosIO(MagicMock):
 
 
 class MockDxlMotor(MagicMock, DynamixelMotor):
-    pass
+    @property
+    def temperature(self):
+        return 20.0
 
 
 def mock_luos_io():
