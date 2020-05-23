@@ -234,8 +234,12 @@ class WsServer(object):
 
 
 class FakeFan(object):
+    """Fake fan module for API consistensy."""
+
     def on(self):
+        """Do nothing."""
         pass
 
     def off(self):
+        """Do nothing."""
         pass

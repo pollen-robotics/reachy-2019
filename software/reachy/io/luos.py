@@ -164,19 +164,26 @@ class SharedLuosIO(IO):
 
 
 class Fan(object):
+    """Fan module for motor cooling."""
+
     def __init__(self, name, mod):
+        """Create a new motor associated with its Luos module."""
         self.name = name
         self.mod = mod
 
     def __repr__(self):
+        """Fan representation."""
         return f'<Fan "{self.name}" is "{self.status}">'
 
     @property
     def status(self):
+        """Get the fan mode ('on' or 'off')."""
         return 'on' if self.mod.state else 'off'
 
     def on(self):
+        """Turn the fan on."""
         self.mod.state = True
 
     def off(self):
+        """Turn the fan off."""
         self.mod.state = False

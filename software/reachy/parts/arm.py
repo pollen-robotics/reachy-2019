@@ -149,17 +149,23 @@ class Arm(ReachyPart):
         return J
 
     def enable_temperature_monitoring(self):
+        """Enable the automatic motor cooling procedure.
+
+        The specified motors temperature will be watched and when they reached a specific threshold, the fan will automatically be turned on.
+        When the temperature goes below a lower threshold, they will turn off.
+        """
         if not self._monitor_temp.is_set():
             self._monitor_temp.set()
-            self._monitor_temp_loop = Thread(target=self.temperature_monitoring)
+            self._monitor_temp_loop = Thread(target=self._temperature_monitoring)
             self._monitor_temp_loop.daemon = True
             self._monitor_temp_loop.start()
 
     def disable_temperature_monitoring(self):
+        """Disable the automatic motor cooling procedure."""
         if self._monitor_temp.is_set():
             self._monitor_temp.clear()
 
-    def temperature_monitoring(self):
+    def _temperature_monitoring(self):
         while self._monitor_temp.is_set():
             for fan_name, motor_name in self.fans.items():
                 fan = attrgetter(fan_name)(self)

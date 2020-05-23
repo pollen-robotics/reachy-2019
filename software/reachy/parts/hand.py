@@ -38,6 +38,7 @@ class EmptyHand(Hand):
 
     Composed of three dynamixel motors.
     """
+
     fans = ['wrist_fan']
 
     def __init__(self, root, io):
@@ -109,6 +110,7 @@ class ForceGripper(Hand):
 
     Composed of three dynamixel motors and a force sensor for gripping pressure.
     """
+
     fans = {'wrist_fan': 'hand.wrist_pitch'}
 
     def __init__(self, root, io):
