@@ -54,8 +54,8 @@ class Head(ReachyPart):
 
     def teardown(self):
         """Clean and close head part."""
-        self.luos_io.close()
-        self.cam.close()
+        self.camera.close()
+        ReachyPart.teardown(self)
 
     def look_at(self, x, y, z, duration, wait):
         """Make the head look at a 3D point in space.
