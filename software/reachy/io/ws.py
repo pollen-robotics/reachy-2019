@@ -63,6 +63,10 @@ class WsIO(IO):
         self.ws.motors[m.name] = m
         return m
 
+    def find_fan(self, fan_name):
+        """Get a specific fan from its name."""
+        return FakeFan()
+
     def find_orbita_disks(self):
         """Get a specific orbita module from the IO.
 
@@ -227,3 +231,15 @@ class WsServer(object):
         self.t = Thread(target=self.run_forever)
         self.t.daemon = True
         self.t.start()
+
+
+class FakeFan(object):
+    """Fake fan module for API consistensy."""
+
+    def on(self):
+        """Do nothing."""
+        pass
+
+    def off(self):
+        """Do nothing."""
+        pass

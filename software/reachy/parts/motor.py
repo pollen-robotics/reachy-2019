@@ -91,7 +91,7 @@ class DynamixelMotor(object):
     # Speed
     @property
     def moving_speed(self):
-        """Get the current moving speed (in degree per second) of the motor."""
+        """Get the maximum speed (in degree per second) of the motor."""
         return self._motor.target_rot_speed
 
     @moving_speed.setter

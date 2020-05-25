@@ -22,6 +22,8 @@ class Hand(ReachyPart):
         io (str): port name where the modules can be found
     """
 
+    fans = {}
+
     def __init__(self, root, io):
         """Create hand part."""
         ReachyPart.__init__(self, name=f'{root.name}.hand', io=io)
@@ -38,6 +40,8 @@ class EmptyHand(Hand):
 
     Composed of three dynamixel motors.
     """
+
+    fans = {'wrist_fan': 'hand.wrist_pitch'}
 
     def __init__(self, root, io):
         """Create a new Empty Hand."""
@@ -108,6 +112,8 @@ class ForceGripper(Hand):
 
     Composed of three dynamixel motors and a force sensor for gripping pressure.
     """
+
+    fans = {'wrist_fan': 'hand.wrist_pitch'}
 
     def __init__(self, root, io):
         """Create a new Force Gripper Hand."""
