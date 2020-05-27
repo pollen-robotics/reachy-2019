@@ -20,10 +20,6 @@ def test_orbita_goto():
         'Cp_z': [0, 0, 0],
         'R': 36.7,
         'R0': rot('z', 60),
-        'pid': [8, 0.035, 0],
-        'reduction': 77.35,
-        'wheel_size': 62,
-        'encoder_res': 3,
     }
 
     orb = OrbitaActuator('', 'bob', luos_disks_motor, **config)

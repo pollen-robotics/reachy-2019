@@ -266,10 +266,6 @@ class OrbitaWrist(Hand):
         'Cp_z': [0, 0, 0],
         'R': 36.7,
         'R0': rot('z', 60),
-        'pid': [10, 0.04, 90],
-        'reduction': 77.35,
-        'wheel_size': 62,
-        'encoder_res': 3,
     }
 
     def __init__(self, root, io):
