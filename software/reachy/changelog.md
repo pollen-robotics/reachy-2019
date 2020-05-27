@@ -7,6 +7,7 @@
 
 ## Version 1.1.0
 
+* Add support for orbita board
 * Add support for sensors in WsIO (eg. for Unity simulation)
 * Add support for dual camera (left or right), only one can be active at the same time.
 * Add support for fans in the arm.
