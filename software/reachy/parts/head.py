@@ -19,14 +19,10 @@ class Head(ReachyPart):
     """
 
     orbita_config = {
-        'Pc_z': [0, 0, 25],
+        'Pc_z': [0, 0, 23],
         'Cp_z': [0, 0, 0],
-        'R': 36.7,
+        'R': 35.9,
         'R0': np.dot(rot('z', 60), rot('y', 10)),
-        'pid': [8, 0.04, 0],
-        'reduction': 77.35,
-        'wheel_size': 62,
-        'encoder_res': 3,
     }
 
     dxl_motors = OrderedDict([

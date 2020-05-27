@@ -197,10 +197,6 @@ class OrbitaActuator(object):
         Cp_z (float, float, float): center of the disks rotation circle (in mm)
         R (float): radius of the arms rotation circle around the platform (in mm)
         R0 (:py:class:`~numpy.ndarray`): rotation matrix for the initial rotation
-        pid (float, float, float): coefficient for the pid position controller
-        reduction (float): reduction factor
-        wheel_size (float): size of the wheel (in mm)
-        encoder_res (int): encoder resolution
 
     Wrap the three disk and the computation model of Orbita to expose higher-level functionalities such as:
 
@@ -212,20 +208,13 @@ class OrbitaActuator(object):
     def __init__(
         self, root_part, name, luos_disks_motor,
         Pc_z, Cp_z, R, R0,
-        pid, reduction, wheel_size, encoder_res,
     ):
         """Create a OrbitaActuator given its three disks controllers."""
-        self.disk_bottom, self.disk_middle, self.disk_top = luos_disks_motor
+        self.disk_top, self.disk_middle, self.disk_bottom = luos_disks_motor
         self.model = OrbitaModel(Pc_z=Pc_z, Cp_z=Cp_z, R=R, R0=R0)
 
         self._compliancy = False
-
-        self.setup(
-            pid=pid,
-            reduction=reduction,
-            wheel_size=wheel_size,
-            encoder_res=encoder_res,
-        )
+        self.setup()
 
     def __repr__(self):
         """Orbita representation."""
@@ -325,28 +314,15 @@ class OrbitaActuator(object):
         thetas = [-q for q in thetas]
         self.goto(thetas, duration=duration, wait=wait, interpolation_mode='minjerk')
 
-    def setup(self, pid, reduction, wheel_size, encoder_res):
+    def setup(self):
         """Configure each of the three disks.
-
-        Args:
-            pid (float, float, float): coefficient for the pid position controller
-            reduction (float): reduction factor
-            wheel_size (float): size of the wheel (in mm)
-            encoder_res (int): encoder resolution
 
         .. note:: automatically called at instantiation.
         """
         for disk in self.disks:
-            disk.limit_current = 0.4
-            disk.encoder_res = encoder_res
-            disk.reduction = reduction
-            disk.wheel_size = wheel_size
-            disk.positionPid = pid
             disk.rot_position_mode = True
-            disk.rot_speed_mode = False
             disk.rot_position = True
-            disk.rot_speed = False
-            disk.setToZero()
+            disk.temperature = True
 
     def homing(self, limit_pos=-270, target_pos=102):
         """Run homing calibration procedure.

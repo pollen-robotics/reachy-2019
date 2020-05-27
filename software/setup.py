@@ -24,7 +24,7 @@ setup(
     packages=find_packages(exclude=['tests']),
 
     install_requires=[
-        'pyluos>=1.2.1',
+        'pyluos>=1.2.2b2',
         'numpy',
         'scipy>=1.4.0',
         'orbita>=0.3.1',
