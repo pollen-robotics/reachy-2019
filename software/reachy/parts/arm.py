@@ -171,9 +171,9 @@ class Arm(ReachyPart):
                 fan = attrgetter(fan_name)(self)
                 motor = attrgetter(motor_name)(self)
 
-                if motor.temperature >= self.upper_temp_threshold:
+                if motor.temperature is not None and motor.temperature >= self.upper_temp_threshold:
                     fan.on()
-                elif motor.temperature <= self.lower_temp_threshold:
+                elif motor.temperature is not None and motor.temperature <= self.lower_temp_threshold:
                     fan.off()
 
             time.sleep(30)
