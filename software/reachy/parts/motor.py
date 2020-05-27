@@ -324,7 +324,7 @@ class OrbitaActuator(object):
             disk.rot_position = True
             disk.temperature = True
 
-    def homing(self, limit_pos=-270, target_pos=102):
+    def homing(self, limit_pos=-270, target_pos=162):
         """Run homing calibration procedure.
 
         Args:
