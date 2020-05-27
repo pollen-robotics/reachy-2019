@@ -40,7 +40,7 @@ class Head(ReachyPart):
         }),
     ])
 
-    def __init__(self, io, default_camera='left'):
+    def __init__(self, io, default_camera='right'):
         """Create new Head part."""
         ReachyPart.__init__(self, name='head', io=io)
 
@@ -54,8 +54,8 @@ class Head(ReachyPart):
 
     def teardown(self):
         """Clean and close head part."""
-        self.luos_io.close()
-        self.cam.close()
+        self.camera.close()
+        ReachyPart.teardown(self)
 
     def look_at(self, x, y, z, duration, wait):
         """Make the head look at a 3D point in space.

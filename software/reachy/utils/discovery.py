@@ -4,19 +4,20 @@ Provide automatic detection mechanisms to check which parts are present on your 
 .. warning:: Make sure that no other Python instance is connected to the robot before running those functions.
 """
 
+from glob import glob
+
 from reachy import parts
 from reachy.io.luos import SharedLuosIO
 from reachy.error import LuosModuleNotFoundError, LuosGateNotFoundError, CameraNotFoundError
 
 
-def discover_head(luos_port='/dev/ttyUSB*', camera_id=0):
+def discover_head(luos_port='/dev/ttyUSB*'):
     """Check if an head part is connected to a Reachy."""
     part_name = 'head'
 
     try:
         head = parts.Head(
             io=luos_port,
-            camera_id=camera_id,
         )
         head.teardown()
         status = 'ok'
@@ -71,14 +72,17 @@ def discover_arm(side, luos_port='/dev/ttyUSB*', hand='force_gripper'):
     }
 
 
-def discover_all():
+def discover_all(luos_port='/dev/ttyUSB*'):
     """Check which part is connected to a Reachy."""
     SharedLuosIO.close_all_cached_gates()
 
+    if len(glob(luos_port)) == 0:
+        return {}
+
     return {
-        'left_arm': discover_arm(side='left'),
-        'head': discover_head(),
-        'right_arm': discover_arm(side='right'),
+        'left_arm': discover_arm(luos_port='/dev/ttyUSB*', side='left'),
+        'head': discover_head(luos_port='/dev/ttyUSB*'),
+        'right_arm': discover_arm(luos_port='/dev/ttyUSB*', side='right'),
     }
 
 

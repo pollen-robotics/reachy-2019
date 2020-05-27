@@ -19,12 +19,16 @@ from ..error import CameraNotFoundError
 class DualCamera(object):
     """Wrapper around two RPI and the multi channel switch."""
 
-    def __init__(self, default_camera='left'):
+    def __init__(self, default_camera='right'):
         """Create a DualCamera obejct and set the default active."""
         self.set_active(default_camera)
         # Make sure, the camera is active before trying to access it.
         time.sleep(0.5)
         self.cap = BackgroundVideoCapture(0)
+
+    def close(self):
+        """Close the camera capture."""
+        self.cap.close()
 
     @property
     def active_side(self):
