@@ -1,7 +1,5 @@
 """Head part module."""
 
-import numpy as np
-
 from collections import OrderedDict
 
 from ..utils import rot
