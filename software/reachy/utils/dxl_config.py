@@ -45,7 +45,7 @@ def main():
 
         if len(dxl_motors_found) == 0:
             print('No motor found with 1M baudrate. Trying to setup the correct baudrate...')
-            io.void_dxl.dxl_detect()
+            io.void_dxl.baudrate = 1000000
             time.sleep(0.5)
             print('Unplug/Replug the modules and power supply and try again.')
 
