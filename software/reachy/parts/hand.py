@@ -52,10 +52,6 @@ class EmptyHand(Hand):
             for name, conf in self.dxl_motors.items()
         })
 
-        if self.side == 'left':
-            for name, conf in dxl_motors.items():
-                conf['id'] += 10
-
         self.attach_dxl_motors(dxl_motors)
 
 
@@ -123,10 +119,6 @@ class ForceGripper(Hand):
             name: dict(conf)
             for name, conf in self.dxl_motors.items()
         })
-
-        if self.side == 'left':
-            for name, conf in dxl_motors.items():
-                conf['id'] += 10
 
         self.attach_dxl_motors(dxl_motors)
 
