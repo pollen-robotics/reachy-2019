@@ -22,7 +22,8 @@ copyright = '2020, Pollen Robotics'
 author = 'Pollen Robotics'
 
 # The full version, including alpha/beta/rc tags
-release = 'v1.0.0'
+from reachy import __version__
+release = f'v{__version__}'
 
 
 # -- General configuration ---------------------------------------------------
