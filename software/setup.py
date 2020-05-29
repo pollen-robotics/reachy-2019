@@ -43,7 +43,10 @@ setup(
     },
 
     entry_points={
-        'console_scripts': ['dxl-config=reachy.utils.dxl_config:main'],
+        'console_scripts': [
+            'dxl-config=reachy.utils.dxl_config:main',
+            'orbita-config=reachy.utils.orbita_config:main',
+        ],
     },
 
     author='Pollen Robotics',
