@@ -22,7 +22,7 @@ copyright = '2020, Pollen Robotics'
 author = 'Pollen Robotics'
 
 # The full version, including alpha/beta/rc tags
-from reachy import __version__
+from reachy import __version__  # noqa: E402
 release = f'v{__version__}'
 
 
