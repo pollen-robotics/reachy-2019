@@ -64,17 +64,17 @@ class LeftEmptyHand(EmptyHand):
 
     dxl_motors = OrderedDict([
         ('forearm_yaw', {
-            'id': 14, 'offset': 0.0, 'orientation': 'indirect',
+            'id': 24, 'offset': 0.0, 'orientation': 'indirect',
             'angle-limits': [-150, 150],
             'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
         }),
         ('wrist_pitch', {
-            'id': 15, 'offset': 0.0, 'orientation': 'indirect',
+            'id': 25, 'offset': 0.0, 'orientation': 'indirect',
             'angle-limits': [-50, 50],
             'link-translation': [0, 0, -0.25], 'link-rotation': [0, 1, 0],
         }),
         ('wrist_roll', {
-            'id': 16, 'offset': 0.0, 'orientation': 'indirect',
+            'id': 26, 'offset': 0.0, 'orientation': 'indirect',
             'angle-limits': [-45, 45],
             'link-translation': [0, 0, -0.0325], 'link-rotation': [1, 0, 0],
         }),
@@ -201,22 +201,22 @@ class LeftForceGripper(ForceGripper):
 
     dxl_motors = OrderedDict([
         ('forearm_yaw', {
-            'id': 14, 'offset': 0.0, 'orientation': 'indirect',
+            'id': 24, 'offset': 0.0, 'orientation': 'indirect',
             'angle-limits': [-150, 150],
             'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
         }),
         ('wrist_pitch', {
-            'id': 15, 'offset': 0.0, 'orientation': 'indirect',
+            'id': 25, 'offset': 0.0, 'orientation': 'indirect',
             'angle-limits': [-50, 50],
             'link-translation': [0, 0, -0.25], 'link-rotation': [0, 1, 0],
         }),
         ('wrist_roll', {
-            'id': 16, 'offset': 0.0, 'orientation': 'indirect',
+            'id': 26, 'offset': 0.0, 'orientation': 'indirect',
             'angle-limits': [-45, 45],
             'link-translation': [0, 0, -0.0325], 'link-rotation': [1, 0, 0],
         }),
         ('gripper', {
-            'id': 17, 'offset': 0.0, 'orientation': 'direct',
+            'id': 27, 'offset': 0.0, 'orientation': 'direct',
             'angle-limits': [-20, 69],
             'link-translation': [0, -0.01, -0.075], 'link-rotation': [0, 0, 0],
         }),
