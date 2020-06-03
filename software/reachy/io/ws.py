@@ -101,6 +101,7 @@ class WsMotor(object):
         self.compliant = False
         self.target_rot_position = initial_position
         self.rot_position = initial_position
+        self.temperature = 20
 
 
 class WsFakeOrbitaDisk(object):
