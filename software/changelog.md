@@ -11,6 +11,7 @@
 ### Bugfix 
 
 * fix id on left hands
+* fix temperature in ws
 
 ## Version 1.0.0
 
