@@ -57,9 +57,9 @@ def discover_arm(side, luos_port='/dev/ttyUSB*', hand='force_gripper'):
         status = 'ok'
         details = ''
 
-    except LuosGateNotFoundError:
+    except LuosGateNotFoundError as e:
         status = 'missing'
-        details = ''
+        details = str(e)
 
     except LuosModuleNotFoundError as e:
         status = 'problem'
@@ -80,9 +80,9 @@ def discover_all(luos_port='/dev/ttyUSB*'):
         return {}
 
     return {
-        'left_arm': discover_arm(luos_port='/dev/ttyUSB*', side='left'),
-        'head': discover_head(luos_port='/dev/ttyUSB*'),
-        'right_arm': discover_arm(luos_port='/dev/ttyUSB*', side='right'),
+        'left_arm': discover_arm(luos_port=luos_port, side='left'),
+        'head': discover_head(luos_port=luos_port),
+        'right_arm': discover_arm(luos_port=luos_port, side='right'),
     }
 
 

@@ -80,9 +80,6 @@ class SharedLuosIO(IO):
         if len(available_ports) == 0:
             return cls(port_template)
 
-        if len(available_ports) == 1:
-            return cls(available_ports[0])
-
         for p in available_ports:
             io = cls(p)
 

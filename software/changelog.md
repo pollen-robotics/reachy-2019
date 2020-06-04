@@ -12,6 +12,7 @@
 
 * fix id on left hands
 * fix temperature in ws
+* fix bug in discovery when using only one gate
 
 ## Version 1.0.0
 
