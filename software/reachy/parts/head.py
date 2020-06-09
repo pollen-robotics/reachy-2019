@@ -1,5 +1,7 @@
 """Head part module."""
 
+import numpy as np
+
 from collections import OrderedDict
 
 from ..utils import rot
@@ -20,7 +22,7 @@ class Head(ReachyPart):
         'Pc_z': [0, 0, 23],
         'Cp_z': [0, 0, 0],
         'R': 35.9,
-        'R0': rot('y', 10),
+        'R0': np.dot(rot('z', 60), rot('y', 10)),
     }
 
     dxl_motors = OrderedDict([
