@@ -21,6 +21,10 @@ class DualCamera(object):
 
     def __init__(self, default_camera='right'):
         """Create a DualCamera obejct and set the default active."""
+        self._pin17 = DigitalOutputDevice(17)
+        self._pin4 = DigitalOutputDevice(4)
+        self._bus = SMBus(1)
+
         self.set_active(default_camera)
         # Make sure, the camera is active before trying to access it.
         time.sleep(0.5)
@@ -41,15 +45,32 @@ class DualCamera(object):
             raise ValueError('camera_side should be either "lef" or "right"!')
 
         if camera_side == 'left':
-            enable_left_camera()
+            self._enable_left_camera()
         elif camera_side == 'right':
-            enable_right_camera()
+            self._enable_right_camera()
 
         self._active = camera_side
 
     def read(self):
         """Get the latest retrieved frame."""
         return self.cap.read()
+
+    def _enable_left_camera(self):
+        """Enable the left eye camera.
+
+        See https://github.com/ArduCAM/RaspberryPi/tree/master/Multi_Camera_Adapter/Multi_Adapter_Board_2Channel_uc444
+        """
+        self._bus.write_byte_data(0x70, 0, 0x01)
+        self._pin17.off()
+        self._pin4.off()
+
+    def _enable_right_camera(self):
+        """Enable the left eye camera.
+
+        See https://github.com/ArduCAM/RaspberryPi/tree/master/Multi_Camera_Adapter/Multi_Adapter_Board_2Channel_uc444
+        """
+        self._bus.write_byte_data(0x70, 0, 0x02)
+        self._pin4.on()
 
 
 class BackgroundVideoCapture(object):
@@ -110,27 +131,3 @@ class BackgroundVideoCapture(object):
         """Retrieve the last grabbed image."""
         with self._lock:
             return self._img is not None, self._img
-
-
-pin17 = DigitalOutputDevice(17)
-pin4 = DigitalOutputDevice(4)
-bus = SMBus(1)
-
-
-def enable_left_camera():
-    """Enable the left eye camera.
-
-    See https://github.com/ArduCAM/RaspberryPi/tree/master/Multi_Camera_Adapter/Multi_Adapter_Board_2Channel_uc444
-    """
-    bus.write_byte_data(0x70, 0, 0x01)
-    pin17.off()
-    pin4.off()
-
-
-def enable_right_camera():
-    """Enable the left eye camera.
-
-    See https://github.com/ArduCAM/RaspberryPi/tree/master/Multi_Camera_Adapter/Multi_Adapter_Board_2Channel_uc444
-    """
-    bus.write_byte_data(0x70, 0, 0x02)
-    pin4.on()

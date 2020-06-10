@@ -13,6 +13,7 @@
 * fix id on left hands
 * fix temperature in ws
 * fix bug in discovery when used with a single gate connected
+* fix potential bug when switching camera
 
 ## Version 1.0.0
 
