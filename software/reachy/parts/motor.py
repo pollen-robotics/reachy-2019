@@ -210,7 +210,7 @@ class OrbitaActuator(object):
         Pc_z, Cp_z, R, R0,
     ):
         """Create a OrbitaActuator given its three disks controllers."""
-        self.disk_top, self.disk_middle, self.disk_bottom = luos_disks_motor
+        self.disk_bottom, self.disk_middle, self.disk_top = luos_disks_motor
         self.model = OrbitaModel(Pc_z=Pc_z, Cp_z=Cp_z, R=R, R0=R0)
 
         self._compliancy = False
