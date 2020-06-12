@@ -134,7 +134,7 @@ class WsFakeForceSensor(object):
 
     def __init__(self):
         """Init the fake force sensor."""
-        self.load = np.nan
+        self.load = 0
 
 
 class WsDualCamera(object):
