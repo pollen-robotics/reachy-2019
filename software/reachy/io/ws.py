@@ -193,6 +193,11 @@ class WsServer(object):
             resp = await websocket.recv()
             state = json.loads(resp)
 
+            
+            self.rotation = state['rotation']
+            self.position = state['position']
+            self.isHandOpened = state['isHandOpened']
+
             if hasattr(self, 'cam'):
                 eye = f'{self.cam.active_side}_eye'
                 if eye in state:
