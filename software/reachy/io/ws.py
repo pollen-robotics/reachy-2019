@@ -193,9 +193,24 @@ class WsServer(object):
             resp = await websocket.recv()
             state = json.loads(resp)
 
-            self.rotation = state['rotation']
-            self.position = state['position']
-            self.isHandOpened = state['isHandOpened']
+            rightPoseDict = state['rightHand']['handPose']
+            self.rightPose = np.array((
+                (rightPoseDict['e00'], rightPoseDict['e01'], rightPoseDict['e02'], rightPoseDict['e03']),
+                (rightPoseDict['e10'], rightPoseDict['e11'], rightPoseDict['e12'], rightPoseDict['e13']),
+                (rightPoseDict['e20'], rightPoseDict['e21'], rightPoseDict['e22'], rightPoseDict['e23']),
+                (0, 0, 0, 1)
+            ))
+
+            leftPoseDict = state['leftHand']['handPose']
+            self.leftPose = np.array((
+                (leftPoseDict['e00'], leftPoseDict['e01'], leftPoseDict['e02'], leftPoseDict['e03']),
+                (leftPoseDict['e10'], leftPoseDict['e11'], leftPoseDict['e12'], leftPoseDict['e13']),
+                (leftPoseDict['e20'], leftPoseDict['e21'], leftPoseDict['e22'], leftPoseDict['e23']),
+                (0, 0, 0, 1)
+            ))
+
+            self.isRightHandOpened = state['rightHand']['isHandOpened']
+            self.isLeftHandOpened = state['leftHand']['isHandOpened']
 
             if hasattr(self, 'cam'):
                 eye = f'{self.cam.active_side}_eye'
