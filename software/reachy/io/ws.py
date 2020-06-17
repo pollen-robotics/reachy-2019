@@ -193,7 +193,6 @@ class WsServer(object):
             resp = await websocket.recv()
             state = json.loads(resp)
 
-            
             self.rotation = state['rotation']
             self.position = state['position']
             self.isHandOpened = state['isHandOpened']
