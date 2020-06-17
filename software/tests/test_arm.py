@@ -131,3 +131,11 @@ class ArmTestCase(unittest.TestCase):
 
     def test_wrist(self):
         assert hasattr(self.right_arm_with_wrist.hand, 'wrist')
+
+    def test_ik_bounds(self):
+        for arm in [self.left_arm_with_gripper, self.right_arm_with_gripper]:
+            for shoulder_pitch in [-90, 0, 90]:
+                pos = [shoulder_pitch, 0, 0, 0, 0, 0, 0, 0]
+                P = self.left_arm_with_gripper.forward_kinematics(pos)
+                ik_pos = self.left_arm_with_gripper.inverse_kinematics(P, q0=pos)
+                assert np.linalg.norm(pos - ik_pos) < 1e-3
