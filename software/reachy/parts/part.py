@@ -69,7 +69,9 @@ class ReachyPart(object):
             dxl_motors (dict): dynamixel motors config (as given in attach_dxl_motors), the config should also include 'link-translation' and 'link-rotation' for each motor
         """
         def compute_bounds(m):
-            bounds = np.deg2rad(m['angle-limits'])
+            pos = np.array(m['angle-limits'])
+            bounds = (pos if m['orientation'] == 'direct' else -pos) - m['offset']
+            bounds = np.deg2rad(bounds)
             lb = min(bounds)
             rb = max(bounds)
 
