@@ -331,8 +331,6 @@ class OrbitaActuator(object):
             limit_pos (float): limit angle to reach the stops (in degrees)
             target_pos (float): zero position relative to the stops (in degrees)
         """
-        recent_speed = deque([], 10)
-
         for d in self.disks:
             d.setToZero()
         time.sleep(0.5)
@@ -340,35 +338,15 @@ class OrbitaActuator(object):
         self.compliant = False
         time.sleep(0.1)
 
-        trajs = self.goto(
+        self.goto(
             [limit_pos] * 3,
             duration=4,
             interpolation_mode='minjerk',
-            wait=False,
+            wait=True,
         )
 
         for d in self.disks:
-            d.rot_speed = True
-
-        time.sleep(1)
-
-        while True:
-            recent_speed.append([d.rot_speed for d in self.disks])
-            avg_speed = np.mean(recent_speed, axis=0)
-
-            if np.all(avg_speed >= 0):
-                for traj in trajs:
-                    traj.stop()
-                    traj.wait()
-                break
-
-            time.sleep(0.01)
-
-        for d in self.disks:
             d.setToZero()
-
-        for d in self.disks:
-            d.rot_speed = False
 
         time.sleep(1)
 
