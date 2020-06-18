@@ -7,6 +7,7 @@
 * Add support for dual camera (left or right), only one can be active at the same time.
 * Add support for fans in the arm.
 * Support for pyluos 1.2.2
+* Adjust motor angle limit
 
 ### Bugfix 
 
