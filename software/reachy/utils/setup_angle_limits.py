@@ -6,9 +6,6 @@
 import time
 import argparse
 
-from contextlib import closing
-from pyluos import Device as LuosDevice
-
 from reachy.parts import RightArm, LeftArm, Head
 from reachy.parts.hand import LeftForceGripper, RightForceGripper
 from reachy.error import LuosModuleNotFoundError, LuosGateNotFoundError
@@ -23,6 +20,7 @@ reachy_config.update({f'head.{m}': c for m, c in Head.dxl_motors.items()})
 
 
 def main():
+    """Configure all dynamixel motor limits on a Reachy robot."""
     parser = argparse.ArgumentParser()
     parser.add_argument('--luos_port', default='/dev/ttyUSB*')
     args = parser.parse_args()
