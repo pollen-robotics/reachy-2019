@@ -61,12 +61,12 @@ class LeftEmptyHand(EmptyHand):
     dxl_motors = OrderedDict([
         ('forearm_yaw', {
             'id': 24, 'offset': 0.0, 'orientation': 'indirect',
-            'angle-limits': [-150, 150],
+            'angle-limits': [-100, 100],
             'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
         }),
         ('wrist_pitch', {
             'id': 25, 'offset': 0.0, 'orientation': 'indirect',
-            'angle-limits': [-50, 50],
+            'angle-limits': [-45, 45],
             'link-translation': [0, 0, -0.25], 'link-rotation': [0, 1, 0],
         }),
         ('wrist_roll', {
@@ -83,12 +83,12 @@ class RightEmptyHand(EmptyHand):
     dxl_motors = OrderedDict([
         ('forearm_yaw', {
             'id': 14, 'offset': 0.0, 'orientation': 'indirect',
-            'angle-limits': [-150, 150],
+            'angle-limits': [-100, 100],
             'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
         }),
         ('wrist_pitch', {
             'id': 15, 'offset': 0.0, 'orientation': 'indirect',
-            'angle-limits': [-50, 50],
+            'angle-limits': [-45, 45],
             'link-translation': [0, 0, -0.25], 'link-rotation': [0, 1, 0],
         }),
         ('wrist_roll', {
@@ -194,12 +194,12 @@ class LeftForceGripper(ForceGripper):
     dxl_motors = OrderedDict([
         ('forearm_yaw', {
             'id': 24, 'offset': 0.0, 'orientation': 'indirect',
-            'angle-limits': [-150, 150],
+            'angle-limits': [-100, 100],
             'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
         }),
         ('wrist_pitch', {
             'id': 25, 'offset': 0.0, 'orientation': 'indirect',
-            'angle-limits': [-50, 50],
+            'angle-limits': [-45, 45],
             'link-translation': [0, 0, -0.25], 'link-rotation': [0, 1, 0],
         }),
         ('wrist_roll', {
@@ -221,12 +221,12 @@ class RightForceGripper(ForceGripper):
     dxl_motors = OrderedDict([
         ('forearm_yaw', {
             'id': 14, 'offset': 0.0, 'orientation': 'indirect',
-            'angle-limits': [-150, 150],
+            'angle-limits': [-100, 100],
             'link-translation': [0, 0, 0], 'link-rotation': [0, 0, 1],
         }),
         ('wrist_pitch', {
             'id': 15, 'offset': 0.0, 'orientation': 'indirect',
-            'angle-limits': [-50, 50],
+            'angle-limits': [-45, 45],
             'link-translation': [0, 0, -0.25], 'link-rotation': [0, 1, 0],
         }),
         ('wrist_roll', {
