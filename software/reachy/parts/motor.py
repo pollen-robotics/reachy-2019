@@ -7,10 +7,8 @@ Define:
 
 import time
 import logging
-import numpy as np
 
 from threading import Timer
-from collections import deque
 from pyquaternion import Quaternion
 from orbita import Actuator as OrbitaModel
 
