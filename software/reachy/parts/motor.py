@@ -263,7 +263,7 @@ class OrbitaActuator(object):
 
         trajs = [
             Traj(
-                initial_position=disk.rot_position,
+                initial_position=disk.target_rot_position,
                 goal_position=angle,
                 duration=duration,
             )
