@@ -331,6 +331,7 @@ class OrbitaActuator(object):
         """
         for d in self.disks:
             d.setToZero()
+            d.target_rot_position = 0
         time.sleep(0.5)
 
         self.compliant = False
@@ -345,6 +346,7 @@ class OrbitaActuator(object):
 
         for d in self.disks:
             d.setToZero()
+            d.target_rot_position = 0
 
         time.sleep(1)
 
@@ -357,6 +359,8 @@ class OrbitaActuator(object):
 
         for d in self.disks:
             d.setToZero()
+            d.target_rot_position = 0
+
         time.sleep(0.5)
 
         self.model.reset_last_angles()
