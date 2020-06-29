@@ -195,7 +195,7 @@ class WsServer(object):
             state = json.loads(resp)
 
             # used by the tele_op class
-            self.state_dict = state
+            self.state_dict = dict(state)
 
             if hasattr(self, 'cam'):
                 eye = f'{self.cam.active_side}_eye'
