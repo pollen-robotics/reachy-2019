@@ -173,6 +173,7 @@ class WsServer(object):
 
         self.parts = []
         self.motors = {}
+        
 
     async def sync(self, websocket, path):
         """Sync loop that exchange modules state with the client."""
@@ -193,7 +194,8 @@ class WsServer(object):
             resp = await websocket.recv()
             state = json.loads(resp)
 
-            # self.tele_op.update_state(self, state)
+            # used by the tele_op class
+            self.state_dict = state
 
             if hasattr(self, 'cam'):
                 eye = f'{self.cam.active_side}_eye'
