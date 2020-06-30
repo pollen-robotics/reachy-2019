@@ -7,6 +7,7 @@ Define:
 
 import time
 import logging
+import numpy as np
 
 from threading import Timer
 from pyquaternion import Quaternion
@@ -322,6 +323,24 @@ class OrbitaActuator(object):
             disk.rot_position = True
             disk.temperature = True
 
+    def _set_to_zero(self, timeout=2, threshold=5, trials=2):
+        for i in range(trials):
+            for d in self.disks:
+                d.setToZero()
+                d.target_rot_position = 0
+
+            t0 = time.time()
+            while (time.time() - t0) < timeout:
+                pos = np.abs([d.rot_position for d in self.disks])
+                target = np.abs([d.target_rot_position for d in self.disks])
+
+                if np.all(pos < threshold) and np.all(target < threshold):
+                    return True
+
+                time.sleep(0.05)
+
+        return False
+
     def homing(self, limit_pos=-270, target_pos=102):
         """Run homing calibration procedure.
 
@@ -329,17 +348,11 @@ class OrbitaActuator(object):
             limit_pos (float): limit angle to reach the stops (in degrees)
             target_pos (float): zero position relative to the stops (in degrees)
         """
-        for d in self.disks:
-            d.rot_position = False
-            d.temperature = False
-        time.sleep(0.1)
-
         self.compliant = False
         time.sleep(0.1)
 
-        for d in self.disks:
-            d.setToZero()
-            d.target_rot_position = 0
+        if not self._set_to_zero():
+            raise EnvironmentError('Homing failed!')
 
         self.goto(
             [limit_pos] * 3,
@@ -348,9 +361,8 @@ class OrbitaActuator(object):
             wait=True,
         )
 
-        for d in self.disks:
-            d.setToZero()
-            d.target_rot_position = 0
+        if not self._set_to_zero():
+            raise EnvironmentError('Homing failed!')
 
         self.goto(
             [target_pos] * 3,
@@ -359,15 +371,8 @@ class OrbitaActuator(object):
             interpolation_mode='minjerk',
         )
 
-        for d in self.disks:
-            d.setToZero()
-            d.target_rot_position = 0
+        if not self._set_to_zero():
+            raise EnvironmentError('Homing failed!')
 
         self.model.reset_last_angles()
         self.orient(Quaternion(1, 0, 0, 0), duration=1, wait=True)
-
-        for d in self.disks:
-            d.rot_position = True
-            d.temperature = True
-
-        time.sleep(0.1)
