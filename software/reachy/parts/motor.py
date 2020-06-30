@@ -330,12 +330,16 @@ class OrbitaActuator(object):
             target_pos (float): zero position relative to the stops (in degrees)
         """
         for d in self.disks:
-            d.setToZero()
-            d.target_rot_position = 0
-        time.sleep(0.5)
+            d.rot_position = False
+            d.temperature = False
+        time.sleep(0.1)
 
         self.compliant = False
         time.sleep(0.1)
+
+        for d in self.disks:
+            d.setToZero()
+            d.target_rot_position = 0
 
         self.goto(
             [limit_pos] * 3,
@@ -348,8 +352,6 @@ class OrbitaActuator(object):
             d.setToZero()
             d.target_rot_position = 0
 
-        time.sleep(1)
-
         self.goto(
             [target_pos] * 3,
             duration=2,
@@ -361,7 +363,11 @@ class OrbitaActuator(object):
             d.setToZero()
             d.target_rot_position = 0
 
-        time.sleep(0.5)
-
         self.model.reset_last_angles()
         self.orient(Quaternion(1, 0, 0, 0), duration=1, wait=True)
+
+        for d in self.disks:
+            d.rot_position = True
+            d.temperature = True
+
+        time.sleep(0.1)
