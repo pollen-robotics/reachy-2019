@@ -30,9 +30,15 @@ class DualCamera(object):
         time.sleep(0.5)
         self.cap = BackgroundVideoCapture(0)
 
+    def __exit__(self):
+        self.close()
+
     def close(self):
         """Close the camera capture."""
         self.cap.close()
+        self._pin17.close()
+        self._pin4.close()
+        self._bus.close()
 
     @property
     def active_side(self):
