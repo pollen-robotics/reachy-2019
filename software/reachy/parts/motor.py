@@ -356,7 +356,7 @@ class OrbitaActuator(object):
 
         self.goto(
             [limit_pos] * 3,
-            duration=4,
+            duration=3,
             interpolation_mode='minjerk',
             wait=True,
         )
