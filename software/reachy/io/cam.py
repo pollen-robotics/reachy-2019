@@ -31,6 +31,7 @@ class DualCamera(object):
         self.cap = BackgroundVideoCapture(0)
 
     def __exit__(self):
+        """Automatically close the cam on exit."""
         self.close()
 
     def close(self):
