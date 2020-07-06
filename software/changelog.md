@@ -16,6 +16,7 @@
 * fix bug in discovery when used with a single gate connected
 * fix potential bug when switching camera
 * fix bounds in IK.
+* Make homing work entirely in goal position.
 
 ## Version 1.0.0
 
