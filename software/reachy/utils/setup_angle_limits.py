@@ -31,6 +31,7 @@ def main():
         print(f'Connecting to part "{part_name}"...')
         try:
             arm = Arm(io=args.luos_port, hand='force_gripper')
+            time.sleep(0.25)
 
             for m in arm.motors:
                 limits = reachy_config[m.name]['angle-limits']
