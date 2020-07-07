@@ -10,7 +10,6 @@ import logging
 import numpy as np
 
 from threading import Timer
-from pyquaternion import Quaternion
 from orbita import Actuator as OrbitaModel
 
 from ..trajectory.interpolation import interpolation_modes
