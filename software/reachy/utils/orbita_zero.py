@@ -21,7 +21,7 @@ import reachy
 def main():
     """Get the Zero hardware from Orbita."""
     bp = pathlib.Path(reachy.__file__).parent
-    filename = 'orbita_hardware_zero.npy'
+    filename = 'orbita_head_hardware_zero.npy'
     output_filename = os.path.join(bp, filename)
 
     parser = argparse.ArgumentParser()

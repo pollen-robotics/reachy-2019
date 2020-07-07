@@ -27,7 +27,7 @@ class Head(ReachyPart):
         'Cp_z': [0, 0, 0],
         'R': 35.9,
         'R0': np.dot(rot('z', 60), rot('y', 10)),
-        'hardware_zero': np.load(os.path.join(pathlib.Path(reachy.__file__).parent, 'orbita_hardware_zero.npy')),
+        'hardware_zero': np.load(os.path.join(pathlib.Path(reachy.__file__).parent, 'orbita_head_hardware_zero.npy')),
     }
 
     dxl_motors = OrderedDict([
