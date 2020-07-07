@@ -7,6 +7,7 @@ Define different hand parts:
 """
 
 import time
+import numpy as np
 
 from collections import OrderedDict
 
@@ -258,6 +259,7 @@ class OrbitaWrist(Hand):
         'Cp_z': [0, 0, 0],
         'R': 36.7,
         'R0': rot('z', 60),
+        'hardware_zero': np.zeros(3),
     }
 
     def __init__(self, root, io):

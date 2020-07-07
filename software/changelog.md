@@ -1,5 +1,9 @@
 # Changelog 
 
+## Version 1.2.0
+
+* Use absolution positioning for Orbita (only works with Orbita firmware >07-july-2020)
+
 ## Version 1.1.0
 
 * Add support for orbita board

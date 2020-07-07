@@ -47,6 +47,7 @@ setup(
             'dxl-config=reachy.utils.dxl_config:main',
             'orbita-config=reachy.utils.orbita_config:main',
             'reachy-setup-motorlimits=reachy.utils.setup_angle_limits:main',
+            'orbita-zero=reachy.utils.orbita_zero:main',
         ],
     },
 
