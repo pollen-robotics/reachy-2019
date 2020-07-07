@@ -1,4 +1,5 @@
 import pytest
+import numpy as np
 
 from pyquaternion import Quaternion
 
@@ -20,6 +21,7 @@ def test_orbita_goto():
         'Cp_z': [0, 0, 0],
         'R': 36.7,
         'R0': rot('z', 60),
+        'hardware_zero': np.zeros(3),
     }
 
     orb = OrbitaActuator('', 'bob', luos_disks_motor, **config)
