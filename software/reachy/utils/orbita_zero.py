@@ -1,3 +1,9 @@
+"""Retrieve Orbita Zero hardware and write it to the specified config file.
+
+This tool must be run while Orbita is fixed at the Zero Position using a specific 3D part.
+
+"""
+
 import os
 import time
 import pathlib
@@ -13,7 +19,7 @@ import reachy
 
 
 def main():
-    """Get the Zero hardware from Orbita. """
+    """Get the Zero hardware from Orbita."""
     bp = pathlib.Path(reachy.__file__).parent
     filename = 'orbita_hardware_zero.npy'
     output_filename = os.path.join(bp, filename)
