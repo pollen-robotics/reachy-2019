@@ -196,6 +196,7 @@ class OrbitaActuator(object):
         Cp_z (float, float, float): center of the disks rotation circle (in mm)
         R (float): radius of the arms rotation circle around the platform (in mm)
         R0 (:py:class:`~numpy.ndarray`): rotation matrix for the initial rotation
+        hardware_zero (float, float, float): absolute hardware zero position of the orbita disks
 
     Wrap the three disk and the computation model of Orbita to expose higher-level functionalities such as:
 
@@ -206,13 +207,15 @@ class OrbitaActuator(object):
 
     def __init__(
         self, root_part, name, luos_disks_motor,
-        Pc_z, Cp_z, R, R0,
+        Pc_z, Cp_z, R, R0, hardware_zero
     ):
         """Create a OrbitaActuator given its three disks controllers."""
         self.disk_bottom, self.disk_middle, self.disk_top = luos_disks_motor
         self.model = OrbitaModel(Pc_z=Pc_z, Cp_z=Cp_z, R=R, R0=R0)
+        self._hardware_zero = hardware_zero
 
         self._compliancy = False
+        self._offset = np.zeros(3)
         self.setup()
 
     def __repr__(self):
@@ -294,7 +297,7 @@ class OrbitaActuator(object):
         """
         thetas = self.model.get_angles_from_vector(vector, angle)
         # We used a reversed encoder so we need to inverse the angles
-        thetas = [-q for q in thetas]
+        thetas = thetas + self._offset
         return self.goto(thetas, duration=duration, wait=wait, interpolation_mode='minjerk')
 
     def orient(self, quat, duration, wait):
@@ -310,7 +313,7 @@ class OrbitaActuator(object):
         """
         thetas = self.model.get_angles_from_quaternion(quat.w, quat.x, quat.y, quat.z)
         # We used a reversed encoder so we need to inverse the angles
-        thetas = [-q for q in thetas]
+        thetas = thetas + self._offset
         self.goto(thetas, duration=duration, wait=wait, interpolation_mode='minjerk')
 
     def setup(self):
@@ -323,56 +326,17 @@ class OrbitaActuator(object):
             disk.rot_position = True
             disk.temperature = True
 
-    def _set_to_zero(self, timeout=2, threshold=5, trials=2):
-        for i in range(trials):
-            for d in self.disks:
-                d.setToZero()
-                d.target_rot_position = 0
+        def _find_zero(disk, z):
+            A = 360 / (52 / 24)
+            p = disk.rot_position
 
-            t0 = time.time()
-            while (time.time() - t0) < timeout:
-                pos = np.abs([d.rot_position for d in self.disks])
-                target = np.abs([d.target_rot_position for d in self.disks])
+            zeros = [z, -(A - z), A + z]
+            distances = [abs(p - z) for z in zeros]
+            best = np.argmin(distances)
 
-                if np.all(pos < threshold) and np.all(target < threshold):
-                    return True
+            return zeros[best]
 
-                time.sleep(0.05)
+        time.sleep(0.25)
 
-        return False
-
-    def homing(self, limit_pos=-270, target_pos=102):
-        """Run homing calibration procedure.
-
-        Args:
-            limit_pos (float): limit angle to reach the stops (in degrees)
-            target_pos (float): zero position relative to the stops (in degrees)
-        """
-        self.compliant = False
-        time.sleep(0.1)
-
-        if not self._set_to_zero():
-            raise EnvironmentError('Homing failed!')
-
-        self.goto(
-            [limit_pos] * 3,
-            duration=3,
-            interpolation_mode='minjerk',
-            wait=True,
-        )
-
-        if not self._set_to_zero():
-            raise EnvironmentError('Homing failed!')
-
-        self.goto(
-            [target_pos] * 3,
-            duration=2,
-            wait=True,
-            interpolation_mode='minjerk',
-        )
-
-        if not self._set_to_zero():
-            raise EnvironmentError('Homing failed!')
-
-        self.model.reset_last_angles()
-        self.orient(Quaternion(1, 0, 0, 0), duration=1, wait=True)
+        zeros = [_find_zero(d, z) for d, z in zip(self.disks, self._hardware_zero)]
+        self._offset = np.array(zeros) + 60

@@ -1,8 +1,12 @@
 """Head part module."""
 
+import os
+import pathlib
 import numpy as np
 
 from collections import OrderedDict
+
+import reachy
 
 from ..utils import rot
 from .part import ReachyPart
@@ -23,6 +27,7 @@ class Head(ReachyPart):
         'Cp_z': [0, 0, 0],
         'R': 35.9,
         'R0': np.dot(rot('z', 60), rot('y', 10)),
+        'hardware_zero': np.load(os.path.join(pathlib.Path(reachy.__file__).parent, 'orbita_hardware_zero.npy')),
     }
 
     dxl_motors = OrderedDict([
@@ -83,10 +88,6 @@ class Head(ReachyPart):
     @moving_speed.setter
     def moving_speed(self, speed):
         self.neck.moving_speed = speed
-
-    def homing(self):
-        """Launch neck homing procedure."""
-        self.neck.homing()
 
     @property
     def active_camera(self):
