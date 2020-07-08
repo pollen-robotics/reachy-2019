@@ -114,8 +114,8 @@ class TeleOp(object):
                 (0, 0, 0, 1)
             ))
 
-            self.right_hand_command = state_dict['rightHand']['is_hand_opened']
-            self.left_hand_command = state_dict['leftHand']['is_hand_opened']
+            self.right_hand_command = state_dict['rightHand']['isHandOpened']
+            self.left_hand_command = state_dict['leftHand']['isHandOpened']
         else:
             raise NameError('NoHandInformationsInWebSocket')
 
