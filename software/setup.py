@@ -23,6 +23,8 @@ setup(
     version=version(),
     packages=find_packages(exclude=['tests']),
 
+    package_data={'reachy': ['*.npy']},
+
     install_requires=[
         'pyluos>=1.2.2',
         'numpy',
