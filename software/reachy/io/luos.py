@@ -161,41 +161,61 @@ class SharedLuosIO(IO):
 
 
 class OrbitaDisk(object):
+    """Orbita Disk Wrapper around luos controlled motor module."""
+
     def __init__(self, name, luos_disk) -> None:
+        """Create a new Orbita disk using the luos module.
+        
+        Args:
+            name (str): name of the disk (e.g. "disk_bottom").
+            luos_disk: controlled_motor luos module
+
+        """
         self.name = name
         self.luos_disk = luos_disk
         self.offset = 0
 
     def __repr__(self) -> str:
+        """Get the OrbitaDisk string representation."""
         return f'<Orbita "{self.name}" pos="{self.rot_position}>'
 
     def setup(self):
+        """Prepare the luos disk before controlling it.
+        
+        Enable position control, retrieve position and temperature.
+        """
         self.luos_disk.rot_position_mode = True
         self.luos_disk.rot_position = True
         self.luos_disk.temperature = True
 
     @property
     def compliant(self):
+        """Get the disk compliancy."""
         return self.luos_disk.compliant
 
     @compliant.setter
     def compliant(self, new_compliancy):
+        """Set new compliancy (stiff/compliant)."""
         self.luos_disk.compliant = new_compliancy
 
     @property
     def rot_position(self):
+        """Get the current angle position (in deg.)."""
         return self.luos_disk.rot_position
 
     @property
     def target_rot_position(self):
+        """Get the current target angle position (in deg.)."""
         return self.luos_disk.target_rot_position - self.offset
 
     @target_rot_position.setter
     def target_rot_position(self, new_pos):
+        """Set a new target angle position (in deg.)."""
         self.luos_disk.target_rot_position = new_pos + self.offset
 
     @property
     def temperature(self):
+        """Get the current motor temperature in C."""
         return self.luos_disk.temperature
 
 

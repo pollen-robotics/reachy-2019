@@ -119,25 +119,31 @@ class WsFakeOrbitaDisk(object):
         self._target_rot_position = initial_position
 
     def __repr__(self) -> str:
+        """Public Orbita disk string representation."""
         return f'<Orbita "{self.name}" pos="{self.rot_position}>'
 
     def setup(self):
+        """Initialize the disk."""
         pass
 
     @property
     def rot_position(self):
+        """Get the current disk angle position (in deg.)."""
         return self.target_rot_position
 
     @property
     def temperature(self):
+        """Get the current temperature in C."""
         return 37.2
 
     @property
     def target_rot_position(self):
+        """Get the current target angle position (in deg.)."""
         return self._target_rot_position
 
     @target_rot_position.setter
     def target_rot_position(self, new_pos):
+        """Set a new target angle position (in deg.)."""
         self._target_rot_position = new_pos
 
 
