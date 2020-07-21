@@ -156,10 +156,8 @@ class SharedLuosIO(IO):
         """Retrieve a dual camera."""
         # We import DualCamera here to avoid OpenCV/smbus/gpiozero ImportError
         # if we are not using the Head part.
-        # from .cam import DualCamera
-        # return DualCamera(default_camera)
-        from .cam import BackgroundVideoCapture
-        return BackgroundVideoCapture(0)
+        from .cam import DualCamera
+        return DualCamera(default_camera)
 
 
 class OrbitaDisk(object):
