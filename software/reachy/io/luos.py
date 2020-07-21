@@ -165,7 +165,7 @@ class OrbitaDisk(object):
 
     def __init__(self, name, luos_disk) -> None:
         """Create a new Orbita disk using the luos module.
-        
+
         Args:
             name (str): name of the disk (e.g. "disk_bottom").
             luos_disk: controlled_motor luos module
@@ -181,7 +181,7 @@ class OrbitaDisk(object):
 
     def setup(self):
         """Prepare the luos disk before controlling it.
-        
+
         Enable position control, retrieve position and temperature.
         """
         self.luos_disk.rot_position_mode = True
