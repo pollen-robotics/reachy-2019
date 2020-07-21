@@ -69,7 +69,7 @@ class Head(ReachyPart):
             wait (bool): whether or not to wait for the end of the motion
         """
         q = self.neck.model.find_quaternion_transform([1, 0, 0], [x, y, z])
-        self.neck.orient(q, duration=duration, wait=wait)
+        return self.neck.orient(q, duration=duration, wait=wait)
 
     @property
     def compliant(self):

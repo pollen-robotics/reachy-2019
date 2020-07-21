@@ -311,7 +311,7 @@ class OrbitaActuator(object):
         """
         thetas = self.model.get_angles_from_quaternion(quat.w, quat.x, quat.y, quat.z)
         # We used a reversed encoder so we need to inverse the angles
-        self.goto(thetas, duration=duration, wait=wait, interpolation_mode='minjerk')
+        return self.goto(thetas, duration=duration, wait=wait, interpolation_mode='minjerk')
 
     def setup(self):
         """Configure each of the three disks.
