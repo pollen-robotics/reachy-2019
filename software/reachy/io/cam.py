@@ -49,7 +49,7 @@ class DualCamera(object):
     def set_active(self, camera_side):
         """Set one of the camera active (left or right)."""
         if camera_side not in ('left', 'right'):
-            raise ValueError('camera_side should be either "lef" or "right"!')
+            raise ValueError('camera_side should be either "left" or "right"!')
 
         if camera_side == 'left':
             self._enable_left_camera()

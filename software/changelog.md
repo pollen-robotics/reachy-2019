@@ -3,6 +3,7 @@
 ## Version 1.2.0
 
 * Use absolution positioning for Orbita (only works with Orbita firmware >07-july-2020)
+* Add support for Orbita in Unity
 
 ## Version 1.1.0
 

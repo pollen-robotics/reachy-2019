@@ -57,9 +57,11 @@ class TrajectoryInterpolation(object):
         """Check if the trajectory is currently playing."""
         return self._t is not None and self._t.is_alive()
 
-    def stop(self):
+    def stop(self, wait=True):
         """Stop the interpolation trajectory."""
         self._running.clear()
+        if wait:
+            self.wait()
 
     def wait(self):
         """Block until the end of the trajectory interpolation."""
