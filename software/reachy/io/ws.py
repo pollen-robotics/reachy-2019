@@ -22,6 +22,7 @@ class WsIO(IO):
         """Init an io attached to the given part."""
         self.part_name = part_name
         self.motors = []
+        self.disks = []
 
     @classmethod
     def shared_server(cls, part_name):
@@ -72,10 +73,14 @@ class WsIO(IO):
 
         Not currently supported.
         """
-        bottomOrb = WsFakeOrbitaDisk()
-        middleOrb = WsFakeOrbitaDisk()
-        topOrb = WsFakeOrbitaDisk()
-        return [bottomOrb, middleOrb, topOrb]
+        bottomOrb = WsFakeOrbitaDisk(name=f'{self.part_name}.disk_bottom', initial_position=-60)
+        middleOrb = WsFakeOrbitaDisk(name=f'{self.part_name}.disk_middle', initial_position=-60)
+        topOrb = WsFakeOrbitaDisk(name=f'{self.part_name}.disk_top', initial_position=-60)
+
+        disks = [bottomOrb, middleOrb, topOrb]
+        self.disks += disks
+
+        return disks
 
     def find_dual_camera(self, default_camera):
         """Retrieve a dual camera."""
@@ -107,23 +112,33 @@ class WsMotor(object):
 class WsFakeOrbitaDisk(object):
     """Orbital disk placeholder."""
 
-    def __init__(self):
+    def __init__(self, name, initial_position):
         """Create fake Orbita disk."""
+        self.name = name
         self.compliant = False
-        self.target_rot_position = 0
-        self.limit_current = 0
-        self.encoder_res = 0
-        self.reduction = 0
-        self.wheel_size = 0
-        self.positionPid = 0
-        self.rot_position_mode = True
-        self.rot_speed_mode = False
-        self.rot_position = True
-        self.rot_speed = False
+        self._target_rot_position = initial_position
 
-    def setToZero(self):
-        """Do nothing atm."""
+    def __repr__(self) -> str:
+        return f'<Orbita "{self.name}" pos="{self.rot_position}>'
+
+    def setup(self):
         pass
+
+    @property
+    def rot_position(self):
+        return self.target_rot_position
+
+    @property
+    def temperature(self):
+        return 37.2
+
+    @property
+    def target_rot_position(self):
+        return self._target_rot_position
+
+    @target_rot_position.setter
+    def target_rot_position(self, new_pos):
+        self._target_rot_position = new_pos
 
 
 class WsFakeForceSensor(object):
@@ -186,7 +201,11 @@ class WsServer(object):
                 'motors': [
                     {'name': m.name, 'goal_position': m.target_rot_position}
                     for m in sum([p.motors for p in self.parts], [])
-                ]
+                ],
+                'disks': [
+                    {'name': m.name, 'goal_position': m.target_rot_position}
+                    for m in sum([p.disks for p in self.parts], [])
+                ],
             })
             await websocket.send(msg.encode('UTF-8'))
 

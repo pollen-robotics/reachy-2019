@@ -148,7 +148,7 @@ class SharedLuosIO(IO):
     def find_orbita_disks(self):
         """Retrieve the three Luos modules controlling each Orbita disk."""
         return [
-            self.find_module(name)
+            OrbitaDisk(name, self.find_module(name))
             for name in ['disk_bottom', 'disk_middle', 'disk_top']
         ]
 
@@ -156,8 +156,49 @@ class SharedLuosIO(IO):
         """Retrieve a dual camera."""
         # We import DualCamera here to avoid OpenCV/smbus/gpiozero ImportError
         # if we are not using the Head part.
-        from .cam import DualCamera
-        return DualCamera(default_camera)
+        # from .cam import DualCamera
+        # return DualCamera(default_camera)
+        from .cam import BackgroundVideoCapture
+        return BackgroundVideoCapture(0)
+
+
+class OrbitaDisk(object):
+    def __init__(self, name, luos_disk) -> None:
+        self.name = name
+        self.luos_disk = luos_disk
+        self.offset = 0
+
+    def __repr__(self) -> str:
+        return f'<Orbita "{self.name}" pos="{self.rot_position}>'
+
+    def setup(self):
+        self.luos_disk.rot_position_mode = True
+        self.luos_disk.rot_position = True
+        self.luos_disk.temperature = True
+
+    @property
+    def compliant(self):
+        return self.luos_disk.compliant
+
+    @compliant.setter
+    def compliant(self, new_compliancy):
+        self.luos_disk.compliant = new_compliancy
+
+    @property
+    def rot_position(self):
+        return self.luos_disk.rot_position
+
+    @property
+    def target_rot_position(self):
+        return self.luos_disk.target_rot_position - self.offset
+
+    @target_rot_position.setter
+    def target_rot_position(self, new_pos):
+        self.luos_disk.target_rot_position = new_pos + self.offset
+
+    @property
+    def temperature(self):
+        return self.luos_disk.temperature
 
 
 class Fan(object):

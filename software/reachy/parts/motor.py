@@ -190,7 +190,7 @@ class OrbitaActuator(object):
     Args:
         root_part (str): name of the part where the motor is attached to (eg 'head')
         name (str): name of the actuator (eg. 'neck')
-        luos_disks_motor (list of :py:class:`pyluos.motor_controller`): list of the three disks controllers
+        disks_motor (list of :py:class:`pyluos.motor_controller`): list of the three disks controllers
         Pc_z (float, float, float): 3D coordinates of the center of the platform (in mm)
         Cp_z (float, float, float): center of the disks rotation circle (in mm)
         R (float): radius of the arms rotation circle around the platform (in mm)
@@ -205,16 +205,16 @@ class OrbitaActuator(object):
     """
 
     def __init__(
-        self, root_part, name, luos_disks_motor,
+        self, root_part, name, disks_motor,
         Pc_z, Cp_z, R, R0, hardware_zero
     ):
         """Create a OrbitaActuator given its three disks controllers."""
-        self.disk_bottom, self.disk_middle, self.disk_top = luos_disks_motor
+        self.disk_bottom, self.disk_middle, self.disk_top = disks_motor
+
         self.model = OrbitaModel(Pc_z=Pc_z, Cp_z=Cp_z, R=R, R0=R0)
         self._hardware_zero = hardware_zero
 
         self._compliancy = False
-        self._offset = np.zeros(3)
         self.setup()
 
     def __repr__(self):
@@ -296,7 +296,6 @@ class OrbitaActuator(object):
         """
         thetas = self.model.get_angles_from_vector(vector, angle)
         # We used a reversed encoder so we need to inverse the angles
-        thetas = thetas + self._offset
         return self.goto(thetas, duration=duration, wait=wait, interpolation_mode='minjerk')
 
     def orient(self, quat, duration, wait):
@@ -312,7 +311,6 @@ class OrbitaActuator(object):
         """
         thetas = self.model.get_angles_from_quaternion(quat.w, quat.x, quat.y, quat.z)
         # We used a reversed encoder so we need to inverse the angles
-        thetas = thetas + self._offset
         self.goto(thetas, duration=duration, wait=wait, interpolation_mode='minjerk')
 
     def setup(self):
@@ -321,9 +319,7 @@ class OrbitaActuator(object):
         .. note:: automatically called at instantiation.
         """
         for disk in self.disks:
-            disk.rot_position_mode = True
-            disk.rot_position = True
-            disk.temperature = True
+            disk.setup()
 
         def _find_zero(disk, z):
             A = 360 / (52 / 24)
@@ -337,5 +333,5 @@ class OrbitaActuator(object):
 
         time.sleep(0.25)
 
-        zeros = [_find_zero(d, z) for d, z in zip(self.disks, self._hardware_zero)]
-        self._offset = np.array(zeros) + 60
+        for d, z in zip(self.disks, self._hardware_zero):
+            d.offset = _find_zero(d, z) + 60
