@@ -319,7 +319,7 @@ class OrbitaActuator(object):
         .. note:: automatically called at instantiation.
         """
         for disk in self.disks:
-            disk.setup()
+            disk.setup_homing()
 
         def _find_zero(disk, z):
             A = 360 / (52 / 24)
@@ -331,7 +331,10 @@ class OrbitaActuator(object):
 
             return zeros[best]
 
-        time.sleep(0.25)
+        time.sleep(2)
 
         for d, z in zip(self.disks, self._hardware_zero):
             d.offset = _find_zero(d, z) + 60
+
+        for disk in self.disks:
+            disk.setup_control()

@@ -122,8 +122,12 @@ class WsFakeOrbitaDisk(object):
         """Public Orbita disk string representation."""
         return f'<Orbita "{self.name}" pos="{self.rot_position}>'
 
-    def setup(self):
-        """Initialize the disk."""
+    def setup_control(self):
+        """Prepare the disk for being controlled by position."""
+        pass
+
+    def setup_homing(self):
+        """Prepare the disk for homing."""
         pass
 
     @property

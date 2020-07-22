@@ -179,14 +179,14 @@ class OrbitaDisk(object):
         """Get the OrbitaDisk string representation."""
         return f'<Orbita "{self.name}" pos="{self.rot_position}>'
 
-    def setup(self):
-        """Prepare the luos disk before controlling it.
-
-        Enable position control, retrieve position and temperature.
-        """
+    def setup_homing(self):
+        """Prepare the luos disk for homing."""
         self.luos_disk.rot_position_mode = True
         self.luos_disk.rot_position = True
-        self.luos_disk.temperature = True
+
+    def setup_control(self):
+        """Prepare the luos disk before controlling it by position."""
+        self.luos_disk.rot_position = False
 
     @property
     def compliant(self):
