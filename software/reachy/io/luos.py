@@ -196,6 +196,8 @@ class OrbitaDisk(object):
     @compliant.setter
     def compliant(self, new_compliancy):
         """Set new compliancy (stiff/compliant)."""
+        if not new_compliancy:
+            self.luos_disk._rot_position = self.luos_disk._target_rot_position
         self.luos_disk.compliant = new_compliancy
 
     @property
