@@ -5,7 +5,6 @@ This tool must be run while Orbita is fixed at the Zero Position using a specifi
 """
 
 import os
-import time
 import pathlib
 import argparse
 import numpy as np
@@ -13,6 +12,7 @@ import numpy as np
 from glob import glob
 
 from pyluos import Device
+from reachy.io.luos import OrbitaDisk
 
 
 import reachy
@@ -34,13 +34,8 @@ def main():
         ports = [args.luos_port]
 
     device = Device(ports[0])
-    time.sleep(0.5)
-
-    hardware_zero = (
-        device.disk_top.rot_position,
-        device.disk_middle.rot_position,
-        device.disk_bottom.rot_position,
-    )
+    disks = [OrbitaDisk(d.alias, d) for d in [device.disk_top, device.disk_middle, device.disk_bottom]]
+    hardware_zero = [d._wait_for_update() for d in disks]
 
     print(f'Find Orbita Hardware Zero at {hardware_zero}')
     np.save(args.output_filename, hardware_zero)
