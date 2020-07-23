@@ -221,7 +221,7 @@ class OrbitaDisk(object):
         """Get the current motor temperature in C."""
         return self.luos_disk.temperature
 
-    def _wait_for_update(self, n_trials=500): 
+    def _wait_for_update(self, n_trials=500):
         self.luos_disk.rot_position = True
 
         for _ in range(n_trials):
@@ -231,7 +231,7 @@ class OrbitaDisk(object):
                 self.luos_disk.rot_position = False
                 return pos
             except KeyError:
-                pass        
+                pass
             time.sleep(0.01)
         else:
             raise EnvironmentError(f'Could not communicate with orbita "{self.name}"!')
