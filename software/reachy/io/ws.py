@@ -150,6 +150,9 @@ class WsFakeOrbitaDisk(object):
         """Set a new target angle position (in deg.)."""
         self._target_rot_position = new_pos
 
+    def _wait_for_update(self):
+        return self.rot_position
+
 
 class WsFakeForceSensor(object):
     """Force Sensor placeholder.

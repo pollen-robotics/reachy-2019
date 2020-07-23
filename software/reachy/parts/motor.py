@@ -321,9 +321,8 @@ class OrbitaActuator(object):
         for disk in self.disks:
             disk.setup_homing()
 
-        def _find_zero(disk, z):
+        def _find_zero(p, z):
             A = 360 / (52 / 24)
-            p = disk.rot_position
 
             zeros = [z, -(A - z), A + z]
             distances = [abs(p - z) for z in zeros]
@@ -331,10 +330,8 @@ class OrbitaActuator(object):
 
             return zeros[best]
 
-        time.sleep(2)
-
         for d, z in zip(self.disks, self._hardware_zero):
-            d.offset = _find_zero(d, z) + 60
+            d.offset = _find_zero(d._wait_for_update(), z) + 60
 
         for disk in self.disks:
             disk.setup_control()

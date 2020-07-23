@@ -186,6 +186,7 @@ class OrbitaDisk(object):
 
     def setup_control(self):
         """Prepare the luos disk before controlling it by position."""
+        self.luos_disk._target_rot_position = self.luos_disk.rot_position
         self.luos_disk.rot_position = False
 
     @property
@@ -197,13 +198,13 @@ class OrbitaDisk(object):
     def compliant(self, new_compliancy):
         """Set new compliancy (stiff/compliant)."""
         if not new_compliancy:
-            self.luos_disk._rot_position = self.luos_disk._target_rot_position
+            self.target_rot_position = self._wait_for_update()
         self.luos_disk.compliant = new_compliancy
 
     @property
     def rot_position(self):
         """Get the current angle position (in deg.)."""
-        return self.luos_disk.rot_position
+        return self.luos_disk.target_rot_position - self.offset
 
     @property
     def target_rot_position(self):
@@ -219,6 +220,21 @@ class OrbitaDisk(object):
     def temperature(self):
         """Get the current motor temperature in C."""
         return self.luos_disk.temperature
+
+    def _wait_for_update(self, n_trials=500): 
+        self.luos_disk.rot_position = True
+
+        for _ in range(n_trials):
+            s = dict(self.luos_disk._delegate._state)
+            try:
+                pos = s['modules'][self.name]['rot_position']
+                self.luos_disk.rot_position = False
+                return pos
+            except KeyError:
+                pass        
+            time.sleep(0.01)
+        else:
+            raise EnvironmentError(f'Could not communicate with orbita "{self.name}"!')
 
 
 class Fan(object):
