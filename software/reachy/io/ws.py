@@ -173,7 +173,6 @@ class WsServer(object):
 
         self.parts = []
         self.motors = {}
-        
 
     async def sync(self, websocket, path):
         """Sync loop that exchange modules state with the client."""

@@ -4,6 +4,7 @@ import numpy as np
 
 from threading import Thread
 
+
 class TeleOp(object):
     """Class to be use by tele-operation applications
 
@@ -50,7 +51,7 @@ class TeleOp(object):
         self.update_state(self.right_arm.io.ws.state_dict)
         is_left_hand_opened = self.left_hand_command
         is_right_hand_opened = self.right_hand_command
-        while self.is_moving :  
+        while self.is_moving:
             self.update_state(self.right_arm.io.ws.state_dict)           
 
             is_left_hand_opened = self.move_arm(self.left_arm, self.left_hand_command, is_left_hand_opened)
@@ -77,7 +78,7 @@ class TeleOp(object):
             else:
                 self.close_t = Thread(target=self.close_hand, args=(arm,))
                 self.close_t.start()
-        
+
         current_position = [m.present_position for m in arm.motors]
 
         if(arm.side == self.left_arm.side):
@@ -128,7 +129,7 @@ class TeleOp(object):
             motor.goto(joint_pos, duration)
 
     def open_hand(self, arm):
-        arm.hand.open();
+        arm.hand.open()
 
     def close_hand(self, arm):
-        arm.hand.close();
+        arm.hand.close()
