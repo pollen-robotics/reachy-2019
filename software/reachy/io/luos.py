@@ -201,7 +201,7 @@ class OrbitaDisk(object):
     @property
     def rot_position(self):
         """Get the current angle position (in deg.)."""
-        return self.luos_disk.rot_position
+        return self.luos_disk.rot_position - self.offset
 
     @property
     def target_rot_position(self):
