@@ -31,7 +31,7 @@ class TeleOp(object):
         Args:
 
             wait : float
-                time in seconds to wait before start to move        
+                time in seconds to wait before start to move   
         """
         time.sleep(wait)
 
@@ -39,7 +39,7 @@ class TeleOp(object):
 
         self.move_t = Thread(target=self.follow_movements, daemon=True)
         self.is_moving = True
-        self.move_t.start()        
+        self.move_t.start()
 
     def stop_moving(self):
         self.is_moving = False
@@ -52,7 +52,7 @@ class TeleOp(object):
         is_left_hand_opened = self.left_hand_command
         is_right_hand_opened = self.right_hand_command
         while self.is_moving:
-            self.update_state(self.right_arm.io.ws.state_dict)           
+            self.update_state(self.right_arm.io.ws.state_dict)
 
             is_left_hand_opened = self.move_arm(self.left_arm, self.left_hand_command, is_left_hand_opened)
             is_right_hand_opened = self.move_arm(self.right_arm, self.right_hand_command, is_right_hand_opened)
@@ -60,14 +60,14 @@ class TeleOp(object):
     def move_arm(self, arm, hand_command, is_hand_opened):
         """
         Args:
-        
+
             arm (reachy.parts.arm): the arm to move
 
             hand_command (bool): true if the hand is supposed to be opened/closed according to the state received by the webSocket, false otherwise
 
-            is_hand_opened (bool): the current hand's state 
+            is_hand_opened (bool): the current hand's state
 
-        The boleans arguments are used to check wether the state has changed or not. It allows us not to call the open()/close() method when 
+        The boleans arguments are used to check wether the state has changed or not. It allows us not to call the open()/close() method when
         the hand is already opened/closed.
         """
         if(hand_command != is_hand_opened):
@@ -82,10 +82,10 @@ class TeleOp(object):
         current_position = [m.present_position for m in arm.motors]
 
         if(arm.side == self.left_arm.side):
-            targetJoint = arm.inverse_kinematics(self.leftPose, q0= current_position)
+            targetJoint = arm.inverse_kinematics(self.leftPose, q0=current_position)
             self.goto_left_arm_joint_solution(targetJoint, duration=0.1, wait=True)
         else:
-            targetJoint = arm.inverse_kinematics(self.rightPose, q0= current_position)
+            targetJoint = arm.inverse_kinematics(self.rightPose, q0=current_position)
             self.goto_right_arm_joint_solution(targetJoint, duration=0.1, wait=True)
 
         return is_hand_opened
