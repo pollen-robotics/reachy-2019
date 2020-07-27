@@ -31,7 +31,7 @@ class TeleOp(object):
         Args:
 
             wait : float
-                time in seconds to wait before start to move   
+                time in seconds to wait before start to move
         """
         time.sleep(wait)
 
