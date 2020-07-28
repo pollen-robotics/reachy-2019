@@ -1,0 +1,11 @@
+version:
+  robus: 
+    tag: v08-06-20
+    commit: https://github.com/pollen-robotics/Robus/commit/3fbc4329ee237bf34dbe16ed93279d3a6bddee17
+  luos:
+    tag: v27-07-20
+    commit: https://github.com/pollen-robotics/Luos/commit/adc3ff36604ea6e39a44fff50bdaf9322eb067cb
+  modules:
+    tag: v27-07-20
+    commit: https://github.com/pollen-robotics/Luos-modules/commit/fe02215e7ae652cad16a4ccb21dc221103fd77fa
+    
