@@ -152,12 +152,12 @@ class SharedLuosIO(IO):
             for name in ['disk_bottom', 'disk_middle', 'disk_top']
         ]
 
-    def find_dual_camera(self, default_camera):
-        """Retrieve a dual camera."""
-        # We import DualCamera here to avoid OpenCV/smbus/gpiozero ImportError
+    def find_camera(self, camera_index):
+        """Retrieve a camera."""
+        # We import DualCamera here to avoid OpenCV ImportError
         # if we are not using the Head part.
-        from .cam import DualCamera
-        return DualCamera(default_camera)
+        from .cam import BackgroundVideoCapture
+        return BackgroundVideoCapture(camera_index)
 
 
 class OrbitaDisk(object):
