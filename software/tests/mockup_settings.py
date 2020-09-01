@@ -1,0 +1,3 @@
+LOGGING = {
+    'dummy': 42,
+}
