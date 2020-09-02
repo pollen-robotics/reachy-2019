@@ -1,3 +1,11 @@
+"""
+Log utility module.
+
+Provides base Formatter and default configuration.
+The default behavior can be overriden using the settings.py file.
+
+"""
+
 import logging
 import importlib
 
@@ -6,7 +14,10 @@ from pythonjsonlogger import jsonlogger
 
 
 class JsonFormatter(jsonlogger.JsonFormatter):
+    """Custom JSON Formatter to simplify log analysis."""
+
     def add_fields(self, log_record, record, message_dict):
+        """Add timestamp and level in the log_record."""
         jsonlogger.JsonFormatter.add_fields(
             self,
             log_record,
@@ -58,6 +69,7 @@ DEFAULT_LOGGING = {
 
 
 def configure_logging(logging_config, logging_settings):
+    """Configure Reacy logging system as defined by the settings file."""
     module_path, class_name = logging_config.rsplit('.', 1)
     logging_config_func = getattr(importlib.import_module(module_path), class_name)
 

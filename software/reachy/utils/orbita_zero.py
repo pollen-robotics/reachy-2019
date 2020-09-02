@@ -15,7 +15,7 @@ from pyluos import Device
 from reachy.conf import settings
 
 
-def write_hardware_zero(zero, filename):
+def _write_hardware_zero(zero, filename):
     with open(filename) as f:
         lines = f.readlines()
 
@@ -34,7 +34,6 @@ def write_hardware_zero(zero, filename):
 
 def main():
     """Get the Zero hardware from Orbita."""
-
     parser = argparse.ArgumentParser()
     parser.add_argument('--luos_port', default='/dev/ttyUSB*', help='Orbita gate luos port (default: %(default)s)')
     args = parser.parse_args()
@@ -61,7 +60,7 @@ def main():
     shutil.copy(filename, bkp_file)
 
     print(f'Value will be store in {filename}')
-    write_hardware_zero(hardware_zero, filename)
+    _write_hardware_zero(hardware_zero, filename)
 
 
 if __name__ == '__main__':

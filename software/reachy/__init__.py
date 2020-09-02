@@ -12,6 +12,12 @@ from .reachy import Reachy  # noqa: F401
 
 
 def setup():
+    """
+    Set up reachy module.
+
+    Load the settings and configure the logging system.
+    It is automatically done at the first import.
+    """
     from reachy.conf import settings
     from reachy.utils.log import configure_logging
 
