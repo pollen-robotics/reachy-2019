@@ -6,9 +6,8 @@ import numpy as np
 
 from collections import OrderedDict
 
-import reachy
-
 from ..utils import rot
+from ..conf import settings
 from .part import ReachyPart
 
 
@@ -27,7 +26,7 @@ class Head(ReachyPart):
         'Cp_z': [0, 0, 0],
         'R': 35.9,
         'R0': np.dot(rot('z', 60), rot('y', 10)),
-        'hardware_zero': np.load(os.path.join(pathlib.Path(reachy.__file__).parent, 'orbita_head_hardware_zero.npy')),
+        'hardware_zero': settings.hardware.ORBITA_NECK_HARDWARE_ZERO,
     }
 
     dxl_motors = OrderedDict([

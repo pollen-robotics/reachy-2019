@@ -14,3 +14,4 @@ zeroconf==0.24.5
 opencv-python==4.1.0.25
 websockets==8.1
 gpiozero==1.5.1
+python-json-logger==0.1.11

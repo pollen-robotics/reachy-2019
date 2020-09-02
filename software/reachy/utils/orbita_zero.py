@@ -4,29 +4,39 @@ This tool must be run while Orbita is fixed at the Zero Position using a specifi
 
 """
 
-import os
 import time
-import pathlib
+import shutil
 import argparse
-import numpy as np
 
 from glob import glob
+from pathlib import Path
 
 from pyluos import Device
+from reachy.conf import settings
 
 
-import reachy
+def write_hardware_zero(zero, filename):
+    with open(filename) as f:
+        lines = f.readlines()
+
+    zero = list(zero)
+
+    config = []
+    for line in lines:
+        if line.startswith('ORBITA_NECK_HARDWARE_ZERO = ['):
+            config.append(f'ORBITA_NECK_HARDWARE_ZERO = {zero}\n')
+        else:
+            config.append(line)
+
+    with open(filename, 'w') as f:
+        f.write(''.join(config))
 
 
 def main():
     """Get the Zero hardware from Orbita."""
-    bp = pathlib.Path(reachy.__file__).parent
-    filename = 'orbita_head_hardware_zero.npy'
-    output_filename = os.path.join(bp, filename)
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--luos_port', default='/dev/ttyUSB*', help='Orbita gate luos port (default: %(default)s)')
-    parser.add_argument('--output_filename', default=output_filename, help='output file where to store the zero (default: %(default)s)')
     args = parser.parse_args()
 
     ports = glob(args.luos_port)
@@ -43,7 +53,15 @@ def main():
     )
 
     print(f'Find Orbita Hardware Zero at {hardware_zero}')
-    np.save(args.output_filename, hardware_zero)
+
+    filename = Path({settings.REACHY_HARDWARE_SPECIFIC_SETTINGS}).expanduser()
+    bkp_file = Path(f'{filename}.bkp')
+
+    print(f'Making backup file at {bkp_file}')
+    shutil.copy(filename, bkp_file)
+
+    print(f'Value will be store in {filename}')
+    write_hardware_zero(hardware_zero, filename)
 
 
 if __name__ == '__main__':

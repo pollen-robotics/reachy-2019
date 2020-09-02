@@ -33,12 +33,11 @@ setup(
         'pyquaternion',
         'websockets',
         'Pillow',
+        'python-json-logger',
     ],
 
     extras_require={
         'head': ['opencv-python'],
-        'log': ['zzlog'],
-
         'doc': ['sphinx', 'sphinx-autoapi'],
         'lint': ['flake8', 'pydocstyle'],
         'test': ['pytest'],
