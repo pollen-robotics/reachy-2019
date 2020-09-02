@@ -1,7 +1,5 @@
 """Head part module."""
 
-import os
-import pathlib
 import numpy as np
 
 from collections import OrderedDict
