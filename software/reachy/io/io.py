@@ -27,7 +27,7 @@ class IO(object):
         """Close and clean the IO."""
         raise NotImplementedError
 
-    def find_camera(self, canera_index):
+    def find_camera(self, camera_index):
         """Return a camera.
 
         The camera object must implement following methods:
