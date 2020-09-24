@@ -29,7 +29,6 @@ class BackgroundVideoCapture(object):
 
     def __init__(self, camera_index, resolution=(600, 800), lazy_setup=True):
         """Open video capture on the specified camera."""
-
         self.camera_index = camera_index
         self.resolution = resolution
 
