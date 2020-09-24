@@ -6,6 +6,7 @@ See https://github.com/ArduCAM/RaspberryPi/tree/master/Multi_Camera_Adapter/Mult
 
 """
 
+import time
 import cv2 as cv
 
 from threading import Thread, Event, Lock
@@ -26,21 +27,27 @@ class BackgroundVideoCapture(object):
     This ensures that we can always access the most recent image.
     """
 
-    def __init__(self, camera_index, resolution=(600, 800), exposure=600):
+    def __init__(self, camera_index, resolution=(600, 800), lazy_setup=True):
         """Open video capture on the specified camera."""
-        self.cap = cv.VideoCapture(camera_index)
+
+        self.camera_index = camera_index
+        self.resolution = resolution
+
+        if not lazy_setup:
+            self._setup()
+
+    def _setup(self):
+        self.cap = cv.VideoCapture(self.camera_index)
 
         if not self.cap.isOpened():
             raise CameraNotFoundError(
-                message=f'Camera {camera_index} not found!',
-                camera_id=camera_index,
+                message=f'Camera {self.camera_index} not found!',
+                camera_id=self.camera_index,
             )
 
         self.cap.set(cv.CAP_PROP_FOURCC, cv.VideoWriter_fourcc('M', 'J', 'P', 'G'))
-        self.cap.set(cv.CAP_PROP_FRAME_HEIGHT, resolution[0])
-        self.cap.set(cv.CAP_PROP_FRAME_WIDTH, resolution[1])
-        self.cap.set(cv.CAP_PROP_EXPOSURE, exposure)
-        self.cap.set(cv.CAP_PROP_AUTO_EXPOSURE, 1)
+        self.cap.set(cv.CAP_PROP_FRAME_HEIGHT, self.resolution[0])
+        self.cap.set(cv.CAP_PROP_FRAME_WIDTH, self.resolution[1])
 
         self._lock = Lock()
         self.running = Event()
@@ -50,6 +57,11 @@ class BackgroundVideoCapture(object):
         self._t = Thread(target=self._read_loop)
         self._t.daemon = True
         self._t.start()
+
+        for _ in range(50):
+            time.sleep(0.1)
+            if self._img is not None:
+                break
 
     def close(self):
         """Stop polling image and release the Video Capture."""
@@ -72,5 +84,8 @@ class BackgroundVideoCapture(object):
 
     def read(self):
         """Retrieve the last grabbed image."""
+        if not hasattr(self, 'cap'):
+            self._setup()
+
         with self._lock:
             return self._img is not None, self._img
