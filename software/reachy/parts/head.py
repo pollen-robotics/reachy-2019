@@ -91,19 +91,3 @@ class Head(ReachyPart):
     @moving_speed.setter
     def moving_speed(self, speed):
         self.neck.moving_speed = speed
-
-    @property
-    def active_camera(self):
-        """Get the active camera side (left or right)."""
-        return self.camera.active_side
-
-    def get_image(self, eye):
-        """Get last grabbed image from the camera."""
-        if eye == 'left':
-            _, img = self.left_camera.read()
-        elif eye == 'right':
-            _, img = self.right_camera.read()
-        else:
-            raise ValueError('eye should be in ("left", "right")')
-
-        return img
