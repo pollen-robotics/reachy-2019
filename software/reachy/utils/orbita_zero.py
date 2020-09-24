@@ -4,7 +4,6 @@ This tool must be run while Orbita is fixed at the Zero Position using a specifi
 
 """
 
-import os
 import time
 import pathlib
 import argparse
@@ -20,9 +19,7 @@ import reachy
 
 def main():
     """Get the Zero hardware from Orbita."""
-    bp = pathlib.Path(reachy.__file__).parent
-    filename = 'orbita_head_hardware_zero.npy'
-    output_filename = os.path.join(bp, filename)
+    output_filename = pathlib.Path(reachy.__file__).parent / 'orbita_head_hardware_zero.npy'
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--luos_port', default='/dev/ttyUSB*', help='Orbita gate luos port (default: %(default)s)')
