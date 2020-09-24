@@ -41,13 +41,15 @@ class Head(ReachyPart):
         }),
     ])
 
-    def __init__(self, io, default_camera='right'):
+    def __init__(self, io):
         """Create new Head part."""
         ReachyPart.__init__(self, name='head', io=io)
 
         self.neck = self.create_orbita_actuator('neck', Head.orbita_config)
         self.attach_dxl_motors(Head.dxl_motors)
-        self.camera = self.io.find_dual_camera(default_camera)
+
+        self.left_camera = self.io.find_camera(0)
+        self.right_camera = self.io.find_camera(2)
 
     def __repr__(self):
         """Head representation."""
@@ -55,7 +57,8 @@ class Head(ReachyPart):
 
     def teardown(self):
         """Clean and close head part."""
-        self.camera.close()
+        self.left_camera.close()
+        self.right_camera.close()
         ReachyPart.teardown(self)
 
     def look_at(self, x, y, z, duration, wait):
@@ -88,17 +91,3 @@ class Head(ReachyPart):
     @moving_speed.setter
     def moving_speed(self, speed):
         self.neck.moving_speed = speed
-
-    @property
-    def active_camera(self):
-        """Get the active camera side (left or right)."""
-        return self.camera.active_side
-
-    def enable_camera(self, camera_side):
-        """Enable one of the camera active (left or right)."""
-        self.camera.set_active(camera_side)
-
-    def get_image(self):
-        """Get last grabbed image from the camera."""
-        _, img = self.camera.read()
-        return img

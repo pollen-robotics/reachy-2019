@@ -27,15 +27,11 @@ class IO(object):
         """Close and clean the IO."""
         raise NotImplementedError
 
-    def find_dual_camera(self, default_camera):
-        """Return a dual camera.
+    def find_camera(self, canera_index):
+        """Return a camera.
 
         The camera object must implement following methods:
             * read() -> bool, img
             * close()
-            * set_active(side)
-
-        and the property:
-            * active_side --> 'left' or 'right'
         """
         raise NotImplementedError

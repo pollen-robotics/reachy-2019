@@ -1,5 +1,9 @@
 # Changelog 
 
+## Version 1.3.0
+
+* Use two USB cameras instead of the i2c switch (less sensitivity to external perturbations and possiblity to use both cameras at the same time)
+
 ## Version 1.2.0
 
 * Use absolution positioning for Orbita (only works with Orbita firmware >07-july-2020)
