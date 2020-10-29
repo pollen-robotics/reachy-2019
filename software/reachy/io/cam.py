@@ -64,12 +64,13 @@ class BackgroundVideoCapture(object):
 
     def close(self):
         """Stop polling image and release the Video Capture."""
-        self.running.clear()
+        if hasattr(self, 'cap'):
+            self.running.clear()
 
-        if self._t.is_alive():
-            self._t.join()
+            if self._t.is_alive():
+                self._t.join()
 
-        self.cap.release()
+            self.cap.release()
 
     def _read_loop(self):
         self.running.set()
