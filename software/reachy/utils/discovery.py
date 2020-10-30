@@ -88,7 +88,7 @@ def discover_all(luos_port='/dev/ttyUSB*'):
 
 def main():
     """Check which part is connected to a Reachy."""
-    for name, part in discover_all.items():
+    for name, part in discover_all().items():
         status = part['status']
         details = part['details']
 
