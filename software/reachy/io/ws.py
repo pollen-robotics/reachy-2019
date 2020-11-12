@@ -82,10 +82,11 @@ class WsIO(IO):
 
         return disks
 
-    def find_dual_camera(self, default_camera):
+    def find_camera(self, index):
         """Retrieve a dual camera."""
-        cam = WsDualCamera(default_camera)
-        self.ws.cam = cam
+        side = 'left' if index == 0 else 'right'
+        cam = WsDualCamera(side=side)
+        setattr(self.ws, f'{side}_camera', cam)
         return cam
 
     def close(self):
@@ -161,19 +162,9 @@ class WsFakeForceSensor(object):
 class WsDualCamera(object):
     """Remote Camera."""
 
-    def __init__(self, default_camera):
+    def __init__(self, side):
         """Set remote camera up."""
-        self.set_active(default_camera)
         self.frame = np.zeros((300, 480, 3), dtype=np.uint8)
-
-    @property
-    def active_side(self):
-        """Get the active camera side."""
-        return self._camera_side
-
-    def set_active(self, camera_side):
-        """Set one of the camera active (left or right)."""
-        self._camera_side = camera_side
 
     def read(self):
         """Get latest received frame."""
@@ -218,11 +209,13 @@ class WsServer(object):
             resp = await websocket.recv()
             state = json.loads(resp)
 
-            if hasattr(self, 'cam'):
-                eye = f'{self.cam.active_side}_eye'
-                if eye in state:
+            for side in ('left', 'right'):
+                eye = f'{side}_eye'
+
+                if eye in state and hasattr(self, f'{side}_camera'):
                     jpeg_data = b64decode(state[eye])
-                    self.cam.frame = np.array(Image.open(BytesIO(jpeg_data)))
+                    frame = np.array(Image.open(BytesIO(jpeg_data)))
+                    getattr(self, f'{side}_camera').frame = frame
 
             for m in state['motors']:
                 if m['name'] in self.motors:
