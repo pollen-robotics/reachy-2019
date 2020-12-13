@@ -18,7 +18,7 @@ def attempt_luos_connection(port, trials=5):
     io = LuosDevice(port, log_conf='')
     gate_name = io.modules[0].alias
 
-    if trials > 0 and gate_name in ('r_right_arm', 'r_left_arm'):
+    if trials > 0 and gate_name in ('r_right_arm', 'r_left_arm', 'gate'):
         # TEMP: check if the dxl did respond
         if len(io.modules) < 3:
             io.close()
@@ -81,6 +81,7 @@ class SharedLuosIO(IO):
             return cls(port_template)
 
         for p in available_ports:
+            print(p)
             io = cls(p)
 
             if io.gate_name == name:
@@ -152,12 +153,12 @@ class SharedLuosIO(IO):
             for name in ['disk_bottom', 'disk_middle', 'disk_top']
         ]
 
-    def find_camera(self, camera_index):
-        """Retrieve a camera."""
-        # We import DualCamera here to avoid OpenCV ImportError
+    def find_dual_camera(self, default_camera):
+        """Retrieve a dual camera."""
+        # We import DualCamera here to avoid OpenCV/smbus/gpiozero ImportError
         # if we are not using the Head part.
-        from .cam import BackgroundVideoCapture
-        return BackgroundVideoCapture(camera_index)
+        from .cam import DualCamera
+        return DualCamera(default_camera)
 
 
 class OrbitaDisk(object):
@@ -201,7 +202,7 @@ class OrbitaDisk(object):
     @property
     def rot_position(self):
         """Get the current angle position (in deg.)."""
-        return self.luos_disk.rot_position - self.offset
+        return self.luos_disk.rot_position
 
     @property
     def target_rot_position(self):

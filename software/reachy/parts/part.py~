@@ -30,9 +30,8 @@ class ReachyPart(object):
             self.io = ws.WsIO.shared_server(self.name)
         else:
             gate_name = self.name.split('.')[0]
-            gate_name = f'r_{gate_name}'
-            # TODO: the gate for the right arm needs to be renamed
-            #gate_name = "gate"
+            #gate_name = f'r_{gate_name}'
+            gate_name = "gate"
             self.io = luos.SharedLuosIO.with_gate(gate_name, io)
 
     def teardown(self):
