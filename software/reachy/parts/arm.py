@@ -248,7 +248,7 @@ class RightArm(Arm):
         }),
     """
 
-    
+
     dxl_motors = OrderedDict([
         ('shoulder_pitch', {
             # OK
