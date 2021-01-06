@@ -178,13 +178,16 @@ class WsDualCamera(object):
 class WsServer(object):
     """WebSocket server, sync value from the modules with their equivalent from the client."""
 
-    def __init__(self, host='0.0.0.0', port=6171):
+    def __init__(self, host='0.0.0.0', port=6174):
         """Prepare the ws server."""
         self.host, self.port = host, port
         self.running = Event()
 
         self.parts = []
         self.motors = {}
+
+        self.real_value_right = 0
+        self.real_value_left = 0
 
     async def sync(self, websocket, path):
         """Sync loop that exchange modules state with the client."""
@@ -203,19 +206,24 @@ class WsServer(object):
                     {'name': m.name, 'goal_position': m.target_rot_position}
                     for m in sum([p.disks for p in self.parts], [])
                 ],
+                'realValueRight': self.real_value_right,
+                'realValueLeft': self.real_value_left,
             })
             await websocket.send(msg.encode('UTF-8'))
 
             resp = await websocket.recv()
             state = json.loads(resp)
 
-            for side in ('left', 'right'):
-                eye = f'{side}_eye'
+            # For Reachy teleop
+            self.state_dict = dict(state)
 
-                if eye in state and hasattr(self, f'{side}_camera'):
-                    jpeg_data = b64decode(state[eye])
-                    frame = np.array(Image.open(BytesIO(jpeg_data)))
-                    getattr(self, f'{side}_camera').frame = frame
+            # for side in ('left', 'right'):
+            #     eye = f'{side}_eye'
+
+            #     if eye in state and hasattr(self, f'{side}_camera'):
+            #         jpeg_data = b64decode(state[eye])
+            #         frame = np.array(Image.open(BytesIO(jpeg_data)))
+            #         getattr(self, f'{side}_camera').frame = frame
 
             for m in state['motors']:
                 if m['name'] in self.motors:
