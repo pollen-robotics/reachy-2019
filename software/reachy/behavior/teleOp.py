@@ -71,7 +71,7 @@ class TeleOp(object):
             self.goto_right_arm_joint_solution(sol_right, duration=0.1)
             res, sol_left = inverse_kinematics(
                 label='left_arm',
-                q0=[m.present_position for m in self.left_arm.motors[:7]],
+                q0=[0, 0, 0, -90, 0, 0, 0],
                 target_pose=self.leftPose,
             )
             self.goto_left_arm_joint_solution(sol_left, duration=0.1)
