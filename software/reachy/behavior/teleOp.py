@@ -27,6 +27,8 @@ class TeleOp(object):
         self.right_opening = False
         self.left_opening = False
 
+        self.is_compliant = False
+
         self.last_updates = deque([], 100)
         self.last_dts = deque([], 100)
 
@@ -87,6 +89,9 @@ class TeleOp(object):
             ##
 
             self.head_orient(self.head_quaternion, duration=0.01, wait=False)
+
+            if(self.is_compliant != self.set_compliant):
+                self.switch_compliance_mode(self.set_compliant)
 
             time.sleep(0.01)
             
@@ -214,6 +219,8 @@ class TeleOp(object):
             self.trigger_right = state_dict['rightHand']['trigger']
             # print(self.head_rotation)
 
+            self.set_compliant = state_dict['setCompliant']
+
         else:
             raise NameError('NoHandInformationsInWebSocket')
 
@@ -263,6 +270,10 @@ class TeleOp(object):
         if(arm.side == self.left_arm.side):
             pos = -pos 
         arm.hand.gripper.goal_position = pos
+
+    def switch_compliance_mode(self, compliance):
+        self.left_arm.hand.forearm_yaw.compliant = compliance
+        self.is_compliant = compliance
     
     def IK_calculation(self, arm, current_position):
         if(arm.side == self.left_arm.side):
