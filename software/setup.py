@@ -19,7 +19,7 @@ with open(path.join(here, '..', 'README.md'), encoding='utf-8') as f:
 
 
 setup(
-    name='reachy',
+    name='reachy-2019',
     version=version(),
     packages=find_packages(exclude=['tests']),
 
