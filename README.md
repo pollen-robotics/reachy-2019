@@ -21,8 +21,8 @@ This project adheres to the Contributor [code of conduct](CODE_OF_CONDUCT.md). B
 
 ## Documentation (WIP)
 
-* The full documentation is available at: [https://pollen-robotics.github.io/reachy-docs/](https://pollen-robotics.github.io/reachy-docs/)
-* The APIs can be found at: [https://pollen-robotics.github.io/reachy/](https://pollen-robotics.github.io/reachy/)
+* The full documentation is available at: [https://pollen-robotics.github.io/reachy-2019-docs/](https://pollen-robotics.github.io/reachy-2019-docs/)
+* The APIs can be found at: [https://pollen-robotics.github.io/reachy-2019/](https://pollen-robotics.github.io/reachy-2019/)
 
 ## Installation
 
