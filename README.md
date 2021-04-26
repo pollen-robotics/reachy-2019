@@ -1,6 +1,6 @@
 # Reachy: Open source interactive robot to explore real-world applications!
 
-Reachy is a unique open prototyping platform. It makes AI & robotics accessible to researchers, innovation professionals and creatives. 
+Reachy is a unique open prototyping platform. It makes AI & robotics accessible to researchers, innovation professionals and creatives.
 
 [![Hello I'm Reachy, presentation video](https://img.youtube.com/vi/iSL39WFxCLE/0.jpg)](https://www.youtube.com/watch?v=iSL39WFxCLE)
 
@@ -19,8 +19,8 @@ This project adheres to the Contributor [code of conduct](CODE_OF_CONDUCT.md). B
 
 ## Documentation (WIP)
 
-* The full documentation is available at: [https://pollen-robotics.github.io/reachy-docs/](https://pollen-robotics.github.io/reachy-docs/)
-* The APIs can be found at: [https://pollen-robotics.github.io/reachy/](https://pollen-robotics.github.io/reachy/)
+* The full documentation is available at: [https://pollen-robotics.github.io/reachy-2019-docs/](https://pollen-robotics.github.io/reachy-2019-docs/)
+* The APIs can be found at: [https://pollen-robotics.github.io/reachy-2019/](https://pollen-robotics.github.io/reachy-2019/)
 
 ## Installation
 
