@@ -1,0 +1,85 @@
+:mod:`reachy.io`
+================
+
+.. py:module:: reachy.io
+
+.. autoapi-nested-parse::
+
+   Reachy submodule responsible for low-level IO.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   cam/index.rst
+   io/index.rst
+   luos/index.rst
+   ws/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   reachy.io.IO
+
+
+
+
+.. class:: IO
+
+   Bases: :py:obj:`object`
+
+   Abstract IO class.
+
+   Defines how to find and interact with the module.
+
+   .. method:: find_module(self, module_name)
+      :abstractmethod:
+
+      Get a specific module from the IO.
+
+
+   .. method:: find_dxl(self, dxl_name, dxl_config)
+      :abstractmethod:
+
+      Get a specific dynamixel motor from the IO.
+
+
+   .. method:: find_fan(self, fan_name)
+      :abstractmethod:
+
+      Get a specific fan from its name.
+
+
+   .. method:: find_orbita_disks(self)
+      :abstractmethod:
+
+      Get a specific orbita disk from the IO.
+
+
+   .. method:: close(self)
+      :abstractmethod:
+
+      Close and clean the IO.
+
+
+   .. method:: find_camera(self, camera_index)
+      :abstractmethod:
+
+      Return a camera.
+
+      The camera object must implement following methods:
+          * read() -> bool, img
+          * close()
+
+
+

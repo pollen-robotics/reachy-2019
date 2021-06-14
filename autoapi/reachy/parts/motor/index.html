@@ -1,0 +1,426 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>reachy.parts.motor &#8212; reachy v1.4.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css" />
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="reachy.parts.part" href="../part/index.html" />
+    <link rel="prev" title="reachy.parts.kinematic" href="../kinematic/index.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-reachy.parts.motor">
+<span id="reachy-parts-motor"></span><h1><a class="reference internal" href="#module-reachy.parts.motor" title="reachy.parts.motor"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.parts.motor</span></code></a><a class="headerlink" href="#module-reachy.parts.motor" title="Permalink to this headline">¶</a></h1>
+<p>Motor abstraction module.</p>
+<dl class="simple">
+<dt>Define:</dt><dd><ul class="simple">
+<li><p>DynamixelMotor</p></li>
+<li><p>OrbitaActuator</p></li>
+</ul>
+</dd>
+</dl>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reachy.parts.motor.DynamixelMotor" title="reachy.parts.motor.DynamixelMotor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DynamixelMotor</span></code></a></p></td>
+<td><p>DynamixelMotor abstraction class.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reachy.parts.motor.OrbitaActuator" title="reachy.parts.motor.OrbitaActuator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OrbitaActuator</span></code></a></p></td>
+<td><p>Orbita Actuator abstraction.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reachy.parts.motor.logger" title="reachy.parts.motor.logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logger</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py data">
+<dt class="sig sig-object py" id="reachy.parts.motor.logger">
+<span class="sig-prename descclassname"><span class="pre">reachy.parts.motor.</span></span><span class="sig-name descname"><span class="pre">logger</span></span><a class="headerlink" href="#reachy.parts.motor.logger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="reachy.parts.motor.DynamixelMotor">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reachy.parts.motor.</span></span><span class="sig-name descname"><span class="pre">DynamixelMotor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_part</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">luos_motor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.DynamixelMotor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>DynamixelMotor abstraction class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_part</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – name of the part where the motor is attached to (eg ‘right_arm.hand’)</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – name of the motor (eg. ‘shoulder_pitch’)</p></li>
+<li><p><strong>luos_motor</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">pyluos.modules.DxlMotor</span></code>) – pyluos motor</p></li>
+<li><p><strong>config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – extra motor config (must include ‘offset’ and ‘orientation’ fields)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Wrap the pyluos motor object to simplify and make the API homogeneous.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.DynamixelMotor.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.DynamixelMotor.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Motor representation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.DynamixelMotor.name">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.DynamixelMotor.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fullname of the motor (eg. right_arm.hand.gripper).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.DynamixelMotor.present_position">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">present_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.DynamixelMotor.present_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Present position (in degrees) of the motor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.DynamixelMotor.goal_position">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">goal_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.DynamixelMotor.goal_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get current goal position (in degrees) of the motor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.DynamixelMotor.offset">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.DynamixelMotor.offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get motor real zero (in degrees).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.DynamixelMotor.is_direct">
+<span class="sig-name descname"><span class="pre">is_direct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.DynamixelMotor.is_direct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether the motor is direct or not.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.DynamixelMotor._as_local_pos">
+<span class="sig-name descname"><span class="pre">_as_local_pos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.DynamixelMotor._as_local_pos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.DynamixelMotor._to_motor_pos">
+<span class="sig-name descname"><span class="pre">_to_motor_pos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.DynamixelMotor._to_motor_pos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.DynamixelMotor.moving_speed">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">moving_speed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.DynamixelMotor.moving_speed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the maximum speed (in degree per second) of the motor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.DynamixelMotor.compliant">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">compliant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.DynamixelMotor.compliant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether or not the motor is compliant.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.DynamixelMotor.torque_limit">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">torque_limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.DynamixelMotor.torque_limit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the maximum torque allowed (in %) of the motor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.DynamixelMotor.temperature">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">temperature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.DynamixelMotor.temperature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the current motor temp. (in °C).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.DynamixelMotor.goto">
+<span class="sig-name descname"><span class="pre">goto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">goal_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'present_position'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interpolation_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.DynamixelMotor.goto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set trajectory goal for the motor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>goal_position</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – target position (in degrees)</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – duration of the movement (in seconds)</p></li>
+<li><p><strong>starting_point</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – register used to determine the starting point (eg. ‘goal_position’ can also be used in some specific case)</p></li>
+<li><p><strong>wait</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – whether or not to wait for the end of the motion</p></li>
+<li><p><strong>interpolation_mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – interpolation technique used for computing the trajectory (‘linear’, ‘minjerk’)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>trajectory player that can be used to monitor the trajectory, stop it, etc</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../trajectory/index.html#reachy.trajectory.TrajectoryPlayer" title="reachy.trajectory.TrajectoryPlayer">reachy.trajectory.TrajectoryPlayer</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.DynamixelMotor.use_static_error_fix">
+<span class="sig-name descname"><span class="pre">use_static_error_fix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activate</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.DynamixelMotor.use_static_error_fix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trigger the static error fix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>activate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – whether to activate/deactivate the static error issue fix</p>
+</dd>
+</dl>
+<p>If activated, the static error fix will check the reach position a fixed delay after the send of a new goal position.
+The static error may result in the motor’s load increasing, and yet not managing to move.
+To prevent this behavior we automatically adjust the target goal position to reduce this error.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.DynamixelMotor._schedule_static_error_fix">
+<span class="sig-name descname"><span class="pre">_schedule_static_error_fix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.DynamixelMotor._schedule_static_error_fix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.DynamixelMotor._fix_static_error">
+<span class="sig-name descname"><span class="pre">_fix_static_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.DynamixelMotor._fix_static_error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="reachy.parts.motor.OrbitaActuator">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reachy.parts.motor.</span></span><span class="sig-name descname"><span class="pre">OrbitaActuator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_part</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disks_motor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Pc_z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cp_z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hardware_zero</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.OrbitaActuator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Orbita Actuator abstraction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_part</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – name of the part where the motor is attached to (eg ‘head’)</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – name of the actuator (eg. ‘neck’)</p></li>
+<li><p><strong>disks_motor</strong> (list of <code class="xref py py-class docutils literal notranslate"><span class="pre">pyluos.motor_controller</span></code>) – list of the three disks controllers</p></li>
+<li><p><strong>Pc_z</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – 3D coordinates of the center of the platform (in mm)</p></li>
+<li><p><strong>Cp_z</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – center of the disks rotation circle (in mm)</p></li>
+<li><p><strong>R</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – radius of the arms rotation circle around the platform (in mm)</p></li>
+<li><p><strong>R0</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.20)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>) – rotation matrix for the initial rotation</p></li>
+<li><p><strong>hardware_zero</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – absolute hardware zero position of the orbita disks</p></li>
+</ul>
+</dd>
+</dl>
+<p>Wrap the three disk and the computation model of Orbita to expose higher-level functionalities such as:</p>
+<ul class="simple">
+<li><p>quaternion control</p></li>
+<li><p>compliancy mode</p></li>
+<li><p>goto</p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.OrbitaActuator.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.OrbitaActuator.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Orbita representation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.OrbitaActuator.disks">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">disks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.OrbitaActuator.disks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get three disks [top, middle, bottom].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.OrbitaActuator.compliant">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">compliant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.OrbitaActuator.compliant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the disks compliancy.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.OrbitaActuator.goto">
+<span class="sig-name descname"><span class="pre">goto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thetas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interpolation_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.OrbitaActuator.goto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set trajectory goal for three disks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>thetas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – target position (in degrees) for each disks (top, middle, bottom)</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – duration of the movement (in seconds)</p></li>
+<li><p><strong>wait</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – whether or not to wait for the end of the motion</p></li>
+<li><p><strong>interpolation_mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – interpolation technique used for computing the trajectory (‘linear’, ‘minjerk’)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>trajectory player that can be used to monitor the trajectory, stop it, etc</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../trajectory/index.html#reachy.trajectory.TrajectoryPlayer" title="reachy.trajectory.TrajectoryPlayer">reachy.trajectory.TrajectoryPlayer</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.OrbitaActuator.point_at">
+<span class="sig-name descname"><span class="pre">point_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.OrbitaActuator.point_at" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make orbita point at the given vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vector</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – 3D vector indicating the poiting direction (in m)</p></li>
+<li><p><strong>angle</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – rotation around the vector (in degrees)</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – move duration (in seconds)</p></li>
+<li><p><strong>wait</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – whether or not to wait for the end of the motion</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>trajectory player that can be used to monitor the trajectory, stop it, etc</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../trajectory/index.html#reachy.trajectory.TrajectoryPlayer" title="reachy.trajectory.TrajectoryPlayer">reachy.trajectory.TrajectoryPlayer</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.OrbitaActuator.orient">
+<span class="sig-name descname"><span class="pre">orient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.OrbitaActuator.orient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Orient orbita given a quaternion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>quat</strong> (<em>pyquaternion.Quaterion</em>) – quaternion goal orientation</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – move duration (in seconds)</p></li>
+<li><p><strong>wait</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – whether or not to wait for the end of the motion</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>trajectory player that can be used to monitor the trajectory, stop it, etc</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../trajectory/index.html#reachy.trajectory.TrajectoryPlayer" title="reachy.trajectory.TrajectoryPlayer">reachy.trajectory.TrajectoryPlayer</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.motor.OrbitaActuator.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.motor.OrbitaActuator.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure each of the three disks.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>automatically called at instantiation.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">reachy</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy</span></code></a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../io/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.io</span></code></a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.parts</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../trajectory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.trajectory</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.utils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy</span></code></a><ul>
+  <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.parts</span></code></a><ul>
+      <li>Previous: <a href="../kinematic/index.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.parts.kinematic</span></code></a></li>
+      <li>Next: <a href="../part/index.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.parts.part</span></code></a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Pollen Robotics.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../../../_sources/autoapi/reachy/parts/motor/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

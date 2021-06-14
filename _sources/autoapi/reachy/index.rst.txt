@@ -1,0 +1,156 @@
+:mod:`reachy`
+=============
+
+.. py:module:: reachy
+
+.. autoapi-nested-parse::
+
+   Reachy top-level module.
+
+   Exposes:
+
+   * :py:mod:`~reachy.__version__` number
+   * :py:class:`~Reachy` class
+   * :py:mod:`~reachy.parts` submodule
+
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   io/index.rst
+   parts/index.rst
+   trajectory/index.rst
+   utils/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   _version/index.rst
+   error/index.rst
+   reachy/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   reachy.Reachy
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   reachy.__version__
+
+
+.. data:: __version__
+   :annotation: = 1.4.0
+
+   
+
+.. class:: Reachy(left_arm=None, right_arm=None, head=None)
+
+
+   Bases: :py:obj:`object`
+
+   Class representing the connection with the hardware robot.
+
+   :param left_arm: left arm part if present or None if absent
+   :type left_arm: reachy.parts.LeftArm
+   :param right_arm: right arm part if present or None if absent
+   :type right_arm: reachy.parts.RightArm
+   :param head: hrad part if present or None if absent
+   :type head: reachy.parts.Head
+
+   Connect and synchronize with the hardware robot.
+
+   It can be used to monitor real time robot state and to send commands.
+   Mainly a container to hold the different parts of Reachy together.
+
+   .. method:: __repr__(self)
+
+      Reachy representation.
+
+
+   .. method:: close(self)
+
+      Close all communication with each attached parts.
+
+
+   .. method:: parts(self)
+      :property:
+
+      List of all attached parts.
+
+
+   .. method:: motors(self)
+      :property:
+
+      List of all motors in the attached parts.
+
+
+   .. method:: goto(self, goal_positions, duration, starting_point='present_position', wait=False, interpolation_mode='linear')
+
+      Goto specified goal positions.
+
+      :param goal_positions: desired target position (in the form {'full_motor_name': target_position})
+      :type goal_positions: dict
+      :param duration: move duration (in sec.)
+      :type duration: float
+      :param starting_point: register to use to retrieve the starting point (e.g. 'present_postion' or 'goal_position')
+      :type starting_point: str
+      :param wait: whether or not to wait for the end motion before returning
+      :type wait: bool
+      :param interpolation_mode: interpolation used for computing the trajectory (e.g. 'linear' or 'minjerk')
+      :type interpolation_mode: str
+
+      :returns: list of reachy.trajectory.TrajectoryPlayer (one for each controlled motor)
+      :rtype: list
+
+
+   .. method:: need_cooldown(self, temperature_limit=50)
+
+      Check if Reachy needs to cool down.
+
+      :param temperature_limit: Temperature limit (in °C) for each motor.
+      :type temperature_limit: int
+
+      :returns: Whether or not you should let the robot cool down
+      :rtype: bool
+
+
+   .. method:: wait_for_cooldown(self, rest_position, goto_rest_duration=5, lower_temperature=45)
+
+      Wait for the robot to lower its temperature.
+
+      The robot will first go to the specified rest position and then, it will turn all motors compliant.
+      Finally, it will wait until the temperature of each motor goes below the lower_temperature parameters.
+
+      :param rest_position: the desired rest position for the robot
+      :type rest_position: dict
+      :param goto_rest_duration: time in seconds to reach the rest position
+      :type goto_rest_duration: float
+      :param lower_temeprature: lower temperature threshold (in °C) to be reached by all motors before the end of cool down
+      :type lower_temeprature: int
+
+      .. note:: The robot will stay compliant at the end of the function call.
+                It is up to you, to put it back in the desired position.
+
+
+

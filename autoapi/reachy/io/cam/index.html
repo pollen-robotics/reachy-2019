@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>reachy.io.cam &#8212; reachy v1.4.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css" />
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="reachy.io.io" href="../io/index.html" />
+    <link rel="prev" title="reachy.io" href="../index.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-reachy.io.cam">
+<span id="reachy-io-cam"></span><h1><a class="reference internal" href="#module-reachy.io.cam" title="reachy.io.cam"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.io.cam</span></code></a><a class="headerlink" href="#module-reachy.io.cam" title="Permalink to this headline">¶</a></h1>
+<p>Wrapper around two RPI and the multi channel switch.</p>
+<p>It relies on the use of the Multi_Adapter_Board_2Channel_uc444 for switching camera via the I2C and GPIO control.</p>
+<p>See <a class="reference external" href="https://github.com/ArduCAM/RaspberryPi/tree/master/Multi_Camera_Adapter/Multi_Adapter_Board_2Channel_uc444">https://github.com/ArduCAM/RaspberryPi/tree/master/Multi_Camera_Adapter/Multi_Adapter_Board_2Channel_uc444</a></p>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reachy.io.cam.BackgroundVideoCapture" title="reachy.io.cam.BackgroundVideoCapture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BackgroundVideoCapture</span></code></a></p></td>
+<td><p>Wrapper on OpenCV VideoCapture object.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="reachy.io.cam.BackgroundVideoCapture">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reachy.io.cam.</span></span><span class="sig-name descname"><span class="pre">BackgroundVideoCapture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">camera_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(600,</span> <span class="pre">800)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lazy_setup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.cam.BackgroundVideoCapture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Wrapper on OpenCV VideoCapture object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>camera_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – index of the used camera (see OpenCV doc for details)</p></li>
+<li><p><strong>resolution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – desired resolution for the grabbed frame (the resolution must be compatible with the driver)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Instantiating this object will automatically start the polling of image in background.</p>
+<p>This wrapper is reponsible for automatically polling image on the camera.
+This ensures that we can always access the most recent image.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.cam.BackgroundVideoCapture._setup">
+<span class="sig-name descname"><span class="pre">_setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.cam.BackgroundVideoCapture._setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.cam.BackgroundVideoCapture.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.cam.BackgroundVideoCapture.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop polling image and release the Video Capture.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.cam.BackgroundVideoCapture._read_loop">
+<span class="sig-name descname"><span class="pre">_read_loop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.cam.BackgroundVideoCapture._read_loop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.cam.BackgroundVideoCapture.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.cam.BackgroundVideoCapture.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the last grabbed image.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">reachy</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy</span></code></a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.io</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parts/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.parts</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../trajectory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.trajectory</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.utils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy</span></code></a><ul>
+  <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.io</span></code></a><ul>
+      <li>Previous: <a href="../index.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.io</span></code></a></li>
+      <li>Next: <a href="../io/index.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.io.io</span></code></a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Pollen Robotics.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../../../_sources/autoapi/reachy/io/cam/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,31 @@
+:mod:`reachy.utils.orbita_zero`
+===============================
+
+.. py:module:: reachy.utils.orbita_zero
+
+.. autoapi-nested-parse::
+
+   Retrieve Orbita Zero hardware and write it to the specified config file.
+
+   This tool must be run while Orbita is fixed at the Zero Position using a specific 3D part.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   reachy.utils.orbita_zero.main
+
+
+
+.. function:: main()
+
+   Get the Zero hardware from Orbita.
+
+

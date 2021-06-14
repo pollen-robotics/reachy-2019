@@ -1,0 +1,69 @@
+:mod:`reachy.trajectory.mixer`
+==============================
+
+.. py:module:: reachy.trajectory.mixer
+
+.. autoapi-nested-parse::
+
+   Utility module to automatically merge trajectories.
+
+   You should always check the result of the combination of your trajectories before applying it to the robot.
+   Indeed, the code below is by no mean safe. Artefacts could notably be introduced in the process.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   reachy.trajectory.mixer.sigmoid
+   reachy.trajectory.mixer.norm_sigmoid
+   reachy.trajectory.mixer._combine
+   reachy.trajectory.mixer.traj_as_array
+   reachy.trajectory.mixer.combine
+
+
+
+.. function:: sigmoid(x)
+
+   Compute sigmoid function.
+
+
+.. function:: norm_sigmoid(n, r)
+
+   Compute a normalized sigmoid function with specified range.
+
+   :param n: number of samples to used
+   :type n: int
+   :param r: X range [-r, r] where to compute the sigmoid
+   :type r: float
+
+
+.. function:: _combine(m1, m2, overlap, r)
+
+
+.. function:: traj_as_array(traj)
+
+   Transform a trajectory dict into a numpy 2D array.
+
+   :param traj: {motor_name: list of positions}
+   :type traj: dict
+
+
+.. function:: combine(*trajs, overlap=0.1, r=5)
+
+   Combine multiple trajectory into a single one.
+
+   :param trajs: list of trajectories (as dict)
+   :type trajs: list
+   :param overlap: overlap recovery percentage for combining trajectories
+   :type overlap: float
+   :param r: sigmoid slope factor used to merge two trajectories
+   :type r: int
+
+

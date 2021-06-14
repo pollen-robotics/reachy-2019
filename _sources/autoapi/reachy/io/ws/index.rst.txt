@@ -1,0 +1,210 @@
+:mod:`reachy.io.ws`
+===================
+
+.. py:module:: reachy.io.ws
+
+.. autoapi-nested-parse::
+
+   WebSocket IO definition.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   reachy.io.ws.WsIO
+   reachy.io.ws.WsMotor
+   reachy.io.ws.WsFakeOrbitaDisk
+   reachy.io.ws.WsFakeForceSensor
+   reachy.io.ws.WsDualCamera
+   reachy.io.ws.WsServer
+   reachy.io.ws.FakeFan
+
+
+
+
+.. class:: WsIO(part_name)
+
+
+   Bases: :py:obj:`reachy.io.io.IO`
+
+   WebSocket IO implementation.
+
+   .. attribute:: ws
+      
+
+      
+
+   .. method:: shared_server(cls, part_name)
+      :classmethod:
+
+      Create a new io with its ws server.
+
+
+   .. method:: find_module(self, module_name)
+
+      Get a specific module from the IO.
+
+      For the moment no module are really implemented. Only placeholders for code compatibility are provided.
+
+
+   .. method:: find_dxl(self, dxl_name, dxl_config)
+
+      Get a specific dynamixel motor from the IO.
+
+      Only goal position is used atm.
+
+
+   .. method:: find_fan(self, fan_name)
+
+      Get a specific fan from its name.
+
+
+   .. method:: find_orbita_disks(self)
+
+      Get a specific orbita module from the IO.
+
+      Not currently supported.
+
+
+   .. method:: find_camera(self, index)
+
+      Retrieve a dual camera.
+
+
+   .. method:: close(self)
+
+      Close the WS.
+
+
+
+.. class:: WsMotor(name, initial_position)
+
+
+   Bases: :py:obj:`object`
+
+   Motor Placeholder.
+
+   Only the goal position (ie. target_rot_position) is currently used.
+
+
+.. class:: WsFakeOrbitaDisk(name, initial_position)
+
+
+   Bases: :py:obj:`object`
+
+   Orbital disk placeholder.
+
+   .. method:: __repr__(self) -> str
+
+      Public Orbita disk string representation.
+
+
+   .. method:: setup(self)
+
+      Initialize the disk.
+
+
+   .. method:: rot_position(self)
+      :property:
+
+      Get the current disk angle position (in deg.).
+
+
+   .. method:: temperature(self)
+      :property:
+
+      Get the current temperature in C.
+
+
+   .. method:: target_rot_position(self)
+      :property:
+
+      Get the current target angle position (in deg.).
+
+
+
+.. class:: WsFakeForceSensor
+
+
+   Bases: :py:obj:`object`
+
+   Force Sensor placeholder.
+
+   Always return a nan as force.
+
+
+.. class:: WsDualCamera(side)
+
+
+   Bases: :py:obj:`object`
+
+   Remote Camera.
+
+   .. method:: read(self)
+
+      Get latest received frame.
+
+
+   .. method:: close(self)
+
+      Close the camera.
+
+
+
+.. class:: WsServer(host='0.0.0.0', port=6171)
+
+
+   Bases: :py:obj:`object`
+
+   WebSocket server, sync value from the modules with their equivalent from the client.
+
+   .. method:: sync(self, websocket, path)
+      :async:
+
+      Sync loop that exchange modules state with the client.
+
+
+   .. method:: close(self)
+
+      Stop the sync loop.
+
+
+   .. method:: register(self, io)
+
+      Register a new io (and its module) to be synced.
+
+
+   .. method:: run_forever(self)
+
+      Run the sync loop forever.
+
+
+   .. method:: run_in_background(self)
+
+      Run the sync loop forever in background.
+
+
+
+.. class:: FakeFan
+
+   Bases: :py:obj:`object`
+
+   Fake fan module for API consistensy.
+
+   .. method:: on(self)
+
+      Do nothing.
+
+
+   .. method:: off(self)
+
+      Do nothing.
+
+
+

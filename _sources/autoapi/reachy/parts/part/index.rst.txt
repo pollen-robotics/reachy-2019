@@ -1,0 +1,71 @@
+:mod:`reachy.parts.part`
+========================
+
+.. py:module:: reachy.parts.part
+
+.. autoapi-nested-parse::
+
+   Part abstraction module.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   reachy.parts.part.ReachyPart
+
+
+
+
+.. class:: ReachyPart(name, io)
+
+
+   Bases: :py:obj:`object`
+
+   Part abstraction class.
+
+   :param name: name of the new part, can be composed if it's a subpart (eg. right_arm.hand)
+   :type name: str
+   :param io: port name where the modules can be found
+   :type io: str
+
+   Define instantiation, teardown functionalities.
+   Also provides attach function for dynamixel motors and orbita actuator.
+
+   .. method:: teardown(self)
+
+      Clean up before closing.
+
+
+   .. method:: attach_dxl_motors(self, dxl_motors)
+
+      Attach given dynamixel motors to a part.
+
+      :param dxl_motors: motors config, the config must at least include an id for each motor (see attach_kinematic_chain for extra parameters)
+      :type dxl_motors: dict
+
+
+   .. method:: create_orbita_actuator(self, name, config)
+
+      Attach an orbita actuator to a part.
+
+      :param name: name of the orbita actuator (eg neck for the head part)
+      :type name: str
+      :param config: orbita configuration (see OrbitaActuator for details)
+      :type config: dict
+
+
+   .. method:: attach_kinematic_chain(self, dxl_motors)
+
+      Attach a kinematic chain composed of the given motors.
+
+      :param dxl_motors: dynamixel motors config (as given in attach_dxl_motors), the config should also include 'link-translation' and 'link-rotation' for each motor
+      :type dxl_motors: dict
+
+
+

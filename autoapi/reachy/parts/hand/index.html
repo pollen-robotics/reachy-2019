@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>reachy.parts.hand &#8212; reachy v1.4.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css" />
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="reachy.parts.head" href="../head/index.html" />
+    <link rel="prev" title="reachy.parts.arm" href="../arm/index.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-reachy.parts.hand">
+<span id="reachy-parts-hand"></span><h1><a class="reference internal" href="#module-reachy.parts.hand" title="reachy.parts.hand"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.parts.hand</span></code></a><a class="headerlink" href="#module-reachy.parts.hand" title="Permalink to this headline">¶</a></h1>
+<p>Hand part modules.</p>
+<p>Define different hand parts:</p>
+<ul class="simple">
+<li><p>a <a class="reference internal" href="#reachy.parts.hand.ForceGripper" title="reachy.parts.hand.ForceGripper"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForceGripper</span></code></a></p></li>
+<li><p>a <a class="reference internal" href="#reachy.parts.hand.OrbitaWrist" title="reachy.parts.hand.OrbitaWrist"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrbitaWrist</span></code></a></p></li>
+</ul>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reachy.parts.hand.Hand" title="reachy.parts.hand.Hand"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Hand</span></code></a></p></td>
+<td><p>Hand abstraction part.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reachy.parts.hand.EmptyHand" title="reachy.parts.hand.EmptyHand"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EmptyHand</span></code></a></p></td>
+<td><p>Wrist with no hand Part.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reachy.parts.hand.LeftEmptyHand" title="reachy.parts.hand.LeftEmptyHand"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LeftEmptyHand</span></code></a></p></td>
+<td><p>Left Empty Hand Part.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reachy.parts.hand.RightEmptyHand" title="reachy.parts.hand.RightEmptyHand"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RightEmptyHand</span></code></a></p></td>
+<td><p>Right Empty Hand Part.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reachy.parts.hand.ForceGripper" title="reachy.parts.hand.ForceGripper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForceGripper</span></code></a></p></td>
+<td><p>Force Gripper Part.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reachy.parts.hand.LeftForceGripper" title="reachy.parts.hand.LeftForceGripper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LeftForceGripper</span></code></a></p></td>
+<td><p>Left Force Gripper Part.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reachy.parts.hand.RightForceGripper" title="reachy.parts.hand.RightForceGripper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RightForceGripper</span></code></a></p></td>
+<td><p>Right Force Gripper Part.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reachy.parts.hand.OrbitaWrist" title="reachy.parts.hand.OrbitaWrist"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OrbitaWrist</span></code></a></p></td>
+<td><p>Orbita Wrist hand.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="reachy.parts.hand.Hand">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reachy.parts.hand.</span></span><span class="sig-name descname"><span class="pre">Hand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">io</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.hand.Hand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../part/index.html#reachy.parts.part.ReachyPart" title="reachy.parts.part.ReachyPart"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reachy.parts.part.ReachyPart</span></code></a></p>
+<p>Hand abstraction part.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>side</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – which side the hand is attached to (‘left’ or ‘right’)</p></li>
+<li><p><strong>io</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – port name where the modules can be found</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="reachy.parts.hand.Hand.fans">
+<span class="sig-name descname"><span class="pre">fans</span></span><a class="headerlink" href="#reachy.parts.hand.Hand.fans" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="reachy.parts.hand.EmptyHand">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reachy.parts.hand.</span></span><span class="sig-name descname"><span class="pre">EmptyHand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">io</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.hand.EmptyHand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reachy.parts.hand.Hand" title="reachy.parts.hand.Hand"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Hand</span></code></a></p>
+<p>Wrist with no hand Part.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>io</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – port name where the modules can be found</p></li>
+<li><p><strong>side</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – which side the part is attached to (‘left’ or ‘right’)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Composed of three dynamixel motors.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="reachy.parts.hand.EmptyHand.fans">
+<span class="sig-name descname"><span class="pre">fans</span></span><a class="headerlink" href="#reachy.parts.hand.EmptyHand.fans" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="reachy.parts.hand.LeftEmptyHand">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reachy.parts.hand.</span></span><span class="sig-name descname"><span class="pre">LeftEmptyHand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">io</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.hand.LeftEmptyHand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reachy.parts.hand.EmptyHand" title="reachy.parts.hand.EmptyHand"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EmptyHand</span></code></a></p>
+<p>Left Empty Hand Part.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="reachy.parts.hand.LeftEmptyHand.dxl_motors">
+<span class="sig-name descname"><span class="pre">dxl_motors</span></span><a class="headerlink" href="#reachy.parts.hand.LeftEmptyHand.dxl_motors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="reachy.parts.hand.RightEmptyHand">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reachy.parts.hand.</span></span><span class="sig-name descname"><span class="pre">RightEmptyHand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">io</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.hand.RightEmptyHand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reachy.parts.hand.EmptyHand" title="reachy.parts.hand.EmptyHand"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EmptyHand</span></code></a></p>
+<p>Right Empty Hand Part.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="reachy.parts.hand.RightEmptyHand.dxl_motors">
+<span class="sig-name descname"><span class="pre">dxl_motors</span></span><a class="headerlink" href="#reachy.parts.hand.RightEmptyHand.dxl_motors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="reachy.parts.hand.ForceGripper">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reachy.parts.hand.</span></span><span class="sig-name descname"><span class="pre">ForceGripper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">io</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.hand.ForceGripper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reachy.parts.hand.Hand" title="reachy.parts.hand.Hand"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Hand</span></code></a></p>
+<p>Force Gripper Part.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>io</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – port name where the modules can be found</p></li>
+<li><p><strong>side</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – which side the part is attached to (‘left’ or ‘right’)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Composed of three dynamixel motors and a force sensor for gripping pressure.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="reachy.parts.hand.ForceGripper.fans">
+<span class="sig-name descname"><span class="pre">fans</span></span><a class="headerlink" href="#reachy.parts.hand.ForceGripper.fans" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.hand.ForceGripper.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.hand.ForceGripper.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Force gripper representation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.hand.ForceGripper.open">
+<span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.hand.ForceGripper.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open the gripper.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>end_pos</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – open end position (in degrees)</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – open move duration (in seconds)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.hand.ForceGripper.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_grip_force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.hand.ForceGripper.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the gripper.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>end_pos</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – close end position (in degrees)</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – close move duration (in seconds)</p></li>
+<li><p><strong>target_grip_force</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – force threshold to stop closing the gripper</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>whether we did grasp something</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.hand.ForceGripper.grip_force">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">grip_force</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.hand.ForceGripper.grip_force" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get current grip force.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="reachy.parts.hand.LeftForceGripper">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reachy.parts.hand.</span></span><span class="sig-name descname"><span class="pre">LeftForceGripper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">io</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.hand.LeftForceGripper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reachy.parts.hand.ForceGripper" title="reachy.parts.hand.ForceGripper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForceGripper</span></code></a></p>
+<p>Left Force Gripper Part.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="reachy.parts.hand.LeftForceGripper.dxl_motors">
+<span class="sig-name descname"><span class="pre">dxl_motors</span></span><a class="headerlink" href="#reachy.parts.hand.LeftForceGripper.dxl_motors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="reachy.parts.hand.RightForceGripper">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reachy.parts.hand.</span></span><span class="sig-name descname"><span class="pre">RightForceGripper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">io</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.hand.RightForceGripper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reachy.parts.hand.ForceGripper" title="reachy.parts.hand.ForceGripper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForceGripper</span></code></a></p>
+<p>Right Force Gripper Part.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="reachy.parts.hand.RightForceGripper.dxl_motors">
+<span class="sig-name descname"><span class="pre">dxl_motors</span></span><a class="headerlink" href="#reachy.parts.hand.RightForceGripper.dxl_motors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="reachy.parts.hand.OrbitaWrist">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reachy.parts.hand.</span></span><span class="sig-name descname"><span class="pre">OrbitaWrist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">io</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.hand.OrbitaWrist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reachy.parts.hand.Hand" title="reachy.parts.hand.Hand"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Hand</span></code></a></p>
+<p>Orbita Wrist hand.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>io</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – port name where the modules can be found</p></li>
+<li><p><strong>side</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – which side the part is attached to (‘left’ or ‘right’)</p></li>
+</ul>
+</dd>
+</dl>
+<p>A 3dof Orbita Wrist at the end of the arm.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="reachy.parts.hand.OrbitaWrist.dxl_motors">
+<span class="sig-name descname"><span class="pre">dxl_motors</span></span><a class="headerlink" href="#reachy.parts.hand.OrbitaWrist.dxl_motors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="reachy.parts.hand.OrbitaWrist.orbita_config">
+<span class="sig-name descname"><span class="pre">orbita_config</span></span><a class="headerlink" href="#reachy.parts.hand.OrbitaWrist.orbita_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.hand.OrbitaWrist.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.hand.OrbitaWrist.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Orbita wrist representation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.parts.hand.OrbitaWrist.homing">
+<span class="sig-name descname"><span class="pre">homing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.parts.hand.OrbitaWrist.homing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Launch Wrist homing procedure.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">reachy</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy</span></code></a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../io/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.io</span></code></a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.parts</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../trajectory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.trajectory</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.utils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy</span></code></a><ul>
+  <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.parts</span></code></a><ul>
+      <li>Previous: <a href="../arm/index.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.parts.arm</span></code></a></li>
+      <li>Next: <a href="../head/index.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.parts.head</span></code></a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Pollen Robotics.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../../../_sources/autoapi/reachy/parts/hand/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

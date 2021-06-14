@@ -1,0 +1,19 @@
+:mod:`reachy._version`
+======================
+
+.. py:module:: reachy._version
+
+.. autoapi-nested-parse::
+
+   Version module.
+
+
+
+Module Contents
+---------------
+
+.. data:: __version__
+   :annotation: = 1.4.0
+
+   
+

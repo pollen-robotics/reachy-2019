@@ -1,0 +1,217 @@
+:mod:`reachy.parts.hand`
+========================
+
+.. py:module:: reachy.parts.hand
+
+.. autoapi-nested-parse::
+
+   Hand part modules.
+
+   Define different hand parts:
+
+   * a :py:class:`~reachy.parts.hand.ForceGripper`
+   * a :py:class:`~reachy.parts.hand.OrbitaWrist`
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   reachy.parts.hand.Hand
+   reachy.parts.hand.EmptyHand
+   reachy.parts.hand.LeftEmptyHand
+   reachy.parts.hand.RightEmptyHand
+   reachy.parts.hand.ForceGripper
+   reachy.parts.hand.LeftForceGripper
+   reachy.parts.hand.RightForceGripper
+   reachy.parts.hand.OrbitaWrist
+
+
+
+
+.. class:: Hand(root, io)
+
+
+   Bases: :py:obj:`reachy.parts.part.ReachyPart`
+
+   Hand abstraction part.
+
+   :param side: which side the hand is attached to ('left' or 'right')
+   :type side: str
+   :param io: port name where the modules can be found
+   :type io: str
+
+   .. attribute:: fans
+      
+
+      
+
+
+.. class:: EmptyHand(root, io)
+
+
+   Bases: :py:obj:`Hand`
+
+   Wrist with no hand Part.
+
+   :param io: port name where the modules can be found
+   :type io: str
+   :param side: which side the part is attached to ('left' or 'right')
+   :type side: str
+
+   Composed of three dynamixel motors.
+
+   .. attribute:: fans
+      
+
+      
+
+
+.. class:: LeftEmptyHand(root, io)
+
+
+   Bases: :py:obj:`EmptyHand`
+
+   Left Empty Hand Part.
+
+   .. attribute:: dxl_motors
+      
+
+      
+
+
+.. class:: RightEmptyHand(root, io)
+
+
+   Bases: :py:obj:`EmptyHand`
+
+   Right Empty Hand Part.
+
+   .. attribute:: dxl_motors
+      
+
+      
+
+
+.. class:: ForceGripper(root, io)
+
+
+   Bases: :py:obj:`Hand`
+
+   Force Gripper Part.
+
+   :param io: port name where the modules can be found
+   :type io: str
+   :param side: which side the part is attached to ('left' or 'right')
+   :type side: str
+
+   Composed of three dynamixel motors and a force sensor for gripping pressure.
+
+   .. attribute:: fans
+      
+
+      
+
+   .. method:: __repr__(self)
+
+      Force gripper representation.
+
+
+   .. method:: open(self, end_pos=-30, duration=1)
+
+      Open the gripper.
+
+      :param end_pos: open end position (in degrees)
+      :type end_pos: float
+      :param duration: open move duration (in seconds)
+      :type duration: float
+
+
+   .. method:: close(self, end_pos=30, duration=1, target_grip_force=100)
+
+      Close the gripper.
+
+      :param end_pos: close end position (in degrees)
+      :type end_pos: float
+      :param duration: close move duration (in seconds)
+      :type duration: float
+      :param target_grip_force: force threshold to stop closing the gripper
+      :type target_grip_force: float
+
+      :returns: whether we did grasp something
+      :rtype: bool
+
+
+   .. method:: grip_force(self)
+      :property:
+
+      Get current grip force.
+
+
+
+.. class:: LeftForceGripper(root, io)
+
+
+   Bases: :py:obj:`ForceGripper`
+
+   Left Force Gripper Part.
+
+   .. attribute:: dxl_motors
+      
+
+      
+
+
+.. class:: RightForceGripper(root, io)
+
+
+   Bases: :py:obj:`ForceGripper`
+
+   Right Force Gripper Part.
+
+   .. attribute:: dxl_motors
+      
+
+      
+
+
+.. class:: OrbitaWrist(root, io)
+
+
+   Bases: :py:obj:`Hand`
+
+   Orbita Wrist hand.
+
+   :param io: port name where the modules can be found
+   :type io: str
+   :param side: which side the part is attached to ('left' or 'right')
+   :type side: str
+
+   A 3dof Orbita Wrist at the end of the arm.
+
+   .. attribute:: dxl_motors
+      
+
+      
+
+   .. attribute:: orbita_config
+      
+
+      
+
+   .. method:: __repr__(self)
+
+      Orbita wrist representation.
+
+
+   .. method:: homing(self)
+
+      Launch Wrist homing procedure.
+
+
+

@@ -1,0 +1,366 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>reachy.io.luos &#8212; reachy v1.4.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css" />
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="reachy.io.ws" href="../ws/index.html" />
+    <link rel="prev" title="reachy.io.io" href="../io/index.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-reachy.io.luos">
+<span id="reachy-io-luos"></span><h1><a class="reference internal" href="#module-reachy.io.luos" title="reachy.io.luos"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.io.luos</span></code></a><a class="headerlink" href="#module-reachy.io.luos" title="Permalink to this headline">¶</a></h1>
+<p>Wrapper module on top of pyluos Robot object.</p>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reachy.io.luos.SharedLuosIO" title="reachy.io.luos.SharedLuosIO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SharedLuosIO</span></code></a></p></td>
+<td><p>Abstraction class for pyluos Robot object. Create a new connection with a Luos gate.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reachy.io.luos.OrbitaDisk" title="reachy.io.luos.OrbitaDisk"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OrbitaDisk</span></code></a></p></td>
+<td><p>Orbita Disk Wrapper around luos controlled motor module.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reachy.io.luos.Fan" title="reachy.io.luos.Fan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Fan</span></code></a></p></td>
+<td><p>Fan module for motor cooling.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reachy.io.luos.attempt_luos_connection" title="reachy.io.luos.attempt_luos_connection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">attempt_luos_connection</span></code></a>(port, trials=5)</p></td>
+<td><p>Try to connect to a Luos Gate.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reachy.io.luos.logger" title="reachy.io.luos.logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logger</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py data">
+<dt class="sig sig-object py" id="reachy.io.luos.logger">
+<span class="sig-prename descclassname"><span class="pre">reachy.io.luos.</span></span><span class="sig-name descname"><span class="pre">logger</span></span><a class="headerlink" href="#reachy.io.luos.logger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reachy.io.luos.attempt_luos_connection">
+<span class="sig-prename descclassname"><span class="pre">reachy.io.luos.</span></span><span class="sig-name descname"><span class="pre">attempt_luos_connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.attempt_luos_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to connect to a Luos Gate.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="reachy.io.luos.SharedLuosIO">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reachy.io.luos.</span></span><span class="sig-name descname"><span class="pre">SharedLuosIO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">luos_port</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.SharedLuosIO" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../io/index.html#reachy.io.io.IO" title="reachy.io.io.IO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reachy.io.io.IO</span></code></a></p>
+<p>Abstraction class for pyluos Robot object. Create a new connection with a Luos gate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>luos_port</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – name of the serial port used (e.g. ‘/dev/ttyUSB0’)</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If a connection on the same port already exists, the same IO will be used.</p>
+</div>
+<p>The class is reponsible for holding active connections with Luos gate. A same gate can be shared among multiple IOs.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="reachy.io.luos.SharedLuosIO.opened_io">
+<span class="sig-name descname"><span class="pre">opened_io</span></span><a class="headerlink" href="#reachy.io.luos.SharedLuosIO.opened_io" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.luos.SharedLuosIO.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.SharedLuosIO.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shared IO representation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.luos.SharedLuosIO.with_gate">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">with_gate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port_template</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.SharedLuosIO.with_gate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open a connection on the specified Luos gate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – name (or alias) of the searched Luos gate.</p></li>
+<li><p><strong>port_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – template name for the possible serial ports (e.g. ‘/dev/ttyUSB*’)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.luos.SharedLuosIO.close_all_cached_gates">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">close_all_cached_gates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.SharedLuosIO.close_all_cached_gates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close all connections to the Luos gate.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.luos.SharedLuosIO.gate_name">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">gate_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.SharedLuosIO.gate_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the name of the Luos gate.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.luos.SharedLuosIO.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.SharedLuosIO.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the IO.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You are responsible for handling correctly closing if you are using multiple connections on the same IO.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.luos.SharedLuosIO.find_module">
+<span class="sig-name descname"><span class="pre">find_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.SharedLuosIO.find_module" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve a specified Luos module on the IO given its name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>module_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – name (or alias) of the researched module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.luos.SharedLuosIO.find_dxl">
+<span class="sig-name descname"><span class="pre">find_dxl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dxl_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dxl_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.SharedLuosIO.find_dxl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve a specified Dynamixel motor on the IO given its id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dxl_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – configuration of the searched dynamixel (including its id)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.luos.SharedLuosIO.find_fan">
+<span class="sig-name descname"><span class="pre">find_fan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fan_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.SharedLuosIO.find_fan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a specific fan from its name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.luos.SharedLuosIO.find_orbita_disks">
+<span class="sig-name descname"><span class="pre">find_orbita_disks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.SharedLuosIO.find_orbita_disks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the three Luos modules controlling each Orbita disk.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.luos.SharedLuosIO.find_camera">
+<span class="sig-name descname"><span class="pre">find_camera</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.SharedLuosIO.find_camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve a camera.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="reachy.io.luos.OrbitaDisk">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reachy.io.luos.</span></span><span class="sig-name descname"><span class="pre">OrbitaDisk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">luos_disk</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.OrbitaDisk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Orbita Disk Wrapper around luos controlled motor module.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.luos.OrbitaDisk.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><a class="headerlink" href="#reachy.io.luos.OrbitaDisk.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the OrbitaDisk string representation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.luos.OrbitaDisk.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.OrbitaDisk.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare the luos disk before controlling it.</p>
+<p>Enable position control, retrieve position and temperature.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.luos.OrbitaDisk.compliant">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">compliant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.OrbitaDisk.compliant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the disk compliancy.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.luos.OrbitaDisk.rot_position">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">rot_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.OrbitaDisk.rot_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current angle position (in deg.).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.luos.OrbitaDisk.target_rot_position">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">target_rot_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.OrbitaDisk.target_rot_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current target angle position (in deg.).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.luos.OrbitaDisk.temperature">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">temperature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.OrbitaDisk.temperature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current motor temperature in C.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="reachy.io.luos.Fan">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reachy.io.luos.</span></span><span class="sig-name descname"><span class="pre">Fan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mod</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.Fan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Fan module for motor cooling.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.luos.Fan.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.Fan.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fan representation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.luos.Fan.status">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.Fan.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the fan mode (‘on’ or ‘off’).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.luos.Fan.on">
+<span class="sig-name descname"><span class="pre">on</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.Fan.on" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn the fan on.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.io.luos.Fan.off">
+<span class="sig-name descname"><span class="pre">off</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.io.luos.Fan.off" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn the fan off.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">reachy</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy</span></code></a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.io</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parts/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.parts</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../trajectory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.trajectory</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.utils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy</span></code></a><ul>
+  <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.io</span></code></a><ul>
+      <li>Previous: <a href="../io/index.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.io.io</span></code></a></li>
+      <li>Next: <a href="../ws/index.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.io.ws</span></code></a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Pollen Robotics.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../../../_sources/autoapi/reachy/io/luos/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

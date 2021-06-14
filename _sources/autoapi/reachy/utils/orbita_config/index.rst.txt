@@ -1,0 +1,33 @@
+:mod:`reachy.utils.orbita_config`
+=================================
+
+.. py:module:: reachy.utils.orbita_config
+
+.. autoapi-nested-parse::
+
+   Configure gate and three motor modules for an Orbita Actuator.
+
+   This tool:
+   * change the name of the gate (eg. 'r_head')
+   * change the name of the controlled motor modules ('disk_top', 'disk_middle', 'disk_bottom')
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   reachy.utils.orbita_config.main
+
+
+
+.. function:: main()
+
+   Run main orbita config entry point.
+
+

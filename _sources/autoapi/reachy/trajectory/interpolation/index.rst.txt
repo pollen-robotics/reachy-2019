@@ -1,0 +1,161 @@
+:mod:`reachy.trajectory.interpolation`
+======================================
+
+.. py:module:: reachy.trajectory.interpolation
+
+.. autoapi-nested-parse::
+
+   Trajectory interpolation utility module.
+
+   This module defines various interpolation technique (linear, minimum jerk).
+   They can be used in all goto functions.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   reachy.trajectory.interpolation.TrajectoryInterpolation
+   reachy.trajectory.interpolation.Linear
+   reachy.trajectory.interpolation.MinimumJerk
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   reachy.trajectory.interpolation.cubic_smooth
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   reachy.trajectory.interpolation.interpolation_modes
+
+
+.. class:: TrajectoryInterpolation(initial_position, goal_position, duration)
+
+
+   Bases: :py:obj:`object`
+
+   Trajectory interpolation abstraction class.
+
+   :param initial_position: starting position (in degrees)
+   :type initial_position: float
+   :param goal_position: end position (in degrees)
+   :type goal_position: float
+   :param duration: duration of the movement (in seconds)
+   :type duration: float
+
+   You can defined your own interpolation technique by respecting this abstraction so they can be used in goto functions.
+
+   .. method:: interpolate(self, t)
+      :abstractmethod:
+
+      Interpolate the position at given time.
+
+      :param t: time where to interpolate
+      :type t: float
+
+      You are responsible for implementing this method in your own interpolation technique.
+      Please refer to the implementation of Linear of MinimumJerk for examples.
+
+
+   .. method:: start(self, motor, update_freq=100)
+
+      Start the interpolation trajectory thread.
+
+      :param motor: motor to apply the trajectory to
+      :type motor: motor
+      :param update_freq: Update sample frequency (in Hz)
+      :type update_freq: float
+
+
+   .. method:: is_playing(self)
+      :property:
+
+      Check if the trajectory is currently playing.
+
+
+   .. method:: stop(self, wait=True)
+
+      Stop the interpolation trajectory.
+
+
+   .. method:: wait(self)
+
+      Block until the end of the trajectory interpolation.
+
+
+   .. method:: _follow_traj_loop(self, motor, update_freq)
+
+
+
+.. class:: Linear(initial_position, goal_position, duration)
+
+
+   Bases: :py:obj:`TrajectoryInterpolation`
+
+   Linear implementation implementation.
+
+   .. method:: interpolate(self, t)
+
+      Linear interpolation at time t.
+
+
+
+.. class:: MinimumJerk(initial_position, goal_position, duration, initial_velocity=0, final_velocity=0, initial_acceleration=0, final_acceleration=0)
+
+
+   Bases: :py:obj:`TrajectoryInterpolation`
+
+   Minimum Jerk interpolation implementation.
+
+   :param initial_position: starting position (in degrees)
+   :type initial_position: float
+   :param goal_position: end position (in degrees)
+   :type goal_position: float
+   :param duration: duration of the movement (in seconds)
+   :type duration: float
+   :param initial_velocity: initial velocity used for interpolation
+   :type initial_velocity: float
+   :param final_velocity: final velocity used for interpolation
+   :type final_velocity: float
+   :param initial_acceleration: initial acceleration used for interpolation
+   :type initial_acceleration: float
+   :param final_acceleration: final acceleration used for interpolation
+   :type final_acceleration: float
+
+   .. method:: interpolate(self, t)
+
+      Minjerk interpolation at time t.
+
+
+
+.. function:: cubic_smooth(traj, nb_kp, out_points=-1)
+
+   Trjaectory cubic smooth interpolation.
+
+   :param traj: trajectory to smooth ({motor_name: list of motor pos})
+   :type traj: dict
+   :param nb_kp: number of keypoints to use for the cubic smoothing
+   :type nb_kp: int
+   :param out_points: number of samples in the output trajectory (use -1 to conserve the same number as the input trajectory)
+   :type out_points: int
+
+
+.. data:: interpolation_modes
+   
+
+   
+

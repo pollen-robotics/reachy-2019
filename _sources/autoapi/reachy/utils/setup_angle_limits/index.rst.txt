@@ -1,0 +1,44 @@
+:mod:`reachy.utils.setup_angle_limits`
+======================================
+
+.. py:module:: reachy.utils.setup_angle_limits
+
+.. autoapi-nested-parse::
+
+   Command line utility tool to setup all dynamixel motors angle limits in a Reachy robot.
+
+   .. warning:: Make sure the motor ids are correctly set!
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   reachy.utils.setup_angle_limits.main
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   reachy.utils.setup_angle_limits.reachy_config
+
+
+.. data:: reachy_config
+   
+
+   
+
+.. function:: main()
+
+   Configure all dynamixel motor limits on a Reachy robot.
+
+

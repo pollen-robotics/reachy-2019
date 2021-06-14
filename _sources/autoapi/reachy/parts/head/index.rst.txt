@@ -1,0 +1,87 @@
+:mod:`reachy.parts.head`
+========================
+
+.. py:module:: reachy.parts.head
+
+.. autoapi-nested-parse::
+
+   Head part module.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   reachy.parts.head.Head
+
+
+
+
+.. class:: Head(io)
+
+
+   Bases: :py:obj:`reachy.parts.part.ReachyPart`
+
+   Head part.
+
+   :param io: port name where the modules can be found
+   :type io: str
+   :param default_camera: default camera to enable ('left' or 'right')
+   :type default_camera: str
+
+   Composed of an orbita actuator as neck, two controlled antennas and one camera.
+
+   .. attribute:: orbita_config
+      
+
+      
+
+   .. attribute:: dxl_motors
+      
+
+      
+
+   .. method:: __repr__(self)
+
+      Head representation.
+
+
+   .. method:: teardown(self)
+
+      Clean and close head part.
+
+
+   .. method:: look_at(self, x, y, z, duration, wait)
+
+      Make the head look at a 3D point in space.
+
+      :param x: x coordinates in space
+      :type x: float
+      :param y: y coordinates in space
+      :type y: float
+      :param z: z coordinates in space
+      :type z: float
+      :param duration: move duration (in seconds)
+      :type duration: float
+      :param wait: whether or not to wait for the end of the motion
+      :type wait: bool
+
+
+   .. method:: compliant(self)
+      :property:
+
+      Check if the neck is compliant.
+
+
+   .. method:: moving_speed(self)
+      :property:
+
+      Get the current disk moving speed.
+
+
+

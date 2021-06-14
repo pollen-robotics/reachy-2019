@@ -1,0 +1,211 @@
+:mod:`reachy.io.luos`
+=====================
+
+.. py:module:: reachy.io.luos
+
+.. autoapi-nested-parse::
+
+   Wrapper module on top of pyluos Robot object.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   reachy.io.luos.SharedLuosIO
+   reachy.io.luos.OrbitaDisk
+   reachy.io.luos.Fan
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   reachy.io.luos.attempt_luos_connection
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   reachy.io.luos.logger
+
+
+.. data:: logger
+   
+
+   
+
+.. function:: attempt_luos_connection(port, trials=5)
+
+   Try to connect to a Luos Gate.
+
+
+.. class:: SharedLuosIO(luos_port)
+
+
+   Bases: :py:obj:`reachy.io.io.IO`
+
+   Abstraction class for pyluos Robot object. Create a new connection with a Luos gate.
+
+   :param luos_port: name of the serial port used (e.g. '/dev/ttyUSB0')
+   :type luos_port: str
+
+   .. note:: If a connection on the same port already exists, the same IO will be used.
+
+   The class is reponsible for holding active connections with Luos gate. A same gate can be shared among multiple IOs.
+
+   .. attribute:: opened_io
+      
+
+      
+
+   .. method:: __repr__(self)
+
+      Shared IO representation.
+
+
+   .. method:: with_gate(cls, name, port_template)
+      :classmethod:
+
+      Open a connection on the specified Luos gate.
+
+      :param name: name (or alias) of the searched Luos gate.
+      :type name: str
+      :param port_template: template name for the possible serial ports (e.g. '/dev/ttyUSB*')
+      :type port_template: str
+
+
+   .. method:: close_all_cached_gates(cls)
+      :classmethod:
+
+      Close all connections to the Luos gate.
+
+
+   .. method:: gate_name(self)
+      :property:
+
+      Retrieve the name of the Luos gate.
+
+
+   .. method:: close(self)
+
+      Close the IO.
+
+      .. warning:: You are responsible for handling correctly closing if you are using multiple connections on the same IO.
+
+
+   .. method:: find_module(self, module_name)
+
+      Retrieve a specified Luos module on the IO given its name.
+
+      :param module_name: name (or alias) of the researched module
+      :type module_name: str
+
+
+   .. method:: find_dxl(self, dxl_name, dxl_config)
+
+      Retrieve a specified Dynamixel motor on the IO given its id.
+
+      :param dxl_config: configuration of the searched dynamixel (including its id)
+      :type dxl_config: dict
+
+
+   .. method:: find_fan(self, fan_name)
+
+      Get a specific fan from its name.
+
+
+   .. method:: find_orbita_disks(self)
+
+      Retrieve the three Luos modules controlling each Orbita disk.
+
+
+   .. method:: find_camera(self, camera_index)
+
+      Retrieve a camera.
+
+
+
+.. class:: OrbitaDisk(name, luos_disk)
+
+
+   Bases: :py:obj:`object`
+
+   Orbita Disk Wrapper around luos controlled motor module.
+
+   .. method:: __repr__(self) -> str
+
+      Get the OrbitaDisk string representation.
+
+
+   .. method:: setup(self)
+
+      Prepare the luos disk before controlling it.
+
+      Enable position control, retrieve position and temperature.
+
+
+   .. method:: compliant(self)
+      :property:
+
+      Get the disk compliancy.
+
+
+   .. method:: rot_position(self)
+      :property:
+
+      Get the current angle position (in deg.).
+
+
+   .. method:: target_rot_position(self)
+      :property:
+
+      Get the current target angle position (in deg.).
+
+
+   .. method:: temperature(self)
+      :property:
+
+      Get the current motor temperature in C.
+
+
+
+.. class:: Fan(name, mod)
+
+
+   Bases: :py:obj:`object`
+
+   Fan module for motor cooling.
+
+   .. method:: __repr__(self)
+
+      Fan representation.
+
+
+   .. method:: status(self)
+      :property:
+
+      Get the fan mode ('on' or 'off').
+
+
+   .. method:: on(self)
+
+      Turn the fan on.
+
+
+   .. method:: off(self)
+
+      Turn the fan off.
+
+
+

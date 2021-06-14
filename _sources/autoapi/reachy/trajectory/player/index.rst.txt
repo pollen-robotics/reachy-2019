@@ -1,0 +1,64 @@
+:mod:`reachy.trajectory.player`
+===============================
+
+.. py:module:: reachy.trajectory.player
+
+.. autoapi-nested-parse::
+
+   Trajectory player module.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   reachy.trajectory.player.TrajectoryPlayer
+
+
+
+
+.. class:: TrajectoryPlayer(reachy, trajectories, freq=100)
+
+
+   Bases: :py:obj:`object`
+
+   Trajectory player abstraction.
+
+   :param reachy: robot which will play the trajectory
+   :type reachy: :py:class:`~reachy.Reachy`
+   :param trajectories: Trajectory to play (such as {motor_name: list of positions})
+   :type trajectories: dict
+   :param freq: Replay sample frequency (in Hz)
+   :type freq: float
+
+   Provides high-level features to:
+       * play a pre-defined trajectory
+       * wait for the end of the replay
+       * add fade in to smooth begining of motion
+
+   .. method:: play(self, wait=False, fade_in_duration=0)
+
+      Play a given trajectory.
+
+      :param wait: whether or not to wait for the end of the trajectory replay
+      :type wait: bool
+      :param fade_in_duration: time in seconds to reach the starting position (can be used to smooth the begining of the motion)
+      :type fade_in_duration: float
+
+      .. warning:: you can call play multiple times to replay the trajectory. You are responisble for handling the concurrency issue if you try to run multiple trajectories on the same motors.
+
+
+   .. method:: wait_for_end(self)
+
+      Block until the end of a trajectory replay.
+
+
+   .. method:: _play_loop(self)
+
+
+

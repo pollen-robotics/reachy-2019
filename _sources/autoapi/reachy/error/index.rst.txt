@@ -1,0 +1,38 @@
+:mod:`reachy.error`
+===================
+
+.. py:module:: reachy.error
+
+.. autoapi-nested-parse::
+
+   Custom errors for Reachy.
+
+
+
+Module Contents
+---------------
+
+.. exception:: LuosModuleNotFoundError(message, missing_module)
+
+
+   Bases: :py:obj:`Exception`
+
+   Luos Module missing.
+
+
+.. exception:: LuosGateNotFoundError
+
+
+   Bases: :py:obj:`Exception`
+
+   Luos Gate missing.
+
+
+.. exception:: CameraNotFoundError(message, camera_id)
+
+
+   Bases: :py:obj:`Exception`
+
+   Camera missing.
+
+

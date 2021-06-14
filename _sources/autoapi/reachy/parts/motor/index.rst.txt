@@ -1,0 +1,266 @@
+:mod:`reachy.parts.motor`
+=========================
+
+.. py:module:: reachy.parts.motor
+
+.. autoapi-nested-parse::
+
+   Motor abstraction module.
+
+   Define:
+       * DynamixelMotor
+       * OrbitaActuator
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   reachy.parts.motor.DynamixelMotor
+   reachy.parts.motor.OrbitaActuator
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   reachy.parts.motor.logger
+
+
+.. data:: logger
+   
+
+   
+
+.. class:: DynamixelMotor(root_part, name, luos_motor, config)
+
+
+   Bases: :py:obj:`object`
+
+   DynamixelMotor abstraction class.
+
+   :param root_part: name of the part where the motor is attached to (eg 'right_arm.hand')
+   :type root_part: str
+   :param name: name of the motor (eg. 'shoulder_pitch')
+   :type name: str
+   :param luos_motor: pyluos motor
+   :type luos_motor: :py:class:`pyluos.modules.DxlMotor`
+   :param config: extra motor config (must include 'offset' and 'orientation' fields)
+   :type config: dict
+
+   Wrap the pyluos motor object to simplify and make the API homogeneous.
+
+   .. method:: __repr__(self)
+
+      Motor representation.
+
+
+   .. method:: name(self)
+      :property:
+
+      Fullname of the motor (eg. right_arm.hand.gripper).
+
+
+   .. method:: present_position(self)
+      :property:
+
+      Present position (in degrees) of the motor.
+
+
+   .. method:: goal_position(self)
+      :property:
+
+      Get current goal position (in degrees) of the motor.
+
+
+   .. method:: offset(self)
+      :property:
+
+      Get motor real zero (in degrees).
+
+
+   .. method:: is_direct(self)
+
+      Check whether the motor is direct or not.
+
+
+   .. method:: _as_local_pos(self, pos)
+
+
+   .. method:: _to_motor_pos(self, pos)
+
+
+   .. method:: moving_speed(self)
+      :property:
+
+      Get the maximum speed (in degree per second) of the motor.
+
+
+   .. method:: compliant(self)
+      :property:
+
+      Check whether or not the motor is compliant.
+
+
+   .. method:: torque_limit(self)
+      :property:
+
+      Check the maximum torque allowed (in %) of the motor.
+
+
+   .. method:: temperature(self)
+      :property:
+
+      Check the current motor temp. (in °C).
+
+
+   .. method:: goto(self, goal_position, duration, starting_point='present_position', wait=False, interpolation_mode='linear')
+
+      Set trajectory goal for the motor.
+
+      :param goal_position: target position (in degrees)
+      :type goal_position: float
+      :param duration: duration of the movement (in seconds)
+      :type duration: float
+      :param starting_point: register used to determine the starting point (eg. 'goal_position' can also be used in some specific case)
+      :type starting_point: str
+      :param wait: whether or not to wait for the end of the motion
+      :type wait: bool
+      :param interpolation_mode: interpolation technique used for computing the trajectory ('linear', 'minjerk')
+      :type interpolation_mode: str
+
+      :returns: trajectory player that can be used to monitor the trajectory, stop it, etc
+      :rtype: reachy.trajectory.TrajectoryPlayer
+
+
+   .. method:: use_static_error_fix(self, activate)
+
+      Trigger the static error fix.
+
+      :param activate: whether to activate/deactivate the static error issue fix
+      :type activate: bool
+
+      If activated, the static error fix will check the reach position a fixed delay after the send of a new goal position.
+      The static error may result in the motor's load increasing, and yet not managing to move.
+      To prevent this behavior we automatically adjust the target goal position to reduce this error.
+
+
+   .. method:: _schedule_static_error_fix(self, delay)
+
+
+   .. method:: _fix_static_error(self, threshold=2)
+
+
+
+.. class:: OrbitaActuator(root_part, name, disks_motor, Pc_z, Cp_z, R, R0, hardware_zero)
+
+
+   Bases: :py:obj:`object`
+
+   Orbita Actuator abstraction.
+
+   :param root_part: name of the part where the motor is attached to (eg 'head')
+   :type root_part: str
+   :param name: name of the actuator (eg. 'neck')
+   :type name: str
+   :param disks_motor: list of the three disks controllers
+   :type disks_motor: list of :py:class:`pyluos.motor_controller`
+   :param Pc_z: 3D coordinates of the center of the platform (in mm)
+   :type Pc_z: float, float, float
+   :param Cp_z: center of the disks rotation circle (in mm)
+   :type Cp_z: float, float, float
+   :param R: radius of the arms rotation circle around the platform (in mm)
+   :type R: float
+   :param R0: rotation matrix for the initial rotation
+   :type R0: :py:class:`~numpy.ndarray`
+   :param hardware_zero: absolute hardware zero position of the orbita disks
+   :type hardware_zero: float, float, float
+
+   Wrap the three disk and the computation model of Orbita to expose higher-level functionalities such as:
+
+   * quaternion control
+   * compliancy mode
+   * goto
+
+   .. method:: __repr__(self)
+
+      Orbita representation.
+
+
+   .. method:: disks(self)
+      :property:
+
+      Get three disks [top, middle, bottom].
+
+
+   .. method:: compliant(self)
+      :property:
+
+      Check the disks compliancy.
+
+
+   .. method:: goto(self, thetas, duration, wait, interpolation_mode='linear')
+
+      Set trajectory goal for three disks.
+
+      :param thetas: target position (in degrees) for each disks (top, middle, bottom)
+      :type thetas: float, float, float
+      :param duration: duration of the movement (in seconds)
+      :type duration: float
+      :param wait: whether or not to wait for the end of the motion
+      :type wait: bool
+      :param interpolation_mode: interpolation technique used for computing the trajectory ('linear', 'minjerk')
+      :type interpolation_mode: str
+
+      :returns: trajectory player that can be used to monitor the trajectory, stop it, etc
+      :rtype: reachy.trajectory.TrajectoryPlayer
+
+
+   .. method:: point_at(self, vector, angle, duration, wait)
+
+      Make orbita point at the given vector.
+
+      :param vector: 3D vector indicating the poiting direction (in m)
+      :type vector: float, float, float
+      :param angle: rotation around the vector (in degrees)
+      :type angle: float
+      :param duration: move duration (in seconds)
+      :type duration: float
+      :param wait: whether or not to wait for the end of the motion
+      :type wait: bool
+
+      :returns: trajectory player that can be used to monitor the trajectory, stop it, etc
+      :rtype: reachy.trajectory.TrajectoryPlayer
+
+
+   .. method:: orient(self, quat, duration, wait)
+
+      Orient orbita given a quaternion.
+
+      :param quat: quaternion goal orientation
+      :type quat: pyquaternion.Quaterion
+      :param duration: move duration (in seconds)
+      :type duration: float
+      :param wait: whether or not to wait for the end of the motion
+      :type wait: bool
+
+      :returns: trajectory player that can be used to monitor the trajectory, stop it, etc
+      :rtype: reachy.trajectory.TrajectoryPlayer
+
+
+   .. method:: setup(self)
+
+      Configure each of the three disks.
+
+      .. note:: automatically called at instantiation.
+
+
+

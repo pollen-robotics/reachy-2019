@@ -1,0 +1,130 @@
+:mod:`reachy.parts.kinematic`
+=============================
+
+.. py:module:: reachy.parts.kinematic
+
+.. autoapi-nested-parse::
+
+   Kinematic forward and inverse utility module.
+
+   * Allow the creation of kinematic chain (following a simplified DH notation)
+   * Compute the forward kinematic
+   * Provide optimization via scipy for inverse approximation
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   reachy.parts.kinematic.Link
+   reachy.parts.kinematic.Chain
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   reachy.parts.kinematic.translation_matrix
+   reachy.parts.kinematic.position_dist
+   reachy.parts.kinematic.rotation_dist
+   reachy.parts.kinematic.pose_dist
+
+
+
+.. class:: Link(translation, rotation, bounds)
+
+
+   Bases: :py:obj:`object`
+
+   Simplified Link following DH notation.
+
+   :param translation: 3d translation from the previous link
+   :type translation: :py:class:`~numpy.ndarray`
+   :param rotation: 3d euler rotation (xyz) from the previous link
+   :type rotation: :py:class:`~numpy.ndarray`
+
+   .. method:: transformation_matrix(self, theta)
+
+      Compute local transformation matrix for given angle.
+
+      :param theta: joint rotation angle (in radians)
+      :type theta: float
+
+
+
+.. class:: Chain(links)
+
+
+   Bases: :py:obj:`object`
+
+   Chain of Link forming a kinematic chain.
+
+   :param links: list of :py:class:`Link`
+   :type links: list
+
+   .. method:: bounds(self)
+      :property:
+
+      Get bounds for each link.
+
+
+   .. method:: forward(self, joints)
+
+      Compute forward kinematics of the chain given joints configurations.
+
+      :param joints: N*J array joint rotation angle for each link (in radians)
+      :type joints: :py:class:`~numpy.ndarray`
+
+      :returns: 4x4 homogeneous matrix pose of the end effector
+      :rtype: :py:class:`~numpy.ndarray`
+
+      .. warning:: this is a vectorized version of the forward!
+
+
+   .. method:: inverse(self, poses, q0s, maxiter=10)
+
+      Approximate the inverse kinematics of the chain given end pose.
+
+      :param poses: N*4*4 homogeneous matrix poses for the end effector
+      :type poses: :py:class:`~numpy.ndarray`
+      :param q0s: N*J initial joint configuration used to bootstrap the optimization
+      :type q0s: :py:class:`~numpy.ndarray`
+      :param maxiter: maximum number of iteration to run on the optimizer
+      :type maxiter: int
+
+      .. warning:: this is a vectorized version of the forward!
+
+
+   .. method:: _inverse(self, target, q0, maxiter)
+
+
+
+.. function:: translation_matrix(translation)
+
+   Create homogenous matrix given a 3D translation vector.
+
+
+.. function:: position_dist(P, Q)
+
+   Compute euclidian distance between two 3D position.
+
+
+.. function:: rotation_dist(P, Q)
+
+   Compute rotation distance between two 3D rotation.
+
+
+.. function:: pose_dist(M1, M2, threshold=-1)
+
+   Compute distance between two pose.
+
+   The distance is defined as the sum of the position distance and the rotation distance where 1° of error is equal to 1mm error distance.
+
+

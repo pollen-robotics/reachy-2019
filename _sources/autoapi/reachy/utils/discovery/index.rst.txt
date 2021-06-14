@@ -1,0 +1,50 @@
+:mod:`reachy.utils.discovery`
+=============================
+
+.. py:module:: reachy.utils.discovery
+
+.. autoapi-nested-parse::
+
+   Discovery utility tools.
+
+   Provide automatic detection mechanisms to check which parts are present on your robot and their status.
+   .. warning:: Make sure that no other Python instance is connected to the robot before running those functions.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   reachy.utils.discovery.discover_head
+   reachy.utils.discovery.discover_arm
+   reachy.utils.discovery.discover_all
+   reachy.utils.discovery.main
+
+
+
+.. function:: discover_head(luos_port='/dev/ttyUSB*')
+
+   Check if an head part is connected to a Reachy.
+
+
+.. function:: discover_arm(side, luos_port='/dev/ttyUSB*', hand='force_gripper')
+
+   Check if an arm part is connected to a Reachy.
+
+
+.. function:: discover_all(luos_port='/dev/ttyUSB*')
+
+   Check which part is connected to a Reachy.
+
+
+.. function:: main()
+
+   Check which part is connected to a Reachy.
+
+

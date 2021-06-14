@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>reachy.reachy &#8212; reachy v1.4.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="prev" title="reachy.error" href="../error/index.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-reachy.reachy">
+<span id="reachy-reachy"></span><h1><a class="reference internal" href="#module-reachy.reachy" title="reachy.reachy"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.reachy</span></code></a><a class="headerlink" href="#module-reachy.reachy" title="Permalink to this headline">¶</a></h1>
+<p>Reachy main module entry point.</p>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reachy.reachy.Reachy" title="reachy.reachy.Reachy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Reachy</span></code></a></p></td>
+<td><p>Class representing the connection with the hardware robot.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reachy.reachy.logger" title="reachy.reachy.logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logger</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py data">
+<dt class="sig sig-object py" id="reachy.reachy.logger">
+<span class="sig-prename descclassname"><span class="pre">reachy.reachy.</span></span><span class="sig-name descname"><span class="pre">logger</span></span><a class="headerlink" href="#reachy.reachy.logger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="reachy.reachy.Reachy">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reachy.reachy.</span></span><span class="sig-name descname"><span class="pre">Reachy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left_arm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_arm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">head</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.reachy.Reachy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class representing the connection with the hardware robot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>left_arm</strong> (<a class="reference internal" href="../parts/index.html#reachy.parts.LeftArm" title="reachy.parts.LeftArm"><em>reachy.parts.LeftArm</em></a>) – left arm part if present or None if absent</p></li>
+<li><p><strong>right_arm</strong> (<a class="reference internal" href="../parts/index.html#reachy.parts.RightArm" title="reachy.parts.RightArm"><em>reachy.parts.RightArm</em></a>) – right arm part if present or None if absent</p></li>
+<li><p><strong>head</strong> (<a class="reference internal" href="../parts/index.html#reachy.parts.Head" title="reachy.parts.Head"><em>reachy.parts.Head</em></a>) – hrad part if present or None if absent</p></li>
+</ul>
+</dd>
+</dl>
+<p>Connect and synchronize with the hardware robot.</p>
+<p>It can be used to monitor real time robot state and to send commands.
+Mainly a container to hold the different parts of Reachy together.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.reachy.Reachy.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.reachy.Reachy.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reachy representation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.reachy.Reachy.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.reachy.Reachy.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close all communication with each attached parts.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.reachy.Reachy.parts">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">parts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.reachy.Reachy.parts" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of all attached parts.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.reachy.Reachy.motors">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">motors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.reachy.Reachy.motors" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of all motors in the attached parts.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.reachy.Reachy.goto">
+<span class="sig-name descname"><span class="pre">goto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">goal_positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'present_position'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interpolation_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.reachy.Reachy.goto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Goto specified goal positions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>goal_positions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – desired target position (in the form {‘full_motor_name’: target_position})</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – move duration (in sec.)</p></li>
+<li><p><strong>starting_point</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – register to use to retrieve the starting point (e.g. ‘present_postion’ or ‘goal_position’)</p></li>
+<li><p><strong>wait</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – whether or not to wait for the end motion before returning</p></li>
+<li><p><strong>interpolation_mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – interpolation used for computing the trajectory (e.g. ‘linear’ or ‘minjerk’)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of reachy.trajectory.TrajectoryPlayer (one for each controlled motor)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.reachy.Reachy.need_cooldown">
+<span class="sig-name descname"><span class="pre">need_cooldown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature_limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.reachy.Reachy.need_cooldown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if Reachy needs to cool down.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>temperature_limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Temperature limit (in °C) for each motor.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Whether or not you should let the robot cool down</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reachy.reachy.Reachy.wait_for_cooldown">
+<span class="sig-name descname"><span class="pre">wait_for_cooldown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rest_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">goto_rest_duration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_temperature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">45</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.reachy.Reachy.wait_for_cooldown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for the robot to lower its temperature.</p>
+<p>The robot will first go to the specified rest position and then, it will turn all motors compliant.
+Finally, it will wait until the temperature of each motor goes below the lower_temperature parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rest_position</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – the desired rest position for the robot</p></li>
+<li><p><strong>goto_rest_duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – time in seconds to reach the rest position</p></li>
+<li><p><strong>lower_temeprature</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – lower temperature threshold (in °C) to be reached by all motors before the end of cool down</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The robot will stay compliant at the end of the function call.
+It is up to you, to put it back in the desired position.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">reachy</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy</span></code></a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy._version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../error/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.error</span></code></a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.reachy</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy</span></code></a><ul>
+      <li>Previous: <a href="../error/index.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.error</span></code></a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Pollen Robotics.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../../_sources/autoapi/reachy/reachy/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

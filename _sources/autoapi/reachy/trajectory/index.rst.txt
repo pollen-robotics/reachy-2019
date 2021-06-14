@@ -1,0 +1,121 @@
+:mod:`reachy.trajectory`
+========================
+
+.. py:module:: reachy.trajectory
+
+.. autoapi-nested-parse::
+
+   Trajectory utility module.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   interpolation/index.rst
+   mixer/index.rst
+   player/index.rst
+   recorder/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   reachy.trajectory.TrajectoryRecorder
+   reachy.trajectory.TrajectoryPlayer
+
+
+
+
+.. class:: TrajectoryRecorder(motors, position_field='present_position', freq=100)
+
+
+   Bases: :py:obj:`object`
+
+   Trajectory Recorder utility class.
+
+   :param motors: list of motors to record (eg. [reachy.right_arm.elbow_pitch, reachy.right_arm.shoulder_pitch])
+   :type motors: list
+   :param position_field: register to record as trajectories (default use the 'present_position', 'goal_position' can also be useful in some specific case)
+   :type position_field: str
+   :param freq: record sample frequency (in Hz)
+   :type freq: float
+
+   .. note:: A same recorder can be used to record multiple trajectories.
+
+   Facilitates the recording of a full trajectory on multiple motors.
+
+   .. method:: start(self, turn_compliant=False)
+
+      Start the record.
+
+      :param turn_compliant: whether or not to turn the motor compliant before starting the record.
+      :type turn_compliant: bool
+
+
+   .. method:: stop(self, turn_stiff=False)
+
+      Stop the record.
+
+      :param turn_stiff: whether or not to turn the motor stiff at the end of the record.
+      :type turn_stiff: bool
+
+
+   .. method:: trajectories(self)
+      :property:
+
+      Retrieve a copy of the recorded trajectories.
+
+
+   .. method:: _record_loop(self)
+
+
+
+.. class:: TrajectoryPlayer(reachy, trajectories, freq=100)
+
+
+   Bases: :py:obj:`object`
+
+   Trajectory player abstraction.
+
+   :param reachy: robot which will play the trajectory
+   :type reachy: :py:class:`~reachy.Reachy`
+   :param trajectories: Trajectory to play (such as {motor_name: list of positions})
+   :type trajectories: dict
+   :param freq: Replay sample frequency (in Hz)
+   :type freq: float
+
+   Provides high-level features to:
+       * play a pre-defined trajectory
+       * wait for the end of the replay
+       * add fade in to smooth begining of motion
+
+   .. method:: play(self, wait=False, fade_in_duration=0)
+
+      Play a given trajectory.
+
+      :param wait: whether or not to wait for the end of the trajectory replay
+      :type wait: bool
+      :param fade_in_duration: time in seconds to reach the starting position (can be used to smooth the begining of the motion)
+      :type fade_in_duration: float
+
+      .. warning:: you can call play multiple times to replay the trajectory. You are responisble for handling the concurrency issue if you try to run multiple trajectories on the same motors.
+
+
+   .. method:: wait_for_end(self)
+
+      Block until the end of a trajectory replay.
+
+
+   .. method:: _play_loop(self)
+
+
+

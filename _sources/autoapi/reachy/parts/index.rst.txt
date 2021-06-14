@@ -1,0 +1,145 @@
+:mod:`reachy.parts`
+===================
+
+.. py:module:: reachy.parts
+
+.. autoapi-nested-parse::
+
+   Reachy parts submodule.
+
+   Used to define all parts in Reachy:
+
+   * :py:class:`RightArm`, :py:class:`LeftArm`
+   * :py:class:`~reachy.parts.hand.ForceGripper`
+   * :py:class:`Head`
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   arm/index.rst
+   hand/index.rst
+   head/index.rst
+   kinematic/index.rst
+   motor/index.rst
+   part/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   reachy.parts.LeftArm
+   reachy.parts.RightArm
+   reachy.parts.Head
+
+
+
+
+.. class:: LeftArm(io, hand=None)
+
+
+   Bases: :py:obj:`Arm`
+
+   Left Arm part.
+
+   :param io: port name where the modules can be found
+   :type io: str
+   :param hand: name of the :py:class:`~reachy.parts.hand.Hand` to attach ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
+   :type hand: str
+
+   .. attribute:: dxl_motors
+      
+
+      
+
+
+.. class:: RightArm(io, hand=None)
+
+
+   Bases: :py:obj:`Arm`
+
+   Right Arm part.
+
+   :param io: port name where the modules can be found
+   :type io: str
+   :param hand: name of the :py:class:`~reachy.parts.hand.Hand` to attach ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
+   :type hand: str
+
+   .. attribute:: dxl_motors
+      
+
+      
+
+
+.. class:: Head(io)
+
+
+   Bases: :py:obj:`reachy.parts.part.ReachyPart`
+
+   Head part.
+
+   :param io: port name where the modules can be found
+   :type io: str
+   :param default_camera: default camera to enable ('left' or 'right')
+   :type default_camera: str
+
+   Composed of an orbita actuator as neck, two controlled antennas and one camera.
+
+   .. attribute:: orbita_config
+      
+
+      
+
+   .. attribute:: dxl_motors
+      
+
+      
+
+   .. method:: __repr__(self)
+
+      Head representation.
+
+
+   .. method:: teardown(self)
+
+      Clean and close head part.
+
+
+   .. method:: look_at(self, x, y, z, duration, wait)
+
+      Make the head look at a 3D point in space.
+
+      :param x: x coordinates in space
+      :type x: float
+      :param y: y coordinates in space
+      :type y: float
+      :param z: z coordinates in space
+      :type z: float
+      :param duration: move duration (in seconds)
+      :type duration: float
+      :param wait: whether or not to wait for the end of the motion
+      :type wait: bool
+
+
+   .. method:: compliant(self)
+      :property:
+
+      Check if the neck is compliant.
+
+
+   .. method:: moving_speed(self)
+      :property:
+
+      Get the current disk moving speed.
+
+
+

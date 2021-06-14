@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>reachy.utils.discovery &#8212; reachy v1.4.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css" />
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="reachy.utils.dxl_config" href="../dxl_config/index.html" />
+    <link rel="prev" title="reachy.utils" href="../index.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-reachy.utils.discovery">
+<span id="reachy-utils-discovery"></span><h1><a class="reference internal" href="#module-reachy.utils.discovery" title="reachy.utils.discovery"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.utils.discovery</span></code></a><a class="headerlink" href="#module-reachy.utils.discovery" title="Permalink to this headline">¶</a></h1>
+<p>Discovery utility tools.</p>
+<p>Provide automatic detection mechanisms to check which parts are present on your robot and their status.
+.. warning:: Make sure that no other Python instance is connected to the robot before running those functions.</p>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reachy.utils.discovery.discover_head" title="reachy.utils.discovery.discover_head"><code class="xref py py-obj docutils literal notranslate"><span class="pre">discover_head</span></code></a>(luos_port='/dev/ttyUSB*')</p></td>
+<td><p>Check if an head part is connected to a Reachy.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reachy.utils.discovery.discover_arm" title="reachy.utils.discovery.discover_arm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">discover_arm</span></code></a>(side, luos_port='/dev/ttyUSB*', hand='force_gripper')</p></td>
+<td><p>Check if an arm part is connected to a Reachy.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reachy.utils.discovery.discover_all" title="reachy.utils.discovery.discover_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">discover_all</span></code></a>(luos_port='/dev/ttyUSB*')</p></td>
+<td><p>Check which part is connected to a Reachy.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reachy.utils.discovery.main" title="reachy.utils.discovery.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a>()</p></td>
+<td><p>Check which part is connected to a Reachy.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="reachy.utils.discovery.discover_head">
+<span class="sig-prename descclassname"><span class="pre">reachy.utils.discovery.</span></span><span class="sig-name descname"><span class="pre">discover_head</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">luos_port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/dev/ttyUSB*'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.utils.discovery.discover_head" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if an head part is connected to a Reachy.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reachy.utils.discovery.discover_arm">
+<span class="sig-prename descclassname"><span class="pre">reachy.utils.discovery.</span></span><span class="sig-name descname"><span class="pre">discover_arm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">side</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">luos_port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/dev/ttyUSB*'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hand</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'force_gripper'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.utils.discovery.discover_arm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if an arm part is connected to a Reachy.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reachy.utils.discovery.discover_all">
+<span class="sig-prename descclassname"><span class="pre">reachy.utils.discovery.</span></span><span class="sig-name descname"><span class="pre">discover_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">luos_port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/dev/ttyUSB*'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reachy.utils.discovery.discover_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check which part is connected to a Reachy.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reachy.utils.discovery.main">
+<span class="sig-prename descclassname"><span class="pre">reachy.utils.discovery.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reachy.utils.discovery.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check which part is connected to a Reachy.</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">reachy</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy</span></code></a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../io/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.io</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parts/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.parts</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../trajectory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.trajectory</span></code></a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.utils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy</span></code></a><ul>
+  <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.utils</span></code></a><ul>
+      <li>Previous: <a href="../index.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.utils</span></code></a></li>
+      <li>Next: <a href="../dxl_config/index.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reachy.utils.dxl_config</span></code></a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Pollen Robotics.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../../../_sources/autoapi/reachy/utils/discovery/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

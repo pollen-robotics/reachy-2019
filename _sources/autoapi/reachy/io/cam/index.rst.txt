@@ -1,0 +1,62 @@
+:mod:`reachy.io.cam`
+====================
+
+.. py:module:: reachy.io.cam
+
+.. autoapi-nested-parse::
+
+   Wrapper around two RPI and the multi channel switch.
+
+   It relies on the use of the Multi_Adapter_Board_2Channel_uc444 for switching camera via the I2C and GPIO control.
+
+   See https://github.com/ArduCAM/RaspberryPi/tree/master/Multi_Camera_Adapter/Multi_Adapter_Board_2Channel_uc444
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   reachy.io.cam.BackgroundVideoCapture
+
+
+
+
+.. class:: BackgroundVideoCapture(camera_index, resolution=(600, 800), lazy_setup=True)
+
+
+   Bases: :py:obj:`object`
+
+   Wrapper on OpenCV VideoCapture object.
+
+   :param camera_index: index of the used camera (see OpenCV doc for details)
+   :type camera_index: int
+   :param resolution: desired resolution for the grabbed frame (the resolution must be compatible with the driver)
+   :type resolution: int, int
+
+   Instantiating this object will automatically start the polling of image in background.
+
+   This wrapper is reponsible for automatically polling image on the camera.
+   This ensures that we can always access the most recent image.
+
+   .. method:: _setup(self)
+
+
+   .. method:: close(self)
+
+      Stop polling image and release the Video Capture.
+
+
+   .. method:: _read_loop(self)
+
+
+   .. method:: read(self)
+
+      Retrieve the last grabbed image.
+
+
+

@@ -1,0 +1,42 @@
+:mod:`reachy.utils`
+===================
+
+.. py:module:: reachy.utils
+
+.. autoapi-nested-parse::
+
+   Utility toolbox submodules.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   discovery/index.rst
+   dxl_config/index.rst
+   orbita_config/index.rst
+   orbita_zero/index.rst
+   setup_angle_limits/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   reachy.utils.rot
+
+
+
+.. function:: rot(axis, deg)
+
+   Compute 3D rotation matrix given euler rotation.
+
+

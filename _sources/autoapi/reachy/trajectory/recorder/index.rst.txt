@@ -1,0 +1,68 @@
+:mod:`reachy.trajectory.recorder`
+=================================
+
+.. py:module:: reachy.trajectory.recorder
+
+.. autoapi-nested-parse::
+
+   Trajectory recording utility module.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   reachy.trajectory.recorder.TrajectoryRecorder
+
+
+
+
+.. class:: TrajectoryRecorder(motors, position_field='present_position', freq=100)
+
+
+   Bases: :py:obj:`object`
+
+   Trajectory Recorder utility class.
+
+   :param motors: list of motors to record (eg. [reachy.right_arm.elbow_pitch, reachy.right_arm.shoulder_pitch])
+   :type motors: list
+   :param position_field: register to record as trajectories (default use the 'present_position', 'goal_position' can also be useful in some specific case)
+   :type position_field: str
+   :param freq: record sample frequency (in Hz)
+   :type freq: float
+
+   .. note:: A same recorder can be used to record multiple trajectories.
+
+   Facilitates the recording of a full trajectory on multiple motors.
+
+   .. method:: start(self, turn_compliant=False)
+
+      Start the record.
+
+      :param turn_compliant: whether or not to turn the motor compliant before starting the record.
+      :type turn_compliant: bool
+
+
+   .. method:: stop(self, turn_stiff=False)
+
+      Stop the record.
+
+      :param turn_stiff: whether or not to turn the motor stiff at the end of the record.
+      :type turn_stiff: bool
+
+
+   .. method:: trajectories(self)
+      :property:
+
+      Retrieve a copy of the recorded trajectories.
+
+
+   .. method:: _record_loop(self)
+
+
+

@@ -1,0 +1,157 @@
+:mod:`reachy.parts.arm`
+=======================
+
+.. py:module:: reachy.parts.arm
+
+.. autoapi-nested-parse::
+
+   Arm part module.
+
+   Implements a Right and a Left Arm.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   reachy.parts.arm.Arm
+   reachy.parts.arm.LeftArm
+   reachy.parts.arm.RightArm
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   reachy.parts.arm.hands
+
+
+.. data:: hands
+   
+
+   
+
+.. class:: Arm(side, io, dxl_motors, hand)
+
+
+   Bases: :py:obj:`reachy.parts.part.ReachyPart`
+
+   Arm abstraction class.
+
+   :param side: 'right' or 'left'
+   :type side: str
+   :param io: port name where the modules can be found
+   :type io: str
+   :param dxl_motors: config of the dynamixel motors composing the arm
+   :type dxl_motors: dict
+   :param hand: name of the Hand to attach ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
+   :type hand: str
+
+   Provides high-level access to:
+       * ordered list of motors
+       * forward and inverse kinematics
+
+   .. attribute:: fans
+      
+
+      
+
+   .. method:: teardown(self)
+
+      Clean up before closing.
+
+
+   .. method:: __repr__(self)
+
+      Arm representation.
+
+
+   .. method:: forward_kinematics(self, joints_position, use_rad=False)
+
+      Compute the forward kinematics of the Arm.
+
+      :param joints_position: angle joints configuration of the arm (in degrees by default)
+      :type joints_position: :py:class:`~numpy.ndarray`
+      :param use_rad: whether or not to use radians for joints configuration
+      :type use_rad: bool
+
+      .. note:: the end effector will be the end of the Hand if one is attached.
+
+
+   .. method:: inverse_kinematics(self, target_pose, q0=None, use_rad=False, maxiter=10)
+
+      Approximate the inverse kinematics of the Arm.
+
+      :param target_pose: 4x4 homogeneous pose of the target end effector pose
+      :type target_pose: :py:class:`~numpy.ndarray`
+      :param q0: joint initial angle configurations (used for bootstraping the optimization)
+      :type q0: :py:class:`~numpy.ndarray`
+      :param use_rad: whether or not to use radians for joints configuration
+      :type use_rad: bool
+      :param maxiter: maximum number of iteration to run on the optimizer
+      :type maxiter: int
+
+      .. note:: the end effector will be the end of the Hand if one is attached.
+
+
+   .. method:: enable_temperature_monitoring(self)
+
+      Enable the automatic motor cooling procedure.
+
+      The specified motors temperature will be watched and when they reached a specific threshold, the fan will automatically be turned on.
+      When the temperature goes below a lower threshold, they will turn off.
+
+
+   .. method:: disable_temperature_monitoring(self)
+
+      Disable the automatic motor cooling procedure.
+
+
+   .. method:: _temperature_monitoring(self)
+
+
+
+.. class:: LeftArm(io, hand=None)
+
+
+   Bases: :py:obj:`Arm`
+
+   Left Arm part.
+
+   :param io: port name where the modules can be found
+   :type io: str
+   :param hand: name of the :py:class:`~reachy.parts.hand.Hand` to attach ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
+   :type hand: str
+
+   .. attribute:: dxl_motors
+      
+
+      
+
+
+.. class:: RightArm(io, hand=None)
+
+
+   Bases: :py:obj:`Arm`
+
+   Right Arm part.
+
+   :param io: port name where the modules can be found
+   :type io: str
+   :param hand: name of the :py:class:`~reachy.parts.hand.Hand` to attach ('force_gripper', 'orbita_wrist' or it can be None if no hand are attached)
+   :type hand: str
+
+   .. attribute:: dxl_motors
+      
+
+      
+
+
