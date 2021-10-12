@@ -11,5 +11,5 @@ SimpleWebSocketServer==0.1.1
 six==1.14.0
 websocket-client==0.57.0
 zeroconf==0.24.5
-opencv-python==4.1.0.25
+opencv-python==4.2.0.32
 websockets==9.1
