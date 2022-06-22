@@ -1,7 +1,7 @@
 anytree==2.8.0
 future==0.18.2
 ifaddr==0.1.6
-numpy==1.18.2
+numpy==1.22.0
 orbita==0.3.1
 pyluos==1.2.2
 pyquaternion==0.9.5
